@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'DataInjector_Example' do
+  pod 'DataInjector', :path => '../../'
+
+  target 'DataInjector_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

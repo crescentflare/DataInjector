@@ -1,0 +1,16 @@
+PODS:
+  - DataInjector (0.1.0)
+
+DEPENDENCIES:
+  - DataInjector (from `../../`)
+
+EXTERNAL SOURCES:
+  DataInjector:
+    :path: ../../
+
+SPEC CHECKSUMS:
+  DataInjector: dc19475e311942c8502675bd0c9541b3e762bcaa
+
+PODFILE CHECKSUM: f84aea6908b18ad70ee68dad6dc090f97a3032ad
+
+COCOAPODS: 1.1.1

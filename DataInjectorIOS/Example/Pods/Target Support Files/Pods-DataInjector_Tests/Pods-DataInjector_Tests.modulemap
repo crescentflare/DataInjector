@@ -1,0 +1,6 @@
+framework module Pods_DataInjector_Tests {
+  umbrella header "Pods-DataInjector_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}
