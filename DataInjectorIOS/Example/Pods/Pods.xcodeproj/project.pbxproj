@@ -8,18 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		0565DC053331C0400AAB0546D402D9DD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
+		0D6D30B438334215FF135CD42F0590F4 /* Pods-DataInjector_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6EDD88CA2B9ED74C8BADAFE8E1CA14 /* Pods-DataInjector_Tests-dummy.m */; };
 		35DBB5A77AEC3CA94B401D1462C7E804 /* Pods-DataInjector_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B71BBAF4B32BB40F2DA71B23555225 /* Pods-DataInjector_Example-dummy.m */; };
+		50B24527F07B4A6FF74FE13973CED4E8 /* Pods-DataInjector_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FD5E84039CAE064CD40382D5D50E449 /* Pods-DataInjector_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		53789702A30B192FCB76A2E0BDA759F9 /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B9AFA4D469B619E027AA9658E8E63C /* ReplaceMe.swift */; };
-		6BD6349DB791AF07BDA65B5FF5B3A9DD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
 		6E7FB36F1B6E431580E44A9B40A4E2CE /* DataInjector-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7B9DF83814A6B3754CDB01BA4FE969 /* DataInjector-dummy.m */; };
 		79347CEF856A70A236C8DE7ECB9C4A90 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
-		9EAB1489F6BCCFDB4F686FB8DDA8FE1E /* Pods-DataInjector_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6EDD88CA2B9ED74C8BADAFE8E1CA14 /* Pods-DataInjector_Tests-dummy.m */; };
-		A3110659D3BA4F61656FED8891339903 /* Pods-DataInjector_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FD5E84039CAE064CD40382D5D50E449 /* Pods-DataInjector_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		92BA86FDDA8CF1352745C3FFFCBEC73C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
 		B26DFFB53132C250327D510B8CBD7BA8 /* DataInjector-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CFD8B9681B1D4B6A70345834ECF50EF /* DataInjector-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C09F485BF97E95FAE3979EAF2C9C9F9B /* Pods-DataInjector_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB128BF3A020BA167475999B7EDF937 /* Pods-DataInjector_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		25ECA8868D23139824D8A31EAC0F3248 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 56D005B84243B3EF5C4F82E7B8913A77;
+			remoteInfo = DataInjector;
+		};
 		BE6A97F836A1B109329E2BED4AC6A37F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
@@ -73,19 +80,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		287C272D61AE90E4028FA94CD0FE1FC0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92BA86FDDA8CF1352745C3FFFCBEC73C /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4746240AAD100A701FC9B54110DDCB1E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				79347CEF856A70A236C8DE7ECB9C4A90 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5E26F1102A85E8C2B4C6E6A447402105 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6BD6349DB791AF07BDA65B5FF5B3A9DD /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,11 +259,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6BBB87DF6ACC72A870CE91F9B69734A1 /* Headers */ = {
+		ED088B11735E039A9DE43C597B377359 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3110659D3BA4F61656FED8891339903 /* Pods-DataInjector_Tests-umbrella.h in Headers */,
+				50B24527F07B4A6FF74FE13973CED4E8 /* Pods-DataInjector_Tests-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,17 +287,18 @@
 			productReference = 63CB81BB05CFFF535CF61F94DC1211E5 /* DataInjector.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		9D128B1F0BF0D154209758964BE6E411 /* Pods-DataInjector_Tests */ = {
+		B25846D6C48B19991F45E317596517C3 /* Pods-DataInjector_Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B4E70BDA0BB3EE109A3595AD9820D4DE /* Build configuration list for PBXNativeTarget "Pods-DataInjector_Tests" */;
+			buildConfigurationList = DEF9B7D7DD72BF27C828579CAA00CAD3 /* Build configuration list for PBXNativeTarget "Pods-DataInjector_Tests" */;
 			buildPhases = (
-				63BF60B18C6E4F28B861813164FB0F21 /* Sources */,
-				5E26F1102A85E8C2B4C6E6A447402105 /* Frameworks */,
-				6BBB87DF6ACC72A870CE91F9B69734A1 /* Headers */,
+				40F72969E2F7EDA891226F999DDDCBD7 /* Sources */,
+				287C272D61AE90E4028FA94CD0FE1FC0 /* Frameworks */,
+				ED088B11735E039A9DE43C597B377359 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				E565E6DB723D349356B0B1C0E61FD417 /* PBXTargetDependency */,
 			);
 			name = "Pods-DataInjector_Tests";
 			productName = "Pods-DataInjector_Tests";
@@ -338,26 +346,26 @@
 			targets = (
 				56D005B84243B3EF5C4F82E7B8913A77 /* DataInjector */,
 				E12F845353927FD433E9D94CB1B6F29C /* Pods-DataInjector_Example */,
-				9D128B1F0BF0D154209758964BE6E411 /* Pods-DataInjector_Tests */,
+				B25846D6C48B19991F45E317596517C3 /* Pods-DataInjector_Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		40F72969E2F7EDA891226F999DDDCBD7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D6D30B438334215FF135CD42F0590F4 /* Pods-DataInjector_Tests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		60D57FF85738873DD3EC11FF1540601F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				6E7FB36F1B6E431580E44A9B40A4E2CE /* DataInjector-dummy.m in Sources */,
 				53789702A30B192FCB76A2E0BDA759F9 /* ReplaceMe.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		63BF60B18C6E4F28B861813164FB0F21 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9EAB1489F6BCCFDB4F686FB8DDA8FE1E /* Pods-DataInjector_Tests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,79 +386,15 @@
 			target = 56D005B84243B3EF5C4F82E7B8913A77 /* DataInjector */;
 			targetProxy = BE6A97F836A1B109329E2BED4AC6A37F /* PBXContainerItemProxy */;
 		};
+		E565E6DB723D349356B0B1C0E61FD417 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DataInjector;
+			target = 56D005B84243B3EF5C4F82E7B8913A77 /* DataInjector */;
+			targetProxy = 25ECA8868D23139824D8A31EAC0F3248 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		14F5DD8726B0FEA51146F64881D3F931 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = AB1216365816D56568C9040F8365247D /* Pods-DataInjector_Tests.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-DataInjector_Tests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-DataInjector_Tests/Pods-DataInjector_Tests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_DataInjector_Tests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		43C1E3D7D93479FB543EDD0BFFF8A757 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 33215BA70FA36886A403E33C1BA5995E /* Pods-DataInjector_Tests.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-DataInjector_Tests/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-DataInjector_Tests/Pods-DataInjector_Tests.modulemap";
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_DataInjector_Tests;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		589D6B293BAF644802AEF555D008D247 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 566D08FD7B9F0AD2A4D79C4100A3CE2C /* DataInjector.xcconfig */;
@@ -518,6 +462,41 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
+		};
+		84C4A23E17747E1B55A28C2CFA13676D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 33215BA70FA36886A403E33C1BA5995E /* Pods-DataInjector_Tests.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-DataInjector_Tests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-DataInjector_Tests/Pods-DataInjector_Tests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_DataInjector_Tests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		8DED8AD26D381A6ACFF202E5217EC498 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -671,6 +650,42 @@
 			};
 			name = Release;
 		};
+		E761BA5996DDC45C6A834A27CD1D8E81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB1216365816D56568C9040F8365247D /* Pods-DataInjector_Tests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-DataInjector_Tests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-DataInjector_Tests/Pods-DataInjector_Tests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_DataInjector_Tests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -701,11 +716,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B4E70BDA0BB3EE109A3595AD9820D4DE /* Build configuration list for PBXNativeTarget "Pods-DataInjector_Tests" */ = {
+		DEF9B7D7DD72BF27C828579CAA00CAD3 /* Build configuration list for PBXNativeTarget "Pods-DataInjector_Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				14F5DD8726B0FEA51146F64881D3F931 /* Debug */,
-				43C1E3D7D93479FB543EDD0BFFF8A757 /* Release */,
+				E761BA5996DDC45C6A834A27CD1D8E81 /* Debug */,
+				84C4A23E17747E1B55A28C2CFA13676D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
