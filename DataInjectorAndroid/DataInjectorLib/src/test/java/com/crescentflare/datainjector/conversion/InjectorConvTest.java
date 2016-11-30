@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 /**
- * Utility test: map utility
+ * Utility test: data conversion
  */
 public class InjectorConvTest
 {

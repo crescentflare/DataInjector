@@ -32,20 +32,16 @@ public class InjectorUtil {
     public static func itemFromDictionary(_ dictionary: [String: Any], path: [String]) -> Any? {
         if path.count > 0 {
             let checkObject = dictionary[path[0]]
-            if let checkDictionary = checkObject as? [String: Any] {
-                if path.count > 1 {
-                    return itemFromDictionary(checkDictionary, path: Array(path[1..<path.count]))
-                } else {
-                    return checkDictionary
+            if path.count < 2 {
+                if checkObject is NSNull {
+                    return nil
                 }
-            } else if let checkArray = checkObject as? [Any] {
-                if path.count > 1 {
-                    return itemFromArray(checkArray, path: Array(path[1..<path.count]))
-                } else {
-                    return checkArray
-                }
-            } else if path.count < 2 && !(checkObject is NSNull) {
                 return checkObject
+            }
+            if let checkDictionary = checkObject as? [String: Any] {
+                return itemFromDictionary(checkDictionary, path: Array(path[1..<path.count]))
+            } else if let checkArray = checkObject as? [Any] {
+                return itemFromArray(checkArray, path: Array(path[1..<path.count]))
             }
         }
         return nil
@@ -67,20 +63,16 @@ public class InjectorUtil {
         if path.count > 0 {
             if let index = Int(path[0]) {
                 let checkObject = array[index]
-                if let checkDictionary = checkObject as? [String: Any] {
-                    if path.count > 1 {
-                        return itemFromDictionary(checkDictionary, path: Array(path[1..<path.count]))
-                    } else {
-                        return checkDictionary
+                if path.count < 2 {
+                    if checkObject is NSNull {
+                        return nil
                     }
-                } else if let checkArray = checkObject as? [Any] {
-                    if path.count > 1 {
-                        return itemFromArray(checkArray, path: Array(path[1..<path.count]))
-                    } else {
-                        return checkArray
-                    }
-                } else if path.count < 2 && !(checkObject is NSNull) {
                     return checkObject
+                }
+                if let checkDictionary = checkObject as? [String: Any] {
+                    return itemFromDictionary(checkDictionary, path: Array(path[1..<path.count]))
+                } else if let checkArray = checkObject as? [Any] {
+                    return itemFromArray(checkArray, path: Array(path[1..<path.count]))
                 }
             }
         }
