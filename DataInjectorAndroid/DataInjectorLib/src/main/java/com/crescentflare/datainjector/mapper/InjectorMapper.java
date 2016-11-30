@@ -1,6 +1,8 @@
 package com.crescentflare.datainjector.mapper;
 
 import com.crescentflare.datainjector.conversion.InjectorConv;
+import com.crescentflare.datainjector.utility.InjectorDataDetector;
+import com.crescentflare.datainjector.utility.InjectorDataType;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 
 import java.util.HashMap;
@@ -16,7 +18,9 @@ public class InjectorMapper
     // Members
     // ---
 
-    private Map<String, MappingObject> mappingTable = new HashMap<>();
+    private Map<Object, Object> mappingTable = new HashMap<>();
+    private Map<String, Object> fullRefData = null;
+    private Map<String, Object> subRefData = null;
     private boolean initFail = false;
 
 
@@ -41,28 +45,52 @@ public class InjectorMapper
             }
         }
 
-        // Split mappings
-        String mappingItems[] = mapping.split(",");
-        if (mappingItems.length == 0)
+        // Loop through mapping and find items
+        int curPos = 0;
+        boolean findingData = true;
+        while (findingData)
         {
-            initFail = true;
-            return;
-        }
-        for (String mappingItem : mappingItems)
-        {
-            String[] mappingSet = mappingItem.split("->");
-            if (mappingSet.length == 2)
+            // Reset state
+            findingData = false;
+            curPos = findNonSpace(mapping, curPos);
+
+            // Find the item type for the mapping key
+            InjectorDataType keyType = InjectorDataDetector.detectFromString(mapping, curPos);
+            int endPos = InjectorDataDetector.endOfTypeTypeString(keyType, mapping, curPos);
+            if (endPos < 0)
             {
-                String mapFrom = mappingSet[0];
-                MappingObject mapTo = new MappingObject(mappingSet[1], fullRefData, subRefData);
-                if (mapTo.getType() != InjectorDataType.Unknown)
+                endPos = findAssignmentSeparator(mapping, curPos);
+            }
+            if (endPos < 0)
+            {
+                break;
+            }
+            Object keyObject = obtainObject(keyType, mapping, curPos, endPos, fullRefData, subRefData);
+
+            // Find the item type for the mapping value
+            curPos = findAssignmentSeparator(mapping, endPos) + 2;
+            curPos = findNonSpace(mapping, curPos);
+            InjectorDataType valueType = InjectorDataDetector.detectFromString(mapping, curPos);
+            endPos = InjectorDataDetector.endOfTypeTypeString(valueType, mapping, curPos);
+            if (endPos < 0)
+            {
+                endPos = findDividerSeparator(mapping, curPos);
+            }
+            if (endPos < 0)
+            {
+                break;
+            }
+            Object valueObject = obtainObject(valueType, mapping, curPos, endPos, fullRefData, subRefData);
+
+            // Add the value
+            if (keyObject != null && valueObject != null)
+            {
+                mappingTable.put(keyObject, valueObject);
+                endPos = findDividerSeparator(mapping, curPos);
+                if (endPos < mapping.length())
                 {
-                    mappingTable.put(mapFrom, mapTo);
-                }
-                else
-                {
-                    initFail = true;
-                    return;
+                    curPos = endPos + 1;
+                    findingData = true;
                 }
             }
             else
@@ -70,6 +98,15 @@ public class InjectorMapper
                 initFail = true;
                 return;
             }
+        }
+        if (mappingTable.keySet().size() == 0)
+        {
+            initFail = true;
+        }
+        else
+        {
+            this.fullRefData = fullRefData;
+            this.subRefData = subRefData;
         }
     }
 
@@ -82,75 +119,137 @@ public class InjectorMapper
     {
         if (!initFail && item != null)
         {
-            MappingObject result = mappingTable.get(item.toString());
-            if (result != null)
+            InjectorDataType itemType = InjectorDataDetector.detectFromObject(item);
+            if (itemType == InjectorDataType.Reference || itemType == InjectorDataType.SubReference)
             {
-                return result.getValue();
+                item = obtainConvertedObject(itemType, InjectorConv.toString(item), fullRefData, subRefData);
+                if (item == null)
+                {
+                    return null;
+                }
             }
-            return mappingTable.get("else").getValue();
+            for (Object key : mappingTable.keySet())
+            {
+                if (key instanceof String)
+                {
+                    if (key.equals(InjectorConv.toString(item)))
+                    {
+                        return mappingTable.get(key);
+                    }
+                }
+                else if (key instanceof Double)
+                {
+                    if (key.equals(InjectorConv.toDouble(item)))
+                    {
+                        return mappingTable.get(key);
+                    }
+                }
+                else if (key instanceof Integer)
+                {
+                    if (key.equals(InjectorConv.toInteger(item)))
+                    {
+                        return mappingTable.get(key);
+                    }
+                }
+                else if (key instanceof Boolean)
+                {
+                    if (key.equals(InjectorConv.toBoolean(item)))
+                    {
+                        return mappingTable.get(key);
+                    }
+                }
+            }
+            return mappingTable.get("else");
         }
         return null;
     }
 
 
     // ---
-    // A mapping object
+    // Helper
     // ---
 
-    private static class MappingObject
+    private Object obtainObject(InjectorDataType type, String mapping, int start, int end, Map<String, Object> fullRefData, Map<String, Object> subRefData)
     {
-        private InjectorDataType type = InjectorDataType.Unknown;
-        private Object value;
-
-        public MappingObject(Object value, Map<String, Object> fullRefData, Map<String, Object> subRefData)
+        String item = mapping.substring(start, end).trim();
+        if (type == InjectorDataType.String)
         {
-            boolean detecting = true;
-            while (detecting && value != null)
+            char quoteChr = item.charAt(0);
+            if (quoteChr == '\'' || quoteChr == '"')
             {
-                detecting = false;
-                type = InjectorDataType.detectFromObject(value);
-                switch (type)
+                if (item.endsWith("" + quoteChr))
                 {
-                    case String:
-                        this.value = InjectorConv.toString(value);
-                        break;
-                    case Number:
-                        this.value = InjectorConv.toInteger(value);
-                        break;
-                    case DecimalNumber:
-                        this.value = InjectorConv.toDouble(value);
-                        break;
-                    case Boolean:
-                        this.value = InjectorConv.toBoolean(value);
-                        break;
-                    case Reference:
-                        type = InjectorDataType.Unknown;
-                        if (fullRefData != null)
-                        {
-                            value = InjectorUtil.itemFromMap(fullRefData, ((String)value).substring(2));
-                            detecting = true;
-                        }
-                        break;
-                    case SubReference:
-                        type = InjectorDataType.Unknown;
-                        if (subRefData != null)
-                        {
-                            value = InjectorUtil.itemFromMap(subRefData, ((String)value).substring(1));
-                            detecting = true;
-                        }
-                        break;
+                    item = item.substring(1, item.length() - 1);
                 }
             }
         }
+        return obtainConvertedObject(type, item, fullRefData, subRefData);
+    }
 
-        public InjectorDataType getType()
+    private Object obtainConvertedObject(InjectorDataType type, String item, Map<String, Object> fullRefData, Map<String, Object> subRefData)
+    {
+        switch (type)
         {
-            return type;
+            case String:
+                return item;
+            case Number:
+                return InjectorConv.toInteger(item);
+            case DecimalNumber:
+                return InjectorConv.toDouble(item);
+            case Boolean:
+                return InjectorConv.toBoolean(item);
+            case Reference:
+                if (fullRefData != null)
+                {
+                    return InjectorUtil.itemFromMap(fullRefData, item.substring(1));
+                }
+                break;
+            case SubReference:
+                if (fullRefData != null)
+                {
+                    return InjectorUtil.itemFromMap(subRefData, item.substring(2));
+                }
+                break;
         }
+        return null;
+    }
 
-        public Object getValue()
+    private int findNonSpace(String string, int start)
+    {
+        int len = string.length();
+        for (int i = start; i < len; i++)
         {
-            return value;
+            if (string.charAt(i) != ' ')
+            {
+                return i;
+            }
         }
+        return -1;
+    }
+
+    private int findAssignmentSeparator(String string, int start)
+    {
+        int len = string.length();
+        for (int i = start; i < len; i++)
+        {
+            if (string.charAt(i) == '-' && i + 1 < len && string.charAt(i + 1) == '>')
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private int findDividerSeparator(String string, int start)
+    {
+        int len = string.length();
+        for (int i = start; i < len; i++)
+        {
+            if (string.charAt(i) == ',')
+            {
+                return i;
+            }
+        }
+        return len;
     }
 }

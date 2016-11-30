@@ -1,4 +1,4 @@
-package com.crescentflare.datainjector.conversion;
+package com.crescentflare.datainjector.utility;
 
 import com.crescentflare.datainjector.utility.InjectorMapEntry;
 import com.crescentflare.datainjector.utility.InjectorUtil;
