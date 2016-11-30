@@ -4,17 +4,9 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.TimeZone;
-
-import static org.junit.Assert.*;
 
 /**
  * Utility test: map utility
@@ -80,9 +72,6 @@ public class InjectorConvTest
     @Test
     public void optionalBoolean() throws Exception
     {
-        Map<String, Object> map = new HashMap<>();
-        map.put("int", 0);
-        map.put("boolean", true);
         Assert.assertEquals(Boolean.FALSE, InjectorConv.toBoolean("false"));
         Assert.assertEquals(Boolean.TRUE, InjectorConv.toBoolean(2));
     }
@@ -92,24 +81,24 @@ public class InjectorConvTest
     // Helpers
     // ---
 
-    public Date dateFrom(int year, int month, int day)
+    private Date dateFrom(int year, int month, int day)
     {
         return dateFrom(year, month, day, 0, 0, 0);
     }
 
-    public Date dateFrom(int year, int month, int day, int hour, int minute, int second)
+    private Date dateFrom(int year, int month, int day, int hour, int minute, int second)
     {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month - 1, day, hour, minute, second);
         return calendar.getTime();
     }
 
-    public Date utcDateFrom(int year, int month, int day)
+    private Date utcDateFrom(int year, int month, int day)
     {
         return utcDateFrom(year, month, day, 0, 0, 0);
     }
 
-    public Date utcDateFrom(int year, int month, int day, int hour, int minute, int second)
+    private Date utcDateFrom(int year, int month, int day, int hour, int minute, int second)
     {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month - 1, day, hour, minute, second);
