@@ -47,6 +47,34 @@ public class InjectorUtil {
         return nil
     }
 
+    public static func setItemOnDictionary(_ dictionary: inout [String: Any], path: String?, separator: Character = ".", value: Any?) {
+        if let splittedPath = path?.characters.split(separator: separator).map(String.init) {
+            setItemOnDictionary(&dictionary, path: splittedPath, value: value)
+        }
+    }
+    
+    public static func setItemOnDictionary(_ dictionary: inout [String: Any], path: [String], value: Any?) {
+        if path.count > 0 {
+            let key = path[0]
+            if path.count > 1 {
+                let nextPath = Array(path[1..<path.count])
+                if var modifyDictionary = dictionary[key] as? [String: Any] {
+                    setItemOnDictionary(&modifyDictionary, path: nextPath, value: value)
+                    dictionary[key] = modifyDictionary
+                } else if var modifyArray = dictionary[key] as? [Any] {
+                    setItemOnArray(&modifyArray, path: nextPath, value: value)
+                    dictionary[key] = modifyArray
+                }
+            } else {
+                if value == nil {
+                    dictionary.removeValue(forKey: key)
+                } else {
+                    dictionary[key] = value
+                }
+            }
+        }
+    }
+
     
     // ---
     // MARK: Array
@@ -77,6 +105,35 @@ public class InjectorUtil {
             }
         }
         return nil
+    }
+
+    public static func setItemOnArray(_ array: inout [Any], path: String?, separator: Character = ".", value: Any?) {
+        if let splittedPath = path?.characters.split(separator: separator).map(String.init) {
+            setItemOnArray(&array, path: splittedPath, value: value)
+        }
+    }
+    
+    public static func setItemOnArray(_ array: inout [Any], path: [String], value: Any?) {
+        if path.count > 0 {
+            if let index = Int(path[0]) {
+                if path.count > 1 {
+                    let nextPath = Array(path[1..<path.count])
+                    if var modifyDictionary = array[index] as? [String: Any] {
+                        setItemOnDictionary(&modifyDictionary, path: nextPath, value: value)
+                        array[index] = modifyDictionary
+                    } else if var modifyArray = array[index] as? [Any] {
+                        setItemOnArray(&modifyArray, path: nextPath, value: value)
+                        array[index] = modifyArray
+                    }
+                } else {
+                    if value == nil {
+                        array.remove(at: index)
+                    } else {
+                        array[index] = value
+                    }
+                }
+            }
+        }
     }
 
 }
