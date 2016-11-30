@@ -79,6 +79,68 @@ public class InjectorUtil
         return null;
     }
 
+    public static void setItemOnMap(Map<String, Object> map, String path, Object value)
+    {
+        if (path == null)
+        {
+            return;
+        }
+        setItemOnMap(map, path.split("\\."), value);
+    }
+
+    public static void setItemOnMap(Map<String, Object> map, String path, char separator, Object value)
+    {
+        if (path == null)
+        {
+            return;
+        }
+        if (separator == '.')
+        {
+            setItemOnMap(map, path.split("\\" + separator), value);
+        }
+        else
+        {
+            setItemOnMap(map, path.split("" + separator), value);
+        }
+    }
+
+    public static void setItemOnMap(Map<String, Object> map, String[] path, Object value)
+    {
+        if (map == null || path == null)
+        {
+            return;
+        }
+        if (path.length > 0)
+        {
+            String key = path[0];
+            if (path.length > 1)
+            {
+                String[] nextPath = slicedPath(path, 1);
+                Map<String, Object> modifyMap = asStringObjectMap(map.get(key));
+                List<Object> modifyArray = asObjectList(map.get(key));
+                if (modifyMap != null)
+                {
+                    setItemOnMap(modifyMap, nextPath, value);
+                }
+                else if (modifyArray != null)
+                {
+                    setItemOnList(modifyArray, nextPath, value);
+                }
+            }
+            else
+            {
+                if (value == null)
+                {
+                    map.remove(key);
+                }
+                else
+                {
+                    map.put(key, value);
+                }
+            }
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public static Map<String, Object> asStringObjectMap(Object object)
     {
@@ -188,6 +250,78 @@ public class InjectorUtil
             }
         }
         return null;
+    }
+
+    public static void setItemOnList(List<Object> list, String path, Object value)
+    {
+        if (path == null)
+        {
+            return;
+        }
+        setItemOnList(list, path.split("\\."), value);
+    }
+
+    public static void setItemOnList(List<Object> list, String path, char separator, Object value)
+    {
+        if (path == null)
+        {
+            return;
+        }
+        if (separator == '.')
+        {
+            setItemOnList(list, path.split("\\" + separator), value);
+        }
+        else
+        {
+            setItemOnList(list, path.split("" + separator), value);
+        }
+    }
+
+    public static void setItemOnList(List<Object> list, String[] path, Object value)
+    {
+        if (list == null || path == null)
+        {
+            return;
+        }
+        if (path.length > 0)
+        {
+            int index = -1;
+            try
+            {
+                index = Integer.parseInt(path[0]);
+            }
+            catch (NumberFormatException ignored)
+            {
+            }
+            if (index >= 0 && index < list.size())
+            {
+                if (path.length > 1)
+                {
+                    String[] nextPath = slicedPath(path, 1);
+                    Map<String, Object> modifyMap = asStringObjectMap(list.get(index));
+                    List<Object> modifyArray = asObjectList(list.get(index));
+                    if (modifyMap != null)
+                    {
+                        setItemOnMap(modifyMap, nextPath, value);
+                    }
+                    else if (modifyArray != null)
+                    {
+                        setItemOnList(modifyArray, nextPath, value);
+                    }
+                }
+                else
+                {
+                    if (value == null)
+                    {
+                        list.remove(index);
+                    }
+                    else
+                    {
+                        list.set(index, value);
+                    }
+                }
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")

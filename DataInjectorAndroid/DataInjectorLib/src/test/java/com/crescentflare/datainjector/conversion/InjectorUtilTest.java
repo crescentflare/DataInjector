@@ -46,6 +46,30 @@ public class InjectorUtilTest
     }
 
     @Test
+    public void setItemOnMap() throws Exception
+    {
+        Map<String, Object> map = InjectorUtil.initMap(
+                "string", "text",
+                "array", Arrays.asList(0, 1, 2, 3),
+                "dictionary", InjectorUtil.initMap(
+                        "first", "stringValue",
+                        "second", 123,
+                        "third", true
+                )
+        );
+        InjectorUtil.setItemOnMap(map, "string", "modified text");
+        InjectorUtil.setItemOnMap(map, "array.2", 77);
+        InjectorUtil.setItemOnMap(map, "dictionary.first", "modifiedStringValue");
+        InjectorUtil.setItemOnMap(map, "dictionary.second", 987);
+        InjectorUtil.setItemOnMap(map, "dictionary.third", false);
+        Assert.assertEquals("modified text", InjectorUtil.itemFromMap(map, "string"));
+        Assert.assertEquals(77, InjectorUtil.itemFromMap(map, "array.2"));
+        Assert.assertEquals("modifiedStringValue", InjectorUtil.itemFromMap(map, "dictionary.first"));
+        Assert.assertEquals(987, InjectorUtil.itemFromMap(map, "dictionary.second"));
+        Assert.assertEquals(false, InjectorUtil.itemFromMap(map, "dictionary.third"));
+    }
+
+    @Test
     public void asStringObjectMap() throws Exception
     {
         Map<String, Object> correctMap = InjectorUtil.initMap(
@@ -113,6 +137,24 @@ public class InjectorUtilTest
         Assert.assertEquals("three", InjectorUtil.itemFromList(list, "3"));
         Assert.assertEquals("dictionary", InjectorUtil.itemFromList(list, "4.test"));
         Assert.assertEquals("third", InjectorUtil.itemFromList(list, "4.dictarray.2"));
+    }
+
+    @Test
+    public void setItemOnList() throws Exception
+    {
+        List<Object> list = Arrays.asList(
+                "string",
+                InjectorUtil.initMap(
+                        "first", "stringValue",
+                        "second", 123
+                )
+        );
+        InjectorUtil.setItemOnList(list, "0", "modified string");
+        InjectorUtil.setItemOnList(list, "1.first", "newString");
+        InjectorUtil.setItemOnList(list, "1.second", 2022);
+        Assert.assertEquals("modified string", InjectorUtil.itemFromList(list, "0"));
+        Assert.assertEquals("newString", InjectorUtil.itemFromList(list, "1.first"));
+        Assert.assertEquals(2022, InjectorUtil.itemFromList(list, "1.second"));
     }
 
     @Test
