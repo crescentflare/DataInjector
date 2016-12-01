@@ -44,6 +44,6 @@ public class InjectorDataDetectorTest
         Assert.assertEquals(4, InjectorDataDetector.endOfTypeTypeString(InjectorDataType.DecimalNumber, "19.9,16.2"));
         Assert.assertEquals(5, InjectorDataDetector.endOfTypeTypeString(InjectorDataType.Boolean, "false or true"));
         Assert.assertEquals(-1, InjectorDataDetector.endOfTypeTypeString(InjectorDataType.Reference, "@reference"));
-        Assert.assertEquals(-1, InjectorDataDetector.endOfTypeTypeString(InjectorDataType.Reference, "@subReference"));
+        Assert.assertEquals(-1, InjectorDataDetector.endOfTypeTypeString(InjectorDataType.SubReference, "@subReference"));
     }
 }

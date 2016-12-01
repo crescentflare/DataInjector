@@ -129,12 +129,12 @@ public class InjectorDataDetector
     // Helper
     // ---
 
-    private static boolean containsDot(String value)
+    private static boolean containsDot(String numberString)
     {
-        int len = value.length();
+        int len = numberString.length();
         for (int i = 0; i < len; i++)
         {
-            char chr = value.charAt(i);
+            char chr = numberString.charAt(i);
             if (chr == '.')
             {
                 return true;
