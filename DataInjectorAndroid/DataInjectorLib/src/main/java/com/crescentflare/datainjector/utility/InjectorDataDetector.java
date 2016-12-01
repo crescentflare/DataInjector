@@ -52,6 +52,10 @@ public class InjectorDataDetector
 
     public static InjectorDataType detectFromString(String value, int start)
     {
+        if (start < 0)
+        {
+            return InjectorDataType.Unknown;
+        }
         if (value.startsWith("'", start) || value.startsWith("\"", start))
         {
             return InjectorDataType.String;
@@ -86,6 +90,10 @@ public class InjectorDataDetector
 
     public static int endOfTypeTypeString(InjectorDataType type, String value, int start)
     {
+        if (start < 0)
+        {
+            return -1;
+        }
         if (type == InjectorDataType.String && (value.startsWith("'", start) || value.startsWith("\"", start)))
         {
             char findEndChar = value.charAt(start);

@@ -96,8 +96,8 @@ public class InjectorMapper
             if (keyObject != null && valueObject != null)
             {
                 mappingTable.put(keyObject, valueObject);
-                endPos = findDividerSeparator(mapping, curPos);
-                if (endPos < mapping.length())
+                endPos = findDividerSeparator(mapping, endPos);
+                if (endPos >= 0 && endPos < mapping.length())
                 {
                     curPos = endPos + 1;
                     findingData = true;
@@ -226,6 +226,10 @@ public class InjectorMapper
 
     private int findNonSpace(String string, int start)
     {
+        if (start < 0)
+        {
+            return -1;
+        }
         int len = string.length();
         for (int i = start; i < len; i++)
         {
@@ -239,6 +243,10 @@ public class InjectorMapper
 
     private int findAssignmentSeparator(String string, int start)
     {
+        if (start < 0)
+        {
+            return -1;
+        }
         int len = string.length();
         for (int i = start; i < len; i++)
         {
@@ -252,6 +260,10 @@ public class InjectorMapper
 
     private int findDividerSeparator(String string, int start)
     {
+        if (start < 0)
+        {
+            return -1;
+        }
         int len = string.length();
         for (int i = start; i < len; i++)
         {
