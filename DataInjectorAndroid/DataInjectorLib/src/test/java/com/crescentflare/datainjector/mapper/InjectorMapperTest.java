@@ -22,9 +22,10 @@ public class InjectorMapperTest
     public void obtainMapping() throws Exception
     {
         // Test simple mappings
-        Assert.assertEquals(100, new InjectorMapper("[ first -> 80 , second -> 100 , third -> 23 ]", null, null).obtainMapping("second"));
-        Assert.assertEquals(true, new InjectorMapper("['on'->true,'off'->false]", null, null).obtainMapping("on"));
-        Assert.assertEquals("other", new InjectorMapper("[0->zero,1->one,2->two,else->other]", null, null).obtainMapping("fallback"));
+        Assert.assertEquals(100, new InjectorMapper("[ first -> 80 , second -> 100 , third -> 23 ]").obtainMapping("second"));
+        Assert.assertEquals(true, new InjectorMapper("['on'->true,'off'->false]").obtainMapping("on"));
+        Assert.assertEquals("fork", new InjectorMapper("[1->'spoon',2->'fork',3->'knife']").obtainMapping(2));
+        Assert.assertEquals("other", new InjectorMapper("[0->zero,1->one,2->two,else->other]").obtainMapping("fallback"));
 
         // Test mappings with references
         Map<String, Object> subMap = InjectorUtil.initMap(

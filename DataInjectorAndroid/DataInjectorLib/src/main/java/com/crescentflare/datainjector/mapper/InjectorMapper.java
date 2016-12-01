@@ -28,6 +28,16 @@ public class InjectorMapper
     // Initialization
     // ---
 
+    public InjectorMapper(String mapping)
+    {
+        this(mapping, null, null);
+    }
+
+    public InjectorMapper(String mapping, Map<String, Object> fullRefData)
+    {
+        this(mapping, fullRefData, null);
+    }
+
     public InjectorMapper(String mapping, Map<String, Object> fullRefData, Map<String, Object> subRefData)
     {
         // Parse away brackets if needed
