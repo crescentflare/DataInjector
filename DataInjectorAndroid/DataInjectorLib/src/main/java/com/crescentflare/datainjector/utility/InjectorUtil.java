@@ -1,5 +1,7 @@
 package com.crescentflare.datainjector.utility;
 
+import com.crescentflare.datainjector.conversion.InjectorConv;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -223,12 +225,19 @@ public class InjectorUtil
         if (path.length > 0)
         {
             int index = -1;
-            try
+            if (path[0].startsWith("@"))
             {
-                index = Integer.parseInt(path[0]);
+                index = findInjectRef(list, path[0].substring(1));
             }
-            catch (NumberFormatException ignored)
+            else
             {
+                try
+                {
+                    index = Integer.parseInt(path[0]);
+                }
+                catch (NumberFormatException ignored)
+                {
+                }
             }
             if (index >= 0 && index < list.size())
             {
@@ -286,12 +295,19 @@ public class InjectorUtil
         if (path.length > 0)
         {
             int index = -1;
-            try
+            if (path[0].startsWith("@"))
             {
-                index = Integer.parseInt(path[0]);
+                index = findInjectRef(list, path[0].substring(1));
             }
-            catch (NumberFormatException ignored)
+            else
             {
+                try
+                {
+                    index = Integer.parseInt(path[0]);
+                }
+                catch (NumberFormatException ignored)
+                {
+                }
             }
             if (index >= 0 && index < list.size())
             {
@@ -339,6 +355,23 @@ public class InjectorUtil
     // ---
     // Helper
     // ---
+
+    private static int findInjectRef(List<Object> array, String find)
+    {
+        for (int i = 0; i < array.size(); i++)
+        {
+            Map<String, Object> itemMap = asStringObjectMap(array.get(i));
+            if (itemMap != null)
+            {
+                String injectRef = InjectorConv.toString(itemMap.get("injectRef"));
+                if (injectRef != null && injectRef.equals(find))
+                {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
 
     private static String[] slicedPath(String[] inArr, int startPos)
     {
