@@ -89,7 +89,8 @@ public class InjectorUtil {
 
     public static func itemFromArray(_ array: [Any], path: [String]) -> Any? {
         if path.count > 0 {
-            if let index = Int(path[0]) {
+            var checkIndex = path[0].hasPrefix("@") ? findInjectRef(array: array, find: path[0].substring(from: path[0].index(after: path[0].startIndex))) : Int(path[0])
+            if let index = checkIndex {
                 let checkObject = array[index]
                 if path.count < 2 {
                     if checkObject is NSNull {
@@ -115,7 +116,8 @@ public class InjectorUtil {
     
     public static func setItemOnArray(_ array: inout [Any], path: [String], value: Any?) {
         if path.count > 0 {
-            if let index = Int(path[0]) {
+            var checkIndex = path[0].hasPrefix("@") ? findInjectRef(array: array, find: path[0].substring(from: path[0].index(after: path[0].startIndex))) : Int(path[0])
+            if let index = checkIndex {
                 if path.count > 1 {
                     let nextPath = Array(path[1..<path.count])
                     if var modifyDictionary = array[index] as? [String: Any] {
@@ -134,6 +136,24 @@ public class InjectorUtil {
                 }
             }
         }
+    }
+
+
+    // ---
+    // MARK: Helper
+    // ---
+    
+    private static func findInjectRef(array: [Any], find: String) -> Int? {
+        for i in 0..<array.count {
+            if let itemDict = array[i] as? [String: Any] {
+                if let injectRef = InjectorConv.toString(from: itemDict["injectRef"]) {
+                    if injectRef == find {
+                        return i
+                    }
+                }
+            }
+        }
+        return nil
     }
 
 }
