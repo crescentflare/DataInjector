@@ -115,14 +115,11 @@ public class InjectorCondition
                     break;
                 }
                 Object valueObject = obtainObject(valueType, condition, curPos, endPos, fullRefData, subRefData);
-                if (valueObject != null)
+                items.add(new ConditionItem(InjectorConditionType.Unknown, InjectorDataDetector.detectFromObject(valueObject), valueObject));
+                if (endPos >= 0 && endPos < condition.length())
                 {
-                    items.add(new ConditionItem(InjectorConditionType.Unknown, InjectorDataDetector.detectFromObject(valueObject), valueObject));
-                    if (endPos >= 0 && endPos < condition.length())
-                    {
-                        curPos = endPos;
-                        findingData = true;
-                    }
+                    curPos = endPos;
+                    findingData = true;
                 }
             }
         }
@@ -237,6 +234,19 @@ public class InjectorCondition
                         return firstBoolean.equals(secondBoolean);
                     }
                 }
+                else if (secondItem.getValueType() == InjectorDataType.Empty)
+                {
+                    if (firstItem.getValueType() == InjectorDataType.String)
+                    {
+                        String firstString = InjectorConv.toString(firstItem.getValue());
+                        if (firstString == null)
+                        {
+                            firstString = "";
+                        }
+                        return firstString.length() == 0;
+                    }
+                    return firstItem.getValueType() == InjectorDataType.Empty;
+                }
                 return false;
             case NotEquals:
                 if (secondItem.getValueType() == InjectorDataType.String)
@@ -274,6 +284,19 @@ public class InjectorCondition
                     {
                         return !firstBoolean.equals(secondBoolean);
                     }
+                }
+                else if (secondItem.getValueType() == InjectorDataType.Empty)
+                {
+                    if (firstItem.getValueType() == InjectorDataType.String)
+                    {
+                        String firstString = InjectorConv.toString(firstItem.getValue());
+                        if (firstString == null)
+                        {
+                            firstString = "";
+                        }
+                        return firstString.length() > 0;
+                    }
+                    return firstItem.getValueType() != InjectorDataType.Empty;
                 }
                 return false;
             case Bigger:
@@ -354,6 +377,8 @@ public class InjectorCondition
                 return InjectorConv.toDouble(item);
             case Boolean:
                 return InjectorConv.toBoolean(item);
+            case Empty:
+                return null;
             case Reference:
                 if (fullRefData != null)
                 {

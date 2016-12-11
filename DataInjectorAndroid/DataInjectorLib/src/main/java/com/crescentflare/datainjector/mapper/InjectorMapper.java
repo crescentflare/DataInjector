@@ -208,6 +208,8 @@ public class InjectorMapper
                 return InjectorConv.toDouble(item);
             case Boolean:
                 return InjectorConv.toBoolean(item);
+            case Empty:
+                return null;
             case Reference:
                 if (fullRefData != null)
                 {

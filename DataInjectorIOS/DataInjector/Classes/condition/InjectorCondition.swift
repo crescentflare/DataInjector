@@ -98,12 +98,10 @@ public class InjectorCondition {
                     break
                 }
                 var valueObject = obtainObject(type: valueType, condition: condition, start: curPos!, end: endPos!, fullRefData: fullRefData, subRefData: subRefData)
-                if valueObject != nil {
-                    items.append(InjectorConditionItem(conditionType: .unknown, valueType: InjectorDataDetector.detectFromObject(valueObject), value: valueObject))
-                    if endPos != nil && endPos != condition.endIndex {
-                        curPos = endPos
-                        findingData = true
-                    }
+                items.append(InjectorConditionItem(conditionType: .unknown, valueType: InjectorDataDetector.detectFromObject(valueObject), value: valueObject))
+                if endPos != nil && endPos != condition.endIndex {
+                    curPos = endPos
+                    findingData = true
                 }
             }
         }
@@ -176,6 +174,8 @@ public class InjectorCondition {
                 return InjectorConv.toDouble(from: firstItem.value) == InjectorConv.toDouble(from: secondItem.value)
             } else if secondItem.valueType == .boolean {
                 return InjectorConv.toBool(from: firstItem.value) == InjectorConv.toBool(from: secondItem.value)
+            } else if secondItem.valueType == .empty {
+                return firstItem.valueType == .empty || (firstItem.valueType == .string && (InjectorConv.toString(from: firstItem.value)?.characters.count ?? 0) == 0)
             }
             return false
         case .notEquals:
@@ -187,6 +187,8 @@ public class InjectorCondition {
                 return InjectorConv.toDouble(from: firstItem.value) != InjectorConv.toDouble(from: secondItem.value)
             } else if secondItem.valueType == .boolean {
                 return InjectorConv.toBool(from: firstItem.value) != InjectorConv.toBool(from: secondItem.value)
+            } else if secondItem.valueType == .empty {
+                return firstItem.valueType != .empty || (firstItem.valueType == .string && (InjectorConv.toString(from: firstItem.value)?.characters.count ?? 0) > 0)
             }
             return false
         case .bigger:
@@ -250,6 +252,8 @@ public class InjectorCondition {
             return InjectorConv.toDouble(from: item)
         case .boolean:
             return InjectorConv.toBool(from: item)
+        case .empty:
+            return nil
         case .reference:
             if fullRefData != nil {
                 return InjectorUtil.itemFromDictionary(fullRefData!, path: item.substring(from: item.index(after: item.startIndex)))

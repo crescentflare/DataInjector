@@ -15,6 +15,7 @@ public enum InjectorDataType {
     case number
     case decimalNumber
     case boolean
+    case empty
     case reference
     case subReference
 

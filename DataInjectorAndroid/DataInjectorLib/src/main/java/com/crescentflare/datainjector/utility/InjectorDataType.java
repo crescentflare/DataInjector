@@ -11,6 +11,7 @@ public enum InjectorDataType
     Number,
     DecimalNumber,
     Boolean,
+    Empty,
     Reference,
     SubReference
 }

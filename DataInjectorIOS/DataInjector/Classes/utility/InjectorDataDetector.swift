@@ -31,6 +31,8 @@ public class InjectorDataDetector {
             return .number
         } else if object is Bool {
             return .boolean
+        } else if object == nil || object is NSNull {
+            return .empty
         }
         return .unknown
     }
@@ -48,6 +50,8 @@ public class InjectorDataDetector {
             return .reference
         } else if offsetString.hasPrefix("true") || offsetString.hasPrefix("false") {
             return .boolean
+        } else if offsetString.hasPrefix("empty") {
+            return .empty
         } else if offsetString.characters.count > 0 && (offsetString.characters[offsetString.startIndex] >= "0" && offsetString.characters[offsetString.startIndex] <= "9") {
             return containsDot(numberString: offsetString) ? .decimalNumber : .number
         } else if offsetString.characters.count > 1 && offsetString.characters[offsetString.startIndex] == "-" && (offsetString.characters[offsetString.index(after: offsetString.startIndex)] >= "0" && offsetString.characters[offsetString.index(after: offsetString.startIndex)] <= "9") {
@@ -80,6 +84,8 @@ public class InjectorDataDetector {
             } else if offsetString.hasPrefix("false") {
                 return value.index(checkStart, offsetBy: 5)
             }
+        } else if type == .empty {
+            return value.index(checkStart, offsetBy: 5)
         }
         return nil
     }

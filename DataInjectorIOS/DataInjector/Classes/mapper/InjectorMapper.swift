@@ -171,6 +171,8 @@ public class InjectorMapper {
             return InjectorConv.toDouble(from: item)
         case .boolean:
             return InjectorConv.toBool(from: item)
+        case .empty:
+            return nil
         case .reference:
             if fullRefData != nil {
                 return InjectorUtil.itemFromDictionary(fullRefData!, path: item.substring(from: item.index(after: item.startIndex)))

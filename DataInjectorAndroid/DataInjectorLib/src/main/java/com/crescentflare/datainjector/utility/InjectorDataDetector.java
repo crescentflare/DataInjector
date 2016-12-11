@@ -42,6 +42,10 @@ public class InjectorDataDetector
         {
             return InjectorDataType.Boolean;
         }
+        else if (object == null)
+        {
+            return InjectorDataType.Empty;
+        }
         return InjectorDataType.Unknown;
     }
 
@@ -71,6 +75,10 @@ public class InjectorDataDetector
         else if (value.startsWith("true", start) || value.startsWith("false", start))
         {
             return InjectorDataType.Boolean;
+        }
+        else if (value.startsWith("empty", start))
+        {
+            return InjectorDataType.Empty;
         }
         else if (value.length() > start && value.charAt(start) >= '0' && value.charAt(start) <= '9')
         {
@@ -128,6 +136,10 @@ public class InjectorDataDetector
             {
                 return start + 5;
             }
+        }
+        else if (type == InjectorDataType.Empty)
+        {
+            return start + 5;
         }
         return -1;
     }
