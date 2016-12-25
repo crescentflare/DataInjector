@@ -10,7 +10,6 @@
 		040E5CE31DF01C8100968B1C /* InjectorDataDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040E5CE11DF01C6B00968B1C /* InjectorDataDetectorTests.swift */; };
 		040E5CE81DF05C0900968B1C /* InjectorMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040E5CE61DF05BE200968B1C /* InjectorMapperTests.swift */; };
 		041E559F1DEC6641004C4E32 /* DataInjector.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 041E559E1DEC6641004C4E32 /* DataInjector.podspec */; };
-		04840A4D1DEE1287005F6855 /* DataInjector_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04840A4C1DEE1287005F6855 /* DataInjector_Tests.swift */; };
 		04840A541DEE1292005F6855 /* InjectorConvTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04840A441DEE10D9005F6855 /* InjectorConvTests.swift */; };
 		04840A591DEE1D3C005F6855 /* InjectorUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04840A571DEE1D14005F6855 /* InjectorUtilTests.swift */; };
 		048935E31DF0B768002B2E5E /* InjectorConditionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048935E11DF0B74D002B2E5E /* InjectorConditionTests.swift */; };
@@ -39,8 +38,6 @@
 		041E559E1DEC6641004C4E32 /* DataInjector.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DataInjector.podspec; path = ../../DataInjector.podspec; sourceTree = "<group>"; };
 		04840A441DEE10D9005F6855 /* InjectorConvTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectorConvTests.swift; sourceTree = "<group>"; };
 		04840A4A1DEE1287005F6855 /* DataInjector_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DataInjector_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		04840A4C1DEE1287005F6855 /* DataInjector_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataInjector_Tests.swift; sourceTree = "<group>"; };
-		04840A4E1DEE1287005F6855 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04840A571DEE1D14005F6855 /* InjectorUtilTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectorUtilTests.swift; sourceTree = "<group>"; };
 		048935E11DF0B74D002B2E5E /* InjectorConditionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectorConditionTests.swift; sourceTree = "<group>"; };
 		16C41F1590EA796530EEC4B5 /* Pods-DataInjector_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DataInjector_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-DataInjector_Example/Pods-DataInjector_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -81,15 +78,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		04840A4B1DEE1287005F6855 /* DataInjector_Tests */ = {
-			isa = PBXGroup;
-			children = (
-				04840A4C1DEE1287005F6855 /* DataInjector_Tests.swift */,
-				04840A4E1DEE1287005F6855 /* Info.plist */,
-			);
-			path = DataInjector_Tests;
-			sourceTree = "<group>";
-		};
 		544071FA671CA2D5DFB55235 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -107,7 +95,6 @@
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for DataInjector */,
 				607FACE81AFB9204008FA782 /* Tests */,
-				04840A4B1DEE1287005F6855 /* DataInjector_Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				544071FA671CA2D5DFB55235 /* Pods */,
 				ADFC1EDF5E3BF2E1740AEF19 /* Frameworks */,
@@ -390,7 +377,6 @@
 			files = (
 				040E5CE81DF05C0900968B1C /* InjectorMapperTests.swift in Sources */,
 				048935E31DF0B768002B2E5E /* InjectorConditionTests.swift in Sources */,
-				04840A4D1DEE1287005F6855 /* DataInjector_Tests.swift in Sources */,
 				04840A591DEE1D3C005F6855 /* InjectorUtilTests.swift in Sources */,
 				04840A541DEE1292005F6855 /* InjectorConvTests.swift in Sources */,
 				040E5CE31DF01C8100968B1C /* InjectorDataDetectorTests.swift in Sources */,
@@ -446,7 +432,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				INFOPLIST_FILE = DataInjector_Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.structure.DataInjector-Tests";
@@ -466,7 +452,7 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				INFOPLIST_FILE = DataInjector_Tests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.structure.DataInjector-Tests";

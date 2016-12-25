@@ -98,7 +98,7 @@ public class InjectorMapper {
     // MARK: Fetch mapped value
     // ---
     
-    public func obtainMapping(item: Any) -> Any? {
+    public func obtainMapping(item: Any?) -> Any? {
         if !initFail {
             var checkItem: Any? = item
             let itemType = InjectorDataDetector.detectFromObject(item)

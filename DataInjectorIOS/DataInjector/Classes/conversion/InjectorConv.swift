@@ -22,7 +22,7 @@ public class InjectorConv {
     // MARK: Parsing
     // ---
 
-    public static func toDate(from: Any) -> Date? {
+    public static func toDate(from: Any?) -> Date? {
         if let stringDate = from as? String {
             let formats = [
                 "yyyy-MM-dd'T'HH:mm:ssZZZZ",
@@ -48,7 +48,7 @@ public class InjectorConv {
     // MARK: Primitive types
     // ---
     
-    public static func toString(from: Any) -> String? {
+    public static func toString(from: Any?) -> String? {
         if from is String {
             return from as? String
         } else if let doubleValue = from as? Double {
@@ -63,7 +63,7 @@ public class InjectorConv {
         return nil
     }
     
-    public static func toDouble(from: Any) -> Double? {
+    public static func toDouble(from: Any?) -> Double? {
         if let stringValue = from as? String {
             return Double(stringValue)
         } else if from is Double {
@@ -78,7 +78,7 @@ public class InjectorConv {
         return nil
     }
     
-    public static func toFloat(from: Any) -> Float? {
+    public static func toFloat(from: Any?) -> Float? {
         if let stringValue = from as? String {
             return Float(stringValue)
         } else if let doubleValue = from as? Double {
@@ -93,7 +93,7 @@ public class InjectorConv {
         return nil
     }
     
-    public static func toInt(from: Any) -> Int? {
+    public static func toInt(from: Any?) -> Int? {
         if let stringValue = from as? String {
             if let intValue = Int(stringValue) {
                 return intValue
@@ -113,7 +113,7 @@ public class InjectorConv {
         return nil
     }
     
-    public static func toBool(from: Any) -> Bool? {
+    public static func toBool(from: Any?) -> Bool? {
         if let stringValue = from as? String {
             return Bool(stringValue)
         } else if let doubleValue = from as? Double {
