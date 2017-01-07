@@ -27,11 +27,20 @@ class MockDependency: InjectorDependency {
     }
     
 
+    // ---
+    // MARK: Data access
+    // ---
+    
+    override open func obtainInjectableData() -> Any? {
+        return storedJson
+    }
+    
+    
     // --
     // MARK: Resolving
     // --
     
-    override open func resolve(completion: @escaping (_ success: Bool) -> Void) {
+    override open func resolve(input: [String: String], completion: @escaping (_ success: Bool) -> Void) {
         let bundle = Bundle.main
         if let path = bundle.path(forResource: filename, ofType: "json") {
             if let jsonData = try? NSData(contentsOfFile: path, options: .mappedIfSafe) as Data {
