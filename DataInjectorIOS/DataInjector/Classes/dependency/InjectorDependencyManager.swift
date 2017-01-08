@@ -149,6 +149,7 @@ public class InjectorDependencyManager {
                 dependencyItem.state = dependencyItem.state == .resolved || dependencyItem.state == .refreshError ? .refreshing : .obtaining
                 dependencyItem.resolve(input: sendInput, completion: { success in
                     if success {
+                        dependencyItem.resetExpiration()
                         dependencyItem.state = .resolved
                         NotificationCenter.default.post(name: Notification.Name(rawValue: InjectorDependencyManager.dependencyResolved), object: self, userInfo: ["dependency": dependency])
                     } else {

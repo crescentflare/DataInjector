@@ -42,6 +42,10 @@ open class InjectorDependency {
     // MARK: State checking
     // ---
     
+    public func resetExpiration() {
+        lastUpdated = Int(Date().timeIntervalSince1970)
+    }
+    
     public func isExpired() -> Bool {
         if let expiresInSeconds = expiration {
             let currentTime = Int(Date().timeIntervalSince1970)
