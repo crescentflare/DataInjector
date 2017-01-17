@@ -42,10 +42,11 @@ class MockDependency: InjectorDependency {
     
     override open func resolve(input: [String: String], completion: @escaping (_ success: Bool) -> Void) {
         let bundle = Bundle.main
-        if let path = bundle.path(forResource: filename, ofType: "json") {
+        if let path = bundle.path(forResource: "data/" + filename, ofType: "json") {
             if let jsonData = try? NSData(contentsOfFile: path, options: .mappedIfSafe) as Data {
                 if let json = try? JSONSerialization.jsonObject(with: jsonData, options: .allowFragments) {
-                    if let jsonArray = json as? [Any] {
+                    let correctedJson = SnakeToCamelCaseInjector().appliedInjection(targetData: json)
+                    if let jsonArray = correctedJson as? [Any] {
                         storedJson = jsonArray
                         completion(true)
                     }
