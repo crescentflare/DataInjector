@@ -61,7 +61,7 @@ open class SnakeToCamelCaseInjector: DataInjector {
         var modifiedDict: [String: Any] = [:]
         for (key, value) in dict {
             let keyItems = key.characters.split(separator: "_").map(String.init)
-            if keyItems.count > 0 {
+            if keyItems.count > 1 {
                 var newKey = keyItems[0]
                 for i in 1..<keyItems.count {
                     newKey += keyItems[i].capitalized

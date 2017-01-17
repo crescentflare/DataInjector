@@ -35,6 +35,7 @@ class ViewController: UIViewController {
                     InjectorDependencyManager.shared.resolveDependency(dependency: dependency)
                 }
             } else {
+                dependenciesOpen = false
                 updateViews()
             }
         }
@@ -62,8 +63,8 @@ class ViewController: UIViewController {
         if dependenciesOpen {
             let dependenciesLeft = InjectorDependencyManager.shared.getUnresolvedDependencies(checkDependencies: ["customers"])
             if dependenciesLeft.count == 0 {
-                updateViews()
                 dependenciesOpen = false
+                updateViews()
             }
         }
     }

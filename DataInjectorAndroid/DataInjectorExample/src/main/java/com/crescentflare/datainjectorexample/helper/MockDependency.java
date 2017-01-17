@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.crescentflare.datainjector.dependency.InjectorDependency;
+import com.crescentflare.datainjector.injector.SnakeToCamelCaseInjector;
+import com.crescentflare.datainjector.utility.InjectorUtil;
 import com.crescentflare.datainjectorexample.ExampleApplication;
 import com.crescentflare.datainjectorexample.R;
 import com.google.gson.Gson;
@@ -66,6 +68,7 @@ public class MockDependency extends InjectorDependency
             {
                 Type type = new TypeToken<List<Object>>(){}.getType();
                 storedJson = new Gson().fromJson(jsonString, type);
+                new SnakeToCamelCaseInjector().apply(storedJson, null, null);
             }
             completeListener.onResolveResult(storedJson != null);
         }
