@@ -29,6 +29,56 @@ public class InjectorUtil
 
 
     // ---
+    // Dynamic map/array access
+    // ---
+
+    public static Object itemFromObject(Object object, String path)
+    {
+        Map<String, Object> map = asStringObjectMap(object);
+        List<Object> list = asObjectList(object);
+        if (map != null)
+        {
+            return itemFromMap(map, path);
+        }
+        if (list != null)
+        {
+            return itemFromList(list, path);
+        }
+        return null;
+    }
+
+    public static Object itemFromObject(Object object, String path, char separator)
+    {
+        Map<String, Object> map = asStringObjectMap(object);
+        List<Object> list = asObjectList(object);
+        if (map != null)
+        {
+            return itemFromMap(map, path, separator);
+        }
+        if (list != null)
+        {
+            return itemFromList(list, path, separator);
+        }
+        return null;
+    }
+
+    public static Object itemFromObject(Object object, String[] path)
+    {
+        Map<String, Object> map = asStringObjectMap(object);
+        List<Object> list = asObjectList(object);
+        if (map != null)
+        {
+            return itemFromMap(map, path);
+        }
+        if (list != null)
+        {
+            return itemFromList(list, path);
+        }
+        return null;
+    }
+
+
+    // ---
     // Map
     // ---
 

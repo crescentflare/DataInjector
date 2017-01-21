@@ -19,6 +19,29 @@ public class InjectorUtil {
     
     
     // ---
+    // MARK: Dynamic dictionary/array access
+    // ---
+
+    public static func itemFromObject(_ object: Any?, path: String?, separator: Character = ".") -> Any? {
+        if let dictObject = object as? [String: Any] {
+            return itemFromDictionary(dictObject, path: path, separator: separator)
+        } else if let arrayObject = object as? [Any] {
+            return itemFromArray(arrayObject, path: path, separator: separator)
+        }
+        return nil
+    }
+    
+    public static func itemFromObject(_ object: Any?, path: [String]) -> Any? {
+        if let dictObject = object as? [String: Any] {
+            return itemFromDictionary(dictObject, path: path)
+        } else if let arrayObject = object as? [Any] {
+            return itemFromArray(arrayObject, path: path)
+        }
+        return nil
+    }
+
+    
+    // ---
     // MARK: Dictionary
     // ---
 

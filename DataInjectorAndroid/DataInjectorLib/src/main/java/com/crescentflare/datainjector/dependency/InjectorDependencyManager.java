@@ -50,6 +50,19 @@ public class InjectorDependencyManager
         return dependencies.get(name);
     }
 
+    public String dependencyNameFrom(String injectSource)
+    {
+        if (injectSource != null && !injectSource.startsWith("@.") && injectSource.startsWith("@"))
+        {
+            String sourcePath[] = injectSource.split("\\.");
+            if (sourcePath.length > 0)
+            {
+                return sourcePath[0];
+            }
+        }
+        return null;
+    }
+
 
     // ---
     // Resolving dependencies

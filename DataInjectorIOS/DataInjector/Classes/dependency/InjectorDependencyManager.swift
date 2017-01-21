@@ -52,6 +52,16 @@ public class InjectorDependencyManager {
         return dependencies[name]
     }
     
+    public func dependencyNameFrom(injectSource: String) -> String? {
+        if !injectSource.hasPrefix("@.") && injectSource.hasPrefix("@") {
+            let sourcePath = injectSource.characters.split(separator: ".").map(String.init)
+            if sourcePath.count > 0 {
+                return sourcePath[0]
+            }
+        }
+        return nil
+    }
+    
 
     // ---
     // MARK: Resolving dependencies

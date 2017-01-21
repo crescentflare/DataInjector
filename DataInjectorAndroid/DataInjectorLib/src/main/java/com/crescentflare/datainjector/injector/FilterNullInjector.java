@@ -7,16 +7,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Data injector: snake case conversion
- * Converts each entry key in the data set from snake case to camel case recursively
+ * Data injector: remove null values
+ * Traverses a data set recursively removing null values
  */
-public class SnakeToCamelCaseInjector extends DataInjector
+public class FilterNullInjector extends DataInjector
 {
     // ---
     // Initialization
     // ---
 
-    public SnakeToCamelCaseInjector()
+    public FilterNullInjector()
     {
     }
 
@@ -56,6 +56,7 @@ public class SnakeToCamelCaseInjector extends DataInjector
 
     private void processList(List<Object> array)
     {
+        List<Object> modifiedList = new ArrayList<>();
         for (Object arrayItem : array)
         {
             Map<String, Object> targetMap = InjectorUtil.asStringObjectMap(arrayItem);
@@ -63,12 +64,20 @@ public class SnakeToCamelCaseInjector extends DataInjector
             if (targetMap != null)
             {
                 processMap(targetMap);
+                modifiedList.add(targetMap);
             }
             else if (targetList != null)
             {
                 processList(targetList);
+                modifiedList.add(targetList);
+            }
+            else if (arrayItem != null)
+            {
+                modifiedList.add(arrayItem);
             }
         }
+        array.clear();
+        array.addAll(modifiedList);
     }
 
     private void processMap(Map<String, Object> map)
@@ -80,32 +89,20 @@ public class SnakeToCamelCaseInjector extends DataInjector
         }
         for (String key : keys)
         {
-            String[] splitKey = key.split("_");
-            if (splitKey.length > 1)
+            Object value = map.get(key);
+            Map<String, Object> mapValue = InjectorUtil.asStringObjectMap(value);
+            List<Object> listValue = InjectorUtil.asObjectList(value);
+            if (mapValue != null)
             {
-                Object value = map.get(key);
-                Map<String, Object> mapValue = InjectorUtil.asStringObjectMap(value);
-                List<Object> listValue = InjectorUtil.asObjectList(value);
-                String newKey = splitKey[0];
-                for (int i = 1; i < splitKey.length; i++)
-                {
-                    newKey += splitKey[i].substring(0, 1).toUpperCase() + splitKey[i].substring(1);
-                }
+                processMap(mapValue);
+            }
+            else if (listValue != null)
+            {
+                processList(listValue);
+            }
+            else if (value == null)
+            {
                 map.remove(key);
-                if (mapValue != null)
-                {
-                    processMap(mapValue);
-                    map.put(newKey, mapValue);
-                }
-                else if (listValue != null)
-                {
-                    processList(listValue);
-                    map.put(newKey, listValue);
-                }
-                else
-                {
-                    map.put(newKey, value);
-                }
             }
         }
     }

@@ -1,14 +1,14 @@
 //
-//  SnakeToCamelCaseInjector.swift
+//  FilterNullInjector.swift
 //  DataInjector Pod
 //
-//  Library injector: snake case conversion
-//  Converts each entry key in the data set from snake case to camel case recursively
+//  Library injector: remove null values
+//  Traverses a data set recursively removing null values
 //
 
 import Foundation
 
-open class SnakeToCamelCaseInjector: DataInjector {
+open class FilterNullInjector: DataInjector {
     
     // ---
     // MARK: Initialization
@@ -46,12 +46,14 @@ open class SnakeToCamelCaseInjector: DataInjector {
     // ---
     
     private func processArray(array: [Any]) -> [Any] {
-        var modifiedArray = array
-        for i in 0..<modifiedArray.count {
-            if let dictItem = modifiedArray[i] as? [String: Any] {
-                modifiedArray[i] = processDict(dict: dictItem)
-            } else if let arrayItem = modifiedArray[i] as? [Any] {
-                modifiedArray[i] = processArray(array: arrayItem)
+        var modifiedArray: [Any] = []
+        for i in 0..<array.count {
+            if let dictItem = array[i] as? [String: Any] {
+                modifiedArray.append(processDict(dict: dictItem))
+            } else if let arrayItem = array[i] as? [Any] {
+                modifiedArray.append(processArray(array: arrayItem))
+            } else if !(array[i] is NSNull) {
+                modifiedArray.append(array[i])
             }
         }
         return modifiedArray
@@ -60,20 +62,12 @@ open class SnakeToCamelCaseInjector: DataInjector {
     private func processDict(dict: [String: Any]) -> [String: Any] {
         var modifiedDict: [String: Any] = [:]
         for (key, value) in dict {
-            let keyItems = key.characters.split(separator: "_").map(String.init)
-            var newKey = key
-            if keyItems.count > 1 {
-                newKey = keyItems[0]
-                for i in 1..<keyItems.count {
-                    newKey += keyItems[i].capitalized
-                }
-            }
             if let dictItem = value as? [String: Any] {
-                modifiedDict[newKey] = processDict(dict: dictItem)
+                modifiedDict[key] = processDict(dict: dictItem)
             } else if let arrayItem = value as? [Any] {
-                modifiedDict[newKey] = processArray(array: arrayItem)
-            } else {
-                modifiedDict[newKey] = value
+                modifiedDict[key] = processArray(array: arrayItem)
+            } else if !(value is NSNull) {
+                modifiedDict[key] = value
             }
         }
         return modifiedDict

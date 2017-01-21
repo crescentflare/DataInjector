@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.crescentflare.datainjector.dependency.InjectorDependency;
+import com.crescentflare.datainjector.injector.DataInjector;
+import com.crescentflare.datainjector.injector.FilterNullInjector;
+import com.crescentflare.datainjector.injector.JoinStringInjector;
 import com.crescentflare.datainjector.injector.SnakeToCamelCaseInjector;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 import com.crescentflare.datainjectorexample.ExampleApplication;
@@ -16,6 +19,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -28,8 +32,12 @@ public class MockDependency extends InjectorDependency
     // Members
     // ---
 
-    private int rawResourceId;
+    private List<DataInjector> injectors = Arrays.asList(
+            new SnakeToCamelCaseInjector(),
+            new FilterNullInjector()
+    );
     private List<Object> storedJson = new ArrayList<>();
+    private int rawResourceId;
 
 
     // ---
@@ -39,6 +47,13 @@ public class MockDependency extends InjectorDependency
     public MockDependency(int rawResource)
     {
         rawResourceId = rawResource;
+        if (rawResourceId == R.raw.customer_list)
+        {
+            List<DataInjector> newInjectors = new ArrayList<>();
+            newInjectors.addAll(injectors);
+            injectors = newInjectors;
+            injectors.add(new JoinStringInjector("fullName", Arrays.asList("~firstName", "~middleName", "~lastName"), " ", true));
+        }
     }
 
 
@@ -68,7 +83,13 @@ public class MockDependency extends InjectorDependency
             {
                 Type type = new TypeToken<List<Object>>(){}.getType();
                 storedJson = new Gson().fromJson(jsonString, type);
-                new SnakeToCamelCaseInjector().apply(storedJson, null, null);
+                for (Object item : storedJson)
+                {
+                    for (DataInjector injector : injectors)
+                    {
+                        injector.apply(item, null, null);
+                    }
+                }
             }
             completeListener.onResolveResult(storedJson != null);
         }

@@ -14,6 +14,10 @@ class MockDependency: InjectorDependency {
     // MARK: Members
     // --
     
+    private var injectors: [DataInjector] = [
+        SnakeToCamelCaseInjector(),
+        FilterNullInjector()
+    ]
     private let filename: String
     private var storedJson: [Any]?
     
@@ -24,6 +28,9 @@ class MockDependency: InjectorDependency {
     
     init(filename: String) {
         self.filename = filename
+        if filename.hasPrefix("customer") {
+            injectors.append(JoinStringInjector(item: "fullName", fromItems: [ "~firstName", "~middleName", "~lastName" ], delimiter: " ", removeOriginals: true))
+        }
     }
     
 
@@ -45,9 +52,15 @@ class MockDependency: InjectorDependency {
         if let path = bundle.path(forResource: "data/" + filename, ofType: "json") {
             if let jsonData = try? NSData(contentsOfFile: path, options: .mappedIfSafe) as Data {
                 if let json = try? JSONSerialization.jsonObject(with: jsonData, options: .allowFragments) {
-                    let correctedJson = SnakeToCamelCaseInjector().appliedInjection(targetData: json)
-                    if let jsonArray = correctedJson as? [Any] {
-                        storedJson = jsonArray
+                    if let jsonArray = json as? [Any] {
+                        var processedJsonArray: [Any] = []
+                        for var jsonArrayItem in jsonArray {
+                            for injector in injectors {
+                                jsonArrayItem = injector.appliedInjection(targetData: jsonArrayItem)
+                            }
+                            processedJsonArray.append(jsonArrayItem)
+                        }
+                        storedJson = processedJsonArray
                         completion(true)
                     }
                 }
