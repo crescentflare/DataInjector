@@ -112,7 +112,7 @@ public class InjectorUtil {
 
     public static func itemFromArray(_ array: [Any], path: [String]) -> Any? {
         if path.count > 0 {
-            var checkIndex = path[0].hasPrefix("@") ? findInjectRef(array: array, find: path[0].substring(from: path[0].index(after: path[0].startIndex))) : Int(path[0])
+            var checkIndex = path[0].hasPrefix("$") ? findInjectRef(array: array, find: path[0].substring(from: path[0].index(after: path[0].startIndex))) : Int(path[0])
             if let index = checkIndex {
                 let checkObject = array[index]
                 if path.count < 2 {
@@ -139,7 +139,7 @@ public class InjectorUtil {
     
     public static func setItemOnArray(_ array: inout [Any], path: [String], value: Any?) {
         if path.count > 0 {
-            var checkIndex = path[0].hasPrefix("@") ? findInjectRef(array: array, find: path[0].substring(from: path[0].index(after: path[0].startIndex))) : Int(path[0])
+            var checkIndex = path[0].hasPrefix("$") ? findInjectRef(array: array, find: path[0].substring(from: path[0].index(after: path[0].startIndex))) : Int(path[0])
             if let index = checkIndex {
                 if path.count > 1 {
                     let nextPath = Array(path[1..<path.count])

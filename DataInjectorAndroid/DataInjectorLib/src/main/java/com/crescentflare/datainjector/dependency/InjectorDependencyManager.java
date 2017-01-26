@@ -57,7 +57,7 @@ public class InjectorDependencyManager
             String sourcePath[] = injectSource.split("\\.");
             if (sourcePath.length > 0)
             {
-                return sourcePath[0];
+                return sourcePath[0].substring(1);
             }
         }
         return null;

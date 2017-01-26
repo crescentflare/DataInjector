@@ -275,7 +275,7 @@ public class InjectorUtil
         if (path.length > 0)
         {
             int index = -1;
-            if (path[0].startsWith("@"))
+            if (path[0].startsWith("$"))
             {
                 index = findInjectRef(list, path[0].substring(1));
             }
@@ -345,7 +345,7 @@ public class InjectorUtil
         if (path.length > 0)
         {
             int index = -1;
-            if (path[0].startsWith("@"))
+            if (path[0].startsWith("$"))
             {
                 index = findInjectRef(list, path[0].substring(1));
             }

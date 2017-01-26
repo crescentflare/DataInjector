@@ -56,7 +56,7 @@ public class InjectorDependencyManager {
         if !injectSource.hasPrefix("@.") && injectSource.hasPrefix("@") {
             let sourcePath = injectSource.characters.split(separator: ".").map(String.init)
             if sourcePath.count > 0 {
-                return sourcePath[0]
+                return sourcePath[0].substring(from: sourcePath[0].index(after: sourcePath[0].startIndex))
             }
         }
         return nil
