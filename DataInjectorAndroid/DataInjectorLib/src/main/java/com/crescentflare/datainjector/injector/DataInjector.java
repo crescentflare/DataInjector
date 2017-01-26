@@ -39,13 +39,13 @@ public class DataInjector
     // Helper
     // ---
 
-    protected Object obtainValue(String item, Object targetData, Object subTargetData, Object referencedData, Object subReferencedData)
+    public Object obtainValue(String item, Object targetData, Object subTargetData, Object referencedData, Object subReferencedData)
     {
-        if (item.startsWith("#."))
+        if (item.startsWith("@."))
         {
             return InjectorUtil.itemFromObject(subReferencedData, item.substring(2));
         }
-        else if (item.startsWith("#"))
+        else if (item.startsWith("@"))
         {
             return InjectorUtil.itemFromObject(referencedData, item.substring(1));
         }

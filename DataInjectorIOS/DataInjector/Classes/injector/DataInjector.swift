@@ -35,10 +35,10 @@ open class DataInjector {
     // MARK: Helper
     // ---
 
-    func obtainValue(item: String, targetData: Any?, subTargetData: Any?, referencedData: Any?, subReferencedData: Any?) -> Any? {
-        if item.hasPrefix("#.") {
+    public func obtainValue(item: String, targetData: Any?, subTargetData: Any?, referencedData: Any?, subReferencedData: Any?) -> Any? {
+        if item.hasPrefix("@.") {
             return InjectorUtil.itemFromObject(subReferencedData, path: item.substring(from: item.characters.index(item.startIndex, offsetBy: 2)))
-        } else if item.hasPrefix("#") {
+        } else if item.hasPrefix("@") {
             return InjectorUtil.itemFromObject(referencedData, path: item.substring(from: item.characters.index(after: item.startIndex)))
         } else if item.hasPrefix("~.") {
             return InjectorUtil.itemFromObject(subTargetData, path: item.substring(from: item.characters.index(item.startIndex, offsetBy: 2)))
