@@ -22,7 +22,7 @@ open class FilterNullInjector: DataInjector {
     // MARK: Injection
     // ---
 
-    override open func appliedInjection(targetData: Any, referencedData: Any? = nil, subReferencedData: Any? = nil) -> Any {
+    override open func appliedInjection(targetData: Any, subTargetData: Any?, referencedData: Any? = nil, subReferencedData: Any? = nil) -> Any {
         if let dictItem = targetData as? [String: Any] {
             return processDict(dict: dictItem)
         } else if let arrayItem = targetData as? [Any] {

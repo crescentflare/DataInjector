@@ -22,7 +22,7 @@ open class DataInjector {
     // MARK: Functions to implement
     // ---
     
-    open func appliedInjection(targetData: Any, referencedData: Any? = nil, subReferencedData: Any? = nil) -> Any {
+    open func appliedInjection(targetData: Any, subTargetData: Any? = nil, referencedData: Any? = nil, subReferencedData: Any? = nil) -> Any {
         return targetData
     }
     

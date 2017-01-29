@@ -40,7 +40,7 @@ open class JoinStringInjector: DataInjector {
     // MARK: Injection
     // ---
 
-    override open func appliedInjection(targetData: Any, referencedData: Any? = nil, subReferencedData: Any? = nil) -> Any {
+    override open func appliedInjection(targetData: Any, subTargetData: Any?, referencedData: Any? = nil, subReferencedData: Any? = nil) -> Any {
         if item == nil {
             return targetData
         }

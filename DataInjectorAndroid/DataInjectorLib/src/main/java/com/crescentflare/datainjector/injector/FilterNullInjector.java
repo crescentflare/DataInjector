@@ -25,7 +25,8 @@ public class FilterNullInjector extends DataInjector
     // Injection
     // ---
 
-    public void apply(Object targetData, Object referencedData, Object subReferencedData)
+    @Override
+    public void onApply(Object targetData, Object subTargetData, Object referencedData, Object subReferencedData)
     {
         Map<String, Object> targetMap = InjectorUtil.asStringObjectMap(targetData);
         List<Object> targetList = InjectorUtil.asObjectList(targetData);

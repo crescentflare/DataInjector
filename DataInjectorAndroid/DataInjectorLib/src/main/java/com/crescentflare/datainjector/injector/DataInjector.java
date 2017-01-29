@@ -22,10 +22,35 @@ public class DataInjector
 
 
     // ---
+    // Apply overloads
+    // ---
+
+    public final void apply(Object targetData)
+    {
+        onApply(targetData, null, null, null);
+    }
+
+    public final void apply(Object targetData, Object referencedData)
+    {
+        onApply(targetData, null, referencedData, null);
+    }
+
+    public final void apply(Object targetData, Object referencedData, Object subReferencedData)
+    {
+        onApply(targetData, null, referencedData, subReferencedData);
+    }
+
+    public final void apply(Object targetData, Object subTargetData, Object referencedData, Object subReferencedData)
+    {
+        onApply(targetData, subTargetData, referencedData, subReferencedData);
+    }
+
+
+    // ---
     // Functions to implement
     // ---
 
-    public void apply(Object targetData, Object referencedData, Object subReferencedData)
+    public void onApply(Object targetData, Object subTargetData, Object referencedData, Object subReferencedData)
     {
     }
 

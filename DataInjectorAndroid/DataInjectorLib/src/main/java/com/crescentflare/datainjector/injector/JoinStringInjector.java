@@ -59,7 +59,8 @@ public class JoinStringInjector extends DataInjector
     // Injection
     // ---
 
-    public void apply(Object targetData, Object referencedData, Object subReferencedData)
+    @Override
+    public void onApply(Object targetData, Object subTargetData, Object referencedData, Object subReferencedData)
     {
         if (item == null)
         {
