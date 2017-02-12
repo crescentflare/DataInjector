@@ -16,7 +16,7 @@ class MockDependency: InjectorDependency {
     
     private var injectors: [DataInjector] = [
         SnakeToCamelCaseInjector(),
-        FilterNullInjector()
+        ReplaceNullInjector()
     ]
     private let filename: String
     private var storedJson: [Any]?

@@ -1,14 +1,10 @@
 package com.crescentflare.datainjectorexample.helper;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
 import com.crescentflare.datainjector.dependency.InjectorDependency;
 import com.crescentflare.datainjector.injector.DataInjector;
-import com.crescentflare.datainjector.injector.FilterNullInjector;
+import com.crescentflare.datainjector.injector.ReplaceNullInjector;
 import com.crescentflare.datainjector.injector.JoinStringInjector;
 import com.crescentflare.datainjector.injector.SnakeToCamelCaseInjector;
-import com.crescentflare.datainjector.utility.InjectorUtil;
 import com.crescentflare.datainjectorexample.ExampleApplication;
 import com.crescentflare.datainjectorexample.R;
 import com.google.gson.Gson;
@@ -34,7 +30,7 @@ public class MockDependency extends InjectorDependency
 
     private List<DataInjector> injectors = Arrays.asList(
             new SnakeToCamelCaseInjector(),
-            new FilterNullInjector()
+            new ReplaceNullInjector()
     );
     private List<Object> storedJson = new ArrayList<>();
     private int rawResourceId;
