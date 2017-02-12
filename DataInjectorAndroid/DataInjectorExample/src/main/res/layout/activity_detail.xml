@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context="com.crescentflare.datainjectorexample.MainActivity">
+    tools:context="com.crescentflare.datainjectorexample.DetailActivity">
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/activity_main_recycler_view"
+        android:id="@+id/activity_detail_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </FrameLayout>

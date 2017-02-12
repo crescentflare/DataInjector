@@ -1,31 +1,32 @@
 package com.crescentflare.datainjectorexample;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.view.MenuItem;
 
-import com.crescentflare.datainjector.conversion.InjectorConv;
 import com.crescentflare.datainjector.dependency.InjectorDependencyManager;
 import com.crescentflare.datainjector.utility.InjectorUtil;
+import com.crescentflare.datainjectorexample.recyclerview.DetailAdapter;
 import com.crescentflare.datainjectorexample.recyclerview.MainAdapter;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * The main activity shows a list of customers in the example
+ * The detail activity shows a list of products for a given customer in the example
  */
-public class MainActivity extends AppCompatActivity implements InjectorDependencyManager.DependencyUpdateListener, MainAdapter.ItemClickListener
+public class DetailActivity extends AppCompatActivity implements InjectorDependencyManager.DependencyUpdateListener
 {
     // ---
     // Members
     // ---
 
-    private MainAdapter recyclerAdapter = new MainAdapter();
+    private DetailAdapter recyclerAdapter = new DetailAdapter();
     private boolean dependenciesOpen = false;
 
 
@@ -38,17 +39,23 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
     {
         // Load view
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_detail);
+
+        // Add back button to action bar
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+        {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         // Set up recycler view
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.activity_main_recycler_view);
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.activity_detail_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(recyclerAdapter);
-        recyclerAdapter.setItemClickListener(this);
 
         // Determine if dependencies are open
-        dependenciesOpen = InjectorDependencyManager.instance.getUnresolvedDependencies(Collections.singletonList("customers")).size() > 0;
+        dependenciesOpen = InjectorDependencyManager.instance.getUnresolvedDependencies(Arrays.asList("customers", "products")).size() > 0;
     }
 
 
@@ -63,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
         InjectorDependencyManager.instance.addUpdateListener(this);
         if (dependenciesOpen)
         {
-            List<String> dependenciesLeft = InjectorDependencyManager.instance.getUnresolvedDependencies(Collections.singletonList("customers"));
+            List<String> dependenciesLeft = InjectorDependencyManager.instance.getUnresolvedDependencies(Arrays.asList("customers", "products"));
             if (dependenciesLeft.size() > 0)
             {
                 for (String dependency : dependenciesLeft)
@@ -88,13 +95,29 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
 
 
     // ---
+    // Menu handling
+    // ---
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if (item.getItemId() == android.R.id.home)
+        {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    // ---
     // View creation
     // ---
 
     public void updateViews()
     {
-        List<Object> customerItems = InjectorUtil.asObjectList(InjectorDependencyManager.instance.getDependency("customers").obtainInjectableData());
-        recyclerAdapter.setItems(customerItems);
+        List<Object> productItems = InjectorUtil.asObjectList(InjectorDependencyManager.instance.getDependency("products").obtainInjectableData());
+        recyclerAdapter.setItems(productItems);
     }
 
 
@@ -107,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
     {
         if (dependenciesOpen)
         {
-            List<String> dependenciesLeft = InjectorDependencyManager.instance.getUnresolvedDependencies(Collections.singletonList("customers"));
+            List<String> dependenciesLeft = InjectorDependencyManager.instance.getUnresolvedDependencies(Arrays.asList("customers", "products"));
             if (dependenciesLeft.size() == 0)
             {
                 dependenciesOpen = false;
@@ -119,17 +142,5 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
     @Override
     public void onDependencyFailed(String dependency, String reason)
     {
-    }
-
-
-    // ---
-    // Interaction
-    // ---
-
-    @Override
-    public void onClickedItem(int index)
-    {
-        Intent intent = new Intent(this, DetailActivity.class);
-        startActivity(intent);
     }
 }
