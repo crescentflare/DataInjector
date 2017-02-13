@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		048C0C341E2E9E51003B7AFE /* SnakeToCamelCaseInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048C0C331E2E9E51003B7AFE /* SnakeToCamelCaseInjector.swift */; };
+		04AD101B1E525A9A00C40DFA /* LinkDataInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04AD101A1E525A9A00C40DFA /* LinkDataInjector.swift */; };
 		04BB4C151E3385C900D2AD30 /* JoinStringInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BB4C141E3385C900D2AD30 /* JoinStringInjector.swift */; };
 		04F63F701E50F7F700F6B035 /* ReplaceNullInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F63F6F1E50F7F700F6B035 /* ReplaceNullInjector.swift */; };
 		0D6D30B438334215FF135CD42F0590F4 /* Pods-DataInjector_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6EDD88CA2B9ED74C8BADAFE8E1CA14 /* Pods-DataInjector_Tests-dummy.m */; };
@@ -52,6 +53,7 @@
 /* Begin PBXFileReference section */
 		041231DE5F690F3ECDAEA6BD5FAAD6C2 /* DataInjector-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DataInjector-prefix.pch"; sourceTree = "<group>"; };
 		048C0C331E2E9E51003B7AFE /* SnakeToCamelCaseInjector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnakeToCamelCaseInjector.swift; sourceTree = "<group>"; };
+		04AD101A1E525A9A00C40DFA /* LinkDataInjector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkDataInjector.swift; sourceTree = "<group>"; };
 		04BB4C141E3385C900D2AD30 /* JoinStringInjector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinStringInjector.swift; sourceTree = "<group>"; };
 		04F63F6F1E50F7F700F6B035 /* ReplaceNullInjector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaceNullInjector.swift; sourceTree = "<group>"; };
 		088DE2DABE81B236DACB1B2595687B0F /* Pods-DataInjector_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DataInjector_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 			children = (
 				A1CEE910C82DDED63FBC398D875D4FE8 /* DataInjector.swift */,
 				04BB4C141E3385C900D2AD30 /* JoinStringInjector.swift */,
+				04AD101A1E525A9A00C40DFA /* LinkDataInjector.swift */,
 				04F63F6F1E50F7F700F6B035 /* ReplaceNullInjector.swift */,
 				048C0C331E2E9E51003B7AFE /* SnakeToCamelCaseInjector.swift */,
 			);
@@ -447,6 +450,7 @@
 				5E97252A3FFB9967976BDBB6A3523A66 /* InjectorConditionType.swift in Sources */,
 				048C0C341E2E9E51003B7AFE /* SnakeToCamelCaseInjector.swift in Sources */,
 				64465B2F825B8477358302141597754F /* InjectorConv.swift in Sources */,
+				04AD101B1E525A9A00C40DFA /* LinkDataInjector.swift in Sources */,
 				CBCEC6ADF59FC9D0A0C09E06B331A4F0 /* InjectorDataDetector.swift in Sources */,
 				04F63F701E50F7F700F6B035 /* ReplaceNullInjector.swift in Sources */,
 				2581537618711F6C34A2F45ACAB664A4 /* InjectorDataType.swift in Sources */,
