@@ -93,7 +93,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let customerData = InjectorDependencyManager.shared.getDependency(name: "customers")?.obtainInjectableData() as? [[String: Any]] {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "SimpleCell") as? SimpleCell {
-                cell.identifier = InjectorConv.toString(from: customerData[indexPath.row][""])
+                cell.identifier = InjectorConv.toString(from: customerData[indexPath.row]["id"])
                 cell.label = InjectorConv.toString(from: customerData[indexPath.row]["fullName"])
                 return cell
             }

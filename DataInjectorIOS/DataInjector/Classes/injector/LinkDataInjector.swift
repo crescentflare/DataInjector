@@ -26,11 +26,29 @@ open class LinkDataInjector: DataInjector {
 
     
     // ---
+    // MARK: Data helpers
+    // ---
+    
+    public static func findDataItem(onDataArray targetData: [[String: Any]], forValue: Any?, usingKey: String) -> [String: Any]? {
+        if let searchValueString = InjectorConv.toString(from: forValue) {
+            for dataItem in targetData {
+                if let compareValueString = InjectorConv.toString(from: dataItem[usingKey]) {
+                    if compareValueString == searchValueString {
+                        return dataItem
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    
+
+    // ---
     // MARK: Manual injection
     // ---
 
     public static func linkedData(onData targetData: [String: Any], with linkedData: [[String: Any]], linkBy key: String) -> [String: Any] {
-        if let foundItem = searchItem(onData: linkedData, withValue: targetData[key], forKey: key) {
+        if let foundItem = findDataItem(onDataArray: linkedData, forValue: targetData[key], usingKey: key) {
             var modifiedData = targetData
             for (itemKey, itemValue) in foundItem {
                 if itemKey != key {
@@ -75,24 +93,6 @@ open class LinkDataInjector: DataInjector {
 
     override open func foundDependencies() -> [String] {
         return []
-    }
- 
-
-    // ---
-    // MARK: Internal data processing
-    // ---
-    
-    private static func searchItem(onData: [[String: Any]], withValue: Any?, forKey: String) -> [String: Any]? {
-        if let searchValueString = InjectorConv.toString(from: withValue) {
-            for dataItem in onData {
-                if let compareValueString = InjectorConv.toString(from: dataItem[forKey]) {
-                    if compareValueString == searchValueString {
-                        return dataItem
-                    }
-                }
-            }
-        }
-        return nil
     }
 
 }
