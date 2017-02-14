@@ -1,5 +1,6 @@
 package com.crescentflare.datainjectorexample.recyclerview;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,21 +30,14 @@ public class DetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     // Set items
     // ---
 
-    public void setItems(List<Object> items)
+    public void setItems(List<Map<String, Object>> items)
     {
         this.items.clear();
         if (items == null)
         {
             return;
         }
-        for (Object item : items)
-        {
-            Map<String, Object> mapItem = InjectorUtil.asStringObjectMap(item);
-            if (mapItem != null)
-            {
-                this.items.add(mapItem);
-            }
-        }
+        this.items.addAll(items);
         notifyDataSetChanged();
     }
 
@@ -74,9 +68,11 @@ public class DetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     {
         Map<String, Object> item = items.get(position);
         DetailRecycableView itemView = (DetailRecycableView)holder.itemView;
+        Boolean paid = InjectorConv.toBoolean(item.get("paid"));
         itemView.setTitle(InjectorConv.toString(item.get("name")));
         itemView.setInfo(InjectorConv.toString(item.get("description")));
         itemView.setValue(InjectorConv.toString(item.get("price")));
+        itemView.setValueColor(paid != null && paid ? Color.RED : Color.BLACK);
     }
 
     private static class ViewHolder extends RecyclerView.ViewHolder

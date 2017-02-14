@@ -9,19 +9,29 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
 import com.crescentflare.datainjector.dependency.InjectorDependencyManager;
+import com.crescentflare.datainjector.injector.LinkDataInjector;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 import com.crescentflare.datainjectorexample.recyclerview.DetailAdapter;
 import com.crescentflare.datainjectorexample.recyclerview.MainAdapter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The detail activity shows a list of products for a given customer in the example
  */
 public class DetailActivity extends AppCompatActivity implements InjectorDependencyManager.DependencyUpdateListener
 {
+    // ---
+    // Constants
+    // ---
+
+    private static final String ARG_CUSTOMER_ID = "arg_customer_id";
+
+
     // ---
     // Members
     // ---
@@ -33,6 +43,13 @@ public class DetailActivity extends AppCompatActivity implements InjectorDepende
     // ---
     // Initialization
     // ---
+
+    public static Bundle extraBundle(String customerId)
+    {
+        Bundle bundle = new Bundle();
+        bundle.putString(ARG_CUSTOMER_ID, customerId);
+        return bundle;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,6 +73,10 @@ public class DetailActivity extends AppCompatActivity implements InjectorDepende
 
         // Determine if dependencies are open
         dependenciesOpen = InjectorDependencyManager.instance.getUnresolvedDependencies(Arrays.asList("customers", "products")).size() > 0;
+        if (!dependenciesOpen)
+        {
+            updateViews();
+        }
     }
 
 
@@ -116,8 +137,21 @@ public class DetailActivity extends AppCompatActivity implements InjectorDepende
 
     public void updateViews()
     {
-        List<Object> productItems = InjectorUtil.asObjectList(InjectorDependencyManager.instance.getDependency("products").obtainInjectableData());
-        recyclerAdapter.setItems(productItems);
+        // Look up dependency data
+        List<Map<String, Object>> customers = InjectorUtil.asStringObjectMapList(InjectorDependencyManager.instance.getDependency("customers").obtainInjectableData());
+        List<Map<String, Object>> products = InjectorUtil.asStringObjectMapList(InjectorDependencyManager.instance.getDependency("products").obtainInjectableData());
+
+        // Find the products of the given customer id
+        Map<String, Object> customer = LinkDataInjector.findDataItem(customers, getIntent().getStringExtra(ARG_CUSTOMER_ID), "id");
+        List<Map<String, Object>> customerProducts = null;
+        if (customer != null)
+        {
+            customerProducts = InjectorUtil.asStringObjectMapList(customer.get("products"));
+        }
+
+        // If everything is there, link the product details to the customer product list
+        LinkDataInjector.linkDataArray(customerProducts, products, "id");
+        recyclerAdapter.setItems(customerProducts);
     }
 
 

@@ -30,21 +30,14 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     // Set items
     // ---
 
-    public void setItems(List<Object> items)
+    public void setItems(List<Map<String, Object>> items)
     {
         this.items.clear();
         if (items == null)
         {
             return;
         }
-        for (Object item : items)
-        {
-            Map<String, Object> mapItem = InjectorUtil.asStringObjectMap(item);
-            if (mapItem != null)
-            {
-                this.items.add(mapItem);
-            }
-        }
+        this.items.addAll(items);
         notifyDataSetChanged();
     }
 

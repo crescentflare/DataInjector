@@ -391,6 +391,21 @@ public class InjectorUtil
     }
 
     @SuppressWarnings("unchecked")
+    public static List<Map<String, Object>> asStringObjectMapList(Object object)
+    {
+        List<?> objectList = asObjectList(object);
+        if (objectList != null)
+        {
+            if (objectList.size() > 0 && asStringObjectMap(objectList.get(0)) == null)
+            {
+                return null;
+            }
+            return (List<Map<String, Object>>)objectList;
+        }
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
     public static List<Object> asObjectList(Object object)
     {
         return isList(object) ? (List<Object>)object : null;

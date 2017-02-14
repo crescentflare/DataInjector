@@ -83,6 +83,11 @@ public class DetailRecycableView extends LinearLayout
         valueView.setVisibility(text.length() > 0 ? VISIBLE : GONE);
     }
 
+    public void setValueColor(int colorCode)
+    {
+        valueView.setTextColor(colorCode);
+    }
+
     public void showDivider(boolean show)
     {
         divider.setVisibility(show ? VISIBLE : GONE);

@@ -15,6 +15,7 @@ import com.crescentflare.datainjectorexample.recyclerview.MainAdapter;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The main activity shows a list of customers in the example
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
 
     public void updateViews()
     {
-        List<Object> customerItems = InjectorUtil.asObjectList(InjectorDependencyManager.instance.getDependency("customers").obtainInjectableData());
+        List<Map<String, Object>> customerItems = InjectorUtil.asStringObjectMapList(InjectorDependencyManager.instance.getDependency("customers").obtainInjectableData());
         recyclerAdapter.setItems(customerItems);
     }
 
@@ -129,7 +130,24 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
     @Override
     public void onClickedItem(int index)
     {
+        // Fetch customer ID from index
+        String customerId = null;
+        List<Object> customerItems = InjectorUtil.asObjectList(InjectorDependencyManager.instance.getDependency("customers").obtainInjectableData());
+        if (customerItems != null && index < customerItems.size())
+        {
+            Map<String, Object> customer = InjectorUtil.asStringObjectMap(customerItems.get(index));
+            if (customer != null)
+            {
+                if (customer.get("id") instanceof String)
+                {
+                    customerId = (String) customer.get("id");
+                }
+            }
+        }
+
+        // Start activity
         Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtras(DetailActivity.extraBundle(customerId));
         startActivity(intent);
     }
 }
