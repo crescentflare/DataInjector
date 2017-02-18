@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.crescentflare.datainjectorexample.R;
+import com.crescentflare.datainjectorexample.helper.ExampleCompat;
 
 /**
  * A simple view with only a label used in the recycler view
@@ -34,7 +35,7 @@ public class DetailRecycableView extends LinearLayout
         super(context);
 
         LayoutInflater.from(getContext()).inflate(R.layout.view_recycable_detail, this, true);
-        setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.recycable_view_background));
+        ExampleCompat.setBackgroundDrawable(this, ContextCompat.getDrawable(context, R.drawable.recycable_view_background));
         setOrientation(VERTICAL);
         titleView = (TextView)findViewById(R.id.view_recycable_detail_title);
         infoView = (TextView)findViewById(R.id.view_recycable_detail_info);

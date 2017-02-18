@@ -5,11 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.crescentflare.datainjector.conversion.InjectorConv;
-import com.crescentflare.datainjector.utility.InjectorUtil;
 import com.crescentflare.datainjectorexample.recyclerview.views.SimpleRecycableView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -64,7 +62,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position)
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position)
     {
         Map<String, Object> item = items.get(position);
         SimpleRecycableView itemView = (SimpleRecycableView)holder.itemView;
@@ -76,7 +74,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             {
                 if (clickListener != null)
                 {
-                    clickListener.onClickedItem(position);
+                    clickListener.onClickedItem(holder.getAdapterPosition());
                 }
             }
         });

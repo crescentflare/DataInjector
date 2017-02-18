@@ -72,19 +72,24 @@ class MockDependency: InjectorDependency {
     }
     
     override open func resolve(input: [String: String], completion: @escaping (_ success: Bool) -> Void) {
-        if let jsonData = jsonData(forFilename: filename) {
-            DispatchQueue.global(qos: .default).async {
-                let processedJsonArray = self.processedJsonArray(forData: jsonData)
-                DispatchQueue.main.async {
+        let filename = self.filename
+        DispatchQueue.global(qos: .default).async {
+            // First load and process the data
+            var processedJsonArray: [Any]?
+            if let jsonData = self.jsonData(forFilename: filename) {
+                processedJsonArray = self.processedJsonArray(forData: jsonData)
+            }
+            
+            // Then apply the changes on the main thread, wait for half a second to simulate a delay in network traffic
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                if processedJsonArray != nil {
                     if processedJsonArray != nil {
                         self.storedJson = processedJsonArray
                     }
-                    completion(processedJsonArray != nil)
                 }
-            }
-            return
+                completion(processedJsonArray != nil)
+            })
         }
-        completion(false)
     }
 
 }

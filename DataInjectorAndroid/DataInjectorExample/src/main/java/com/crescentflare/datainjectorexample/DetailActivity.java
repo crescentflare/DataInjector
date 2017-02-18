@@ -12,11 +12,8 @@ import com.crescentflare.datainjector.dependency.InjectorDependencyManager;
 import com.crescentflare.datainjector.injector.LinkDataInjector;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 import com.crescentflare.datainjectorexample.recyclerview.DetailAdapter;
-import com.crescentflare.datainjectorexample.recyclerview.MainAdapter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +27,7 @@ public class DetailActivity extends AppCompatActivity implements InjectorDepende
     // ---
 
     private static final String ARG_CUSTOMER_ID = "arg_customer_id";
+    private static final List<String> dependencies = Arrays.asList("customers", "products");
 
 
     // ---
@@ -72,7 +70,7 @@ public class DetailActivity extends AppCompatActivity implements InjectorDepende
         recyclerView.setAdapter(recyclerAdapter);
 
         // Determine if dependencies are open
-        dependenciesOpen = InjectorDependencyManager.instance.getUnresolvedDependencies(Arrays.asList("customers", "products")).size() > 0;
+        dependenciesOpen = InjectorDependencyManager.instance.getUnresolvedDependencies(dependencies).size() > 0;
         if (!dependenciesOpen)
         {
             updateViews();
@@ -91,7 +89,7 @@ public class DetailActivity extends AppCompatActivity implements InjectorDepende
         InjectorDependencyManager.instance.addUpdateListener(this);
         if (dependenciesOpen)
         {
-            List<String> dependenciesLeft = InjectorDependencyManager.instance.getUnresolvedDependencies(Arrays.asList("customers", "products"));
+            List<String> dependenciesLeft = InjectorDependencyManager.instance.getUnresolvedDependencies(dependencies);
             if (dependenciesLeft.size() > 0)
             {
                 for (String dependency : dependenciesLeft)
@@ -164,7 +162,7 @@ public class DetailActivity extends AppCompatActivity implements InjectorDepende
     {
         if (dependenciesOpen)
         {
-            List<String> dependenciesLeft = InjectorDependencyManager.instance.getUnresolvedDependencies(Arrays.asList("customers", "products"));
+            List<String> dependenciesLeft = InjectorDependencyManager.instance.getUnresolvedDependencies(dependencies);
             if (dependenciesLeft.size() == 0)
             {
                 dependenciesOpen = false;

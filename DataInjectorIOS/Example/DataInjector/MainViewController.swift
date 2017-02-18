@@ -11,6 +11,13 @@ import DataInjector
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // --
+    // MARK: Constants
+    // --
+    
+    private static let dependencies = ["customers"]
+    
+    
+    // --
     // MARK: Outlets
     // --
     
@@ -32,13 +39,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        dependenciesOpen = InjectorDependencyManager.shared.getUnresolvedDependencies(checkDependencies: ["customers"]).count > 0
+        dependenciesOpen = InjectorDependencyManager.shared.getUnresolvedDependencies(checkDependencies: MainViewController.dependencies).count > 0
     }
     
     override func viewDidAppear(_ animated: Bool) {
         InjectorDependencyManager.shared.addDataObserver(self, selector: #selector(dependenciesDidUpdate), name: InjectorDependencyManager.dependencyResolved)
         if dependenciesOpen {
-            let dependenciesLeft = InjectorDependencyManager.shared.getUnresolvedDependencies(checkDependencies: ["customers"])
+            let dependenciesLeft = InjectorDependencyManager.shared.getUnresolvedDependencies(checkDependencies: MainViewController.dependencies)
             if dependenciesLeft.count > 0 {
                 for dependency in dependenciesLeft {
                     InjectorDependencyManager.shared.resolveDependency(dependency: dependency)
@@ -61,7 +68,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func dependenciesDidUpdate() {
         if dependenciesOpen {
-            let dependenciesLeft = InjectorDependencyManager.shared.getUnresolvedDependencies(checkDependencies: ["customers"])
+            let dependenciesLeft = InjectorDependencyManager.shared.getUnresolvedDependencies(checkDependencies: MainViewController.dependencies)
             if dependenciesLeft.count == 0 {
                 dependenciesOpen = false
                 tableView.reloadData()

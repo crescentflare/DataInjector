@@ -6,9 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
-import com.crescentflare.datainjector.conversion.InjectorConv;
 import com.crescentflare.datainjector.dependency.InjectorDependencyManager;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 import com.crescentflare.datainjectorexample.recyclerview.MainAdapter;
@@ -22,6 +20,13 @@ import java.util.Map;
  */
 public class MainActivity extends AppCompatActivity implements InjectorDependencyManager.DependencyUpdateListener, MainAdapter.ItemClickListener
 {
+    // ---
+    // Constants
+    // ---
+
+    private static final List<String> dependencies = Collections.singletonList("customers");
+
+
     // ---
     // Members
     // ---
@@ -49,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
         recyclerAdapter.setItemClickListener(this);
 
         // Determine if dependencies are open
-        dependenciesOpen = InjectorDependencyManager.instance.getUnresolvedDependencies(Collections.singletonList("customers")).size() > 0;
+        dependenciesOpen = InjectorDependencyManager.instance.getUnresolvedDependencies(dependencies).size() > 0;
     }
 
 
@@ -64,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
         InjectorDependencyManager.instance.addUpdateListener(this);
         if (dependenciesOpen)
         {
-            List<String> dependenciesLeft = InjectorDependencyManager.instance.getUnresolvedDependencies(Collections.singletonList("customers"));
+            List<String> dependenciesLeft = InjectorDependencyManager.instance.getUnresolvedDependencies(dependencies);
             if (dependenciesLeft.size() > 0)
             {
                 for (String dependency : dependenciesLeft)
@@ -108,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
     {
         if (dependenciesOpen)
         {
-            List<String> dependenciesLeft = InjectorDependencyManager.instance.getUnresolvedDependencies(Collections.singletonList("customers"));
+            List<String> dependenciesLeft = InjectorDependencyManager.instance.getUnresolvedDependencies(dependencies);
             if (dependenciesLeft.size() == 0)
             {
                 dependenciesOpen = false;

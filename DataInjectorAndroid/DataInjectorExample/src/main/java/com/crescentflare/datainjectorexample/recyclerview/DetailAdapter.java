@@ -6,9 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.crescentflare.datainjector.conversion.InjectorConv;
-import com.crescentflare.datainjector.utility.InjectorUtil;
 import com.crescentflare.datainjectorexample.recyclerview.views.DetailRecycableView;
-import com.crescentflare.datainjectorexample.recyclerview.views.SimpleRecycableView;
 
 import java.util.ArrayList;
 import java.util.List;
