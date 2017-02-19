@@ -70,7 +70,7 @@ public class DetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         itemView.setTitle(InjectorConv.toString(item.get("name")));
         itemView.setInfo(InjectorConv.toString(item.get("description")));
         itemView.setValue(InjectorConv.toString(item.get("price")));
-        itemView.setValueColor(paid != null && paid ? Color.RED : Color.BLACK);
+        itemView.setValueColor(paid != null && paid ? Color.BLACK : Color.RED);
     }
 
     private static class ViewHolder extends RecyclerView.ViewHolder

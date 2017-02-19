@@ -56,7 +56,44 @@ public class JoinStringInjector extends DataInjector
 
 
     // ---
-    // Injection
+    // Data helpers
+    // ---
+
+    public static String joinStrings(String[] stringArray, String delimiter)
+    {
+        String result = "";
+        boolean firstString = true;
+        for (String item : stringArray)
+        {
+            if (!firstString)
+            {
+                result += delimiter;
+            }
+            result += item;
+            firstString = false;
+        }
+        return result;
+    }
+
+    public static String joinStrings(List<String> stringList, String delimiter)
+    {
+        String result = "";
+        boolean firstString = true;
+        for (String item : stringList)
+        {
+            if (!firstString)
+            {
+                result += delimiter;
+            }
+            result += item;
+            firstString = false;
+        }
+        return result;
+    }
+
+
+    // ---
+    // General injection
     // ---
 
     @Override
@@ -67,16 +104,18 @@ public class JoinStringInjector extends DataInjector
             return;
         }
         String finalString = "";
+        boolean firstString = true;
         for (String fromItem : fromItems)
         {
             String concatString = InjectorConv.toString(obtainValue(fromItem, targetData, null, referencedData, subReferencedData));
             if (concatString != null)
             {
-                if (finalString.length() > 0)
+                if (!firstString)
                 {
                     finalString += delimiter;
                 }
                 finalString += concatString;
+                firstString = false;
             }
         }
         Map<String, Object> modifyMap = InjectorUtil.asStringObjectMap(targetData);

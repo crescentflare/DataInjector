@@ -37,7 +37,7 @@ open class JoinStringInjector: DataInjector {
 
     
     // ---
-    // MARK: Injection
+    // MARK: General injection
     // ---
 
     override open func appliedInjection(targetData: Any, subTargetData: Any?, referencedData: Any? = nil, subReferencedData: Any? = nil) -> Any {
@@ -45,12 +45,14 @@ open class JoinStringInjector: DataInjector {
             return targetData
         }
         var finalString = ""
+        var firstItem = false
         for fromItem in fromItems {
-            if let concatString = InjectorConv.toString(from: obtainValue(item: fromItem, targetData: targetData, subTargetData: nil, referencedData: referencedData, subReferencedData: subReferencedData)) {
-                if finalString.characters.count > 0 {
+            if let concatString = InjectorConv.toString(from: DataInjector.obtainValue(item: fromItem, targetData: targetData, subTargetData: nil, referencedData: referencedData, subReferencedData: subReferencedData)) {
+                if !firstItem {
                     finalString += delimiter
                 }
                 finalString += concatString
+                firstItem = false
             }
         }
         if var modifyDict = targetData as? [String: Any] {

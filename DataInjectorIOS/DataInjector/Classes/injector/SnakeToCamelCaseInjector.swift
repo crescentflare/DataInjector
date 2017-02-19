@@ -19,16 +19,42 @@ open class SnakeToCamelCaseInjector: DataInjector {
 
     
     // ---
-    // MARK: Injection
+    // MARK: Data helpers
     // ---
+    
+    public static func camelCaseString(from snakeCaseString: String) -> String {
+        let stringItems = snakeCaseString.characters.split(separator: "_").map(String.init)
+        var resultString = snakeCaseString
+        if stringItems.count > 1 {
+            resultString = stringItems[0]
+            for i in 1..<stringItems.count {
+                resultString += stringItems[i].capitalized
+            }
+        }
+        return resultString
+    }
+    
 
-    override open func appliedInjection(targetData: Any, subTargetData: Any?, referencedData: Any? = nil, subReferencedData: Any? = nil) -> Any {
+    // ---
+    // MARK: Manual injection
+    // ---
+    
+    public static func changedCase(onData targetData: Any) -> Any {
         if let dictItem = targetData as? [String: Any] {
             return processDict(dict: dictItem)
         } else if let arrayItem = targetData as? [Any] {
             return processArray(array: arrayItem)
         }
         return targetData
+    }
+
+    
+    // ---
+    // MARK: General injection
+    // ---
+
+    override open func appliedInjection(targetData: Any, subTargetData: Any?, referencedData: Any? = nil, subReferencedData: Any? = nil) -> Any {
+        return SnakeToCamelCaseInjector.changedCase(onData: targetData)
     }
     
 
@@ -45,7 +71,7 @@ open class SnakeToCamelCaseInjector: DataInjector {
     // MARK: Helper
     // ---
     
-    private func processArray(array: [Any]) -> [Any] {
+    private static func processArray(array: [Any]) -> [Any] {
         var modifiedArray = array
         for i in 0..<modifiedArray.count {
             if let dictItem = modifiedArray[i] as? [String: Any] {
@@ -57,17 +83,10 @@ open class SnakeToCamelCaseInjector: DataInjector {
         return modifiedArray
     }
     
-    private func processDict(dict: [String: Any]) -> [String: Any] {
+    private static func processDict(dict: [String: Any]) -> [String: Any] {
         var modifiedDict: [String: Any] = [:]
         for (key, value) in dict {
-            let keyItems = key.characters.split(separator: "_").map(String.init)
-            var newKey = key
-            if keyItems.count > 1 {
-                newKey = keyItems[0]
-                for i in 1..<keyItems.count {
-                    newKey += keyItems[i].capitalized
-                }
-            }
+            var newKey = camelCaseString(from: key)
             if let dictItem = value as? [String: Any] {
                 modifiedDict[newKey] = processDict(dict: dictItem)
             } else if let arrayItem = value as? [Any] {

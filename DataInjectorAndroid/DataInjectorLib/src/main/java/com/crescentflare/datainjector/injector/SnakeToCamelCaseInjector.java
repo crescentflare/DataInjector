@@ -22,11 +22,30 @@ public class SnakeToCamelCaseInjector extends DataInjector
 
 
     // ---
-    // Injection
+    // Data helper
     // ---
 
-    @Override
-    public void onApply(Object targetData, Object subTargetData, Object referencedData, Object subReferencedData)
+    public static String stringToCamelCase(String snakeCaseString)
+    {
+        String[] splitString = snakeCaseString.split("_");
+        if (splitString.length > 1)
+        {
+            String resultString = splitString[0];
+            for (int i = 1; i < splitString.length; i++)
+            {
+                resultString += splitString[i].substring(0, 1).toUpperCase() + splitString[i].substring(1);
+            }
+            return resultString;
+        }
+        return snakeCaseString;
+    }
+
+
+    // ---
+    // Manual injection
+    // ---
+
+    public static void changeToCamelCase(Object targetData)
     {
         Map<String, Object> targetMap = InjectorUtil.asStringObjectMap(targetData);
         List<Object> targetList = InjectorUtil.asObjectList(targetData);
@@ -38,6 +57,17 @@ public class SnakeToCamelCaseInjector extends DataInjector
         {
             processList(targetList);
         }
+    }
+
+
+    // ---
+    // General injection
+    // ---
+
+    @Override
+    public void onApply(Object targetData, Object subTargetData, Object referencedData, Object subReferencedData)
+    {
+        changeToCamelCase(targetData);
     }
 
 
@@ -55,7 +85,7 @@ public class SnakeToCamelCaseInjector extends DataInjector
     // Helper
     // ---
 
-    private void processList(List<Object> array)
+    private static void processList(List<Object> array)
     {
         for (Object arrayItem : array)
         {
@@ -72,7 +102,7 @@ public class SnakeToCamelCaseInjector extends DataInjector
         }
     }
 
-    private void processMap(Map<String, Object> map)
+    private static void processMap(Map<String, Object> map)
     {
         List<String> keys = new ArrayList<>();
         for (String key : map.keySet())
@@ -81,32 +111,34 @@ public class SnakeToCamelCaseInjector extends DataInjector
         }
         for (String key : keys)
         {
-            String[] splitKey = key.split("_");
-            if (splitKey.length > 1)
+            String newKey = stringToCamelCase(key);
+            Object value = map.get(key);
+            Map<String, Object> mapValue = InjectorUtil.asStringObjectMap(value);
+            List<Object> listValue = InjectorUtil.asObjectList(value);
+            boolean adjustKey = !newKey.equals(key);
+            if (adjustKey)
             {
-                Object value = map.get(key);
-                Map<String, Object> mapValue = InjectorUtil.asStringObjectMap(value);
-                List<Object> listValue = InjectorUtil.asObjectList(value);
-                String newKey = splitKey[0];
-                for (int i = 1; i < splitKey.length; i++)
-                {
-                    newKey += splitKey[i].substring(0, 1).toUpperCase() + splitKey[i].substring(1);
-                }
                 map.remove(key);
-                if (mapValue != null)
+            }
+            if (mapValue != null)
+            {
+                processMap(mapValue);
+                if (adjustKey)
                 {
-                    processMap(mapValue);
                     map.put(newKey, mapValue);
                 }
-                else if (listValue != null)
+            }
+            else if (listValue != null)
+            {
+                processList(listValue);
+                if (adjustKey)
                 {
-                    processList(listValue);
                     map.put(newKey, listValue);
                 }
-                else
-                {
-                    map.put(newKey, value);
-                }
+            }
+            else if (adjustKey)
+            {
+                map.put(newKey, value);
             }
         }
     }

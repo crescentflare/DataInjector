@@ -64,7 +64,7 @@ public class DataInjector
     // Helper
     // ---
 
-    public Object obtainValue(String item, Object targetData, Object subTargetData, Object referencedData, Object subReferencedData)
+    public static Object obtainValue(String item, Object targetData, Object subTargetData, Object referencedData, Object subReferencedData)
     {
         if (item.startsWith("@."))
         {
