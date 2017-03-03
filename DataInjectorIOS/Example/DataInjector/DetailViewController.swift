@@ -14,7 +14,7 @@ class DetailViewController: UIViewController, UITableViewDataSource {
     // MARK: Constants
     // --
     
-    private static let dependencies = ["customers", "products"]
+    private static let dependencies = InjectorDependencyManager.shared.dependencies(forNames: ["customers", "products"])
 
     
     // --
@@ -42,7 +42,7 @@ class DetailViewController: UIViewController, UITableViewDataSource {
         tableView.dataSource = self
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
-        dependenciesOpen = InjectorDependencyManager.shared.getUnresolvedDependencies(checkDependencies: DetailViewController.dependencies).count > 0
+        dependenciesOpen = InjectorDependencyManager.shared.filteredDependencies(DetailViewController.dependencies, excludingState: .resolved).count > 0
         if !dependenciesOpen {
             refreshDisplayedData()
         }
@@ -51,7 +51,7 @@ class DetailViewController: UIViewController, UITableViewDataSource {
     override func viewDidAppear(_ animated: Bool) {
         InjectorDependencyManager.shared.addDataObserver(self, selector: #selector(dependenciesDidUpdate), name: InjectorDependencyManager.dependencyResolved)
         if dependenciesOpen {
-            let dependenciesLeft = InjectorDependencyManager.shared.getUnresolvedDependencies(checkDependencies: DetailViewController.dependencies)
+            let dependenciesLeft = InjectorDependencyManager.shared.filteredDependencies(DetailViewController.dependencies, excludingState: .resolved)
             if dependenciesLeft.count > 0 {
                 for dependency in dependenciesLeft {
                     InjectorDependencyManager.shared.resolveDependency(dependency: dependency)
@@ -74,7 +74,7 @@ class DetailViewController: UIViewController, UITableViewDataSource {
 
     func dependenciesDidUpdate() {
         if dependenciesOpen {
-            let dependenciesLeft = InjectorDependencyManager.shared.getUnresolvedDependencies(checkDependencies: DetailViewController.dependencies)
+            let dependenciesLeft = InjectorDependencyManager.shared.filteredDependencies(DetailViewController.dependencies, excludingState: .resolved)
             if dependenciesLeft.count == 0 {
                 dependenciesOpen = false
                 refreshDisplayedData()
@@ -87,8 +87,8 @@ class DetailViewController: UIViewController, UITableViewDataSource {
         showCustomerProducts = nil
         
         // Look up dependency data
-        let customers = InjectorDependencyManager.shared.getDependency(name: "customers")?.obtainInjectableData() as? [[String: Any]]
-        let products = InjectorDependencyManager.shared.getDependency(name: "products")?.obtainInjectableData() as? [[String: Any]]
+        let customers = InjectorDependencyManager.shared.dependency(forName: "customers")?.obtainInjectableData() as? [[String: Any]]
+        let products = InjectorDependencyManager.shared.dependency(forName: "products")?.obtainInjectableData() as? [[String: Any]]
         
         // Find the products of the given customer id
         let customer = LinkDataInjector.findDataItem(onDataArray: customers ?? [], forValue: customerId, usingKey: "id")

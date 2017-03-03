@@ -26,11 +26,12 @@ class MockDependency: InjectorDependency {
     // MARK: Initialization
     // --
     
-    init(filename: String) {
+    init(name: String, filename: String) {
         self.filename = filename
         if filename.hasPrefix("customer") {
             injectors.append(JoinStringInjector(item: "fullName", fromItems: [ "~firstName", "~middleName", "~lastName" ], delimiter: " ", removeOriginals: true))
         }
+        super.init(name: name)
     }
     
 

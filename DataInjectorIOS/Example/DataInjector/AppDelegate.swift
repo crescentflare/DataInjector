@@ -23,8 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // --
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        InjectorDependencyManager.shared.addDependency(name: "customers", dependency: MockDependency(filename: "customer_list"))
-        InjectorDependencyManager.shared.addDependency(name: "products", dependency: MockDependency(filename: "product_list"))
+        InjectorDependencyManager.shared.addDependency(MockDependency(name: "customers", filename: "customer_list"))
+        InjectorDependencyManager.shared.addDependency(MockDependency(name: "products", filename: "product_list"))
         return true
     }
 

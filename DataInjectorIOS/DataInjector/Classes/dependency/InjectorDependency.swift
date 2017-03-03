@@ -14,18 +14,24 @@ open class InjectorDependency {
     // MARK: Members
     // ---
     
+    private let _name: String
     var lastUpdated: Int = 0
-    var state = InjectorDependencyState.pending
+    var state = InjectorDependencyState.idle
     public var expiration: Int?
     public var requiresInput: [String] = []
-    public var dependencies: [String] = []
+    public var dependencies: [InjectorDependency] = []
+    
+    public var name: String {
+        get { return _name }
+    }
 
     
     // ---
     // MARK: Initialization
     // ---
     
-    public init() {
+    public init(name: String) {
+        self._name = name
     }
 
 
@@ -55,7 +61,7 @@ open class InjectorDependency {
     }
     
     public func isError() -> Bool {
-        return state == .obtainError || state == .refreshError
+        return state.isKindOfState(.error)
     }
 
     

@@ -29,7 +29,7 @@ public class InjectorDependencyManager {
     // MARK: Members
     // ---
     
-    private var dependencies: [String: InjectorDependency] = [:]
+    private var dependencies: [InjectorDependency] = []
     
 
     // ---
@@ -44,12 +44,27 @@ public class InjectorDependencyManager {
     // MARK: Dependency management
     // ---
     
-    public func addDependency(name: String, dependency: InjectorDependency) {
-        dependencies[name] = dependency
+    public func addDependency(_ dependency: InjectorDependency) {
+        dependencies.append(dependency)
     }
     
-    public func getDependency(name: String) -> InjectorDependency? {
-        return dependencies[name]
+    public func dependency(forName: String) -> InjectorDependency? {
+        for dependency in dependencies {
+            if dependency.name == forName {
+                return dependency
+            }
+        }
+        return nil
+    }
+
+    public func dependencies(forNames: [String]) -> [InjectorDependency] {
+        var dependencyList: [InjectorDependency] = []
+        for dependency in dependencies {
+            if forNames.contains(dependency.name) {
+                dependencyList.append(dependency)
+            }
+        }
+        return dependencyList
     }
     
     public func dependencyNameFrom(injectSource: String) -> String? {
@@ -64,114 +79,113 @@ public class InjectorDependencyManager {
     
 
     // ---
-    // MARK: Resolving dependencies
+    // MARK: Filtering dependencies
     // ---
-    
-    public func getDependenciesInProgress(checkDependencies: [String], includeBase: Bool = true) -> [String] {
-        var inProgress: [String] = []
-        for checkDependency in checkDependencies {
-            if let dependencyItem = dependencies[checkDependency] {
-                if dependencyItem.state == .obtaining || dependencyItem.state == .refreshing {
-                    inProgress.append(checkDependency)
-                }
-                if includeBase {
-                    inProgress.append(contentsOf: getDependenciesInProgress(checkDependencies: dependencyItem.dependencies))
-                }
-            }
-        }
-        return Array(Set(inProgress))
-    }
 
-    public func getDependenciesWithError(checkDependencies: [String], includeBase: Bool = true) -> [String] {
-        var withError: [String] = []
-        for checkDependency in checkDependencies {
-            if let dependencyItem = dependencies[checkDependency] {
-                if dependencyItem.isError() {
-                    withError.append(checkDependency)
-                }
-                if includeBase {
-                    withError.append(contentsOf: getDependenciesWithError(checkDependencies: dependencyItem.dependencies))
-                }
-            }
-        }
-        return Array(Set(withError))
-    }
-
-    public func getUnresolvedDependencies(checkDependencies: [String], includeBase: Bool = true) -> [String] {
-        var unresolvedDependencies: [String] = []
-        for checkDependency in checkDependencies {
-            if let dependencyItem = dependencies[checkDependency] {
-                if dependencyItem.state != .resolved && dependencyItem.state != .refreshing && dependencyItem.state != .refreshError {
-                    unresolvedDependencies.append(checkDependency)
-                }
-                if includeBase {
-                    unresolvedDependencies.append(contentsOf: getUnresolvedDependencies(checkDependencies: dependencyItem.dependencies))
-                }
-            } else {
-                unresolvedDependencies.append(checkDependency)
-            }
-        }
-        return Array(Set(unresolvedDependencies))
-    }
-    
-    public func getUnresolvedBaseDependencies(checkDependencies: [String]) -> [String] {
-        var baseDependencies: [String] = []
-        for checkDependency in checkDependencies {
-            if let dependencyItem = dependencies[checkDependency] {
-                var recursiveBaseDependencies = getUnresolvedBaseDependencies(checkDependencies: dependencyItem.dependencies)
-                if recursiveBaseDependencies.count > 0 {
-                    baseDependencies.append(contentsOf: recursiveBaseDependencies)
-                } else {
-                    baseDependencies.append(contentsOf: getUnresolvedDependencies(checkDependencies: dependencyItem.dependencies))
-                }
-            }
-        }
-        return Array(Set(baseDependencies))
-    }
-
-    public func resolveDependency(dependency: String, forceRefresh: Bool = false, input: [String: String]? = nil) {
-        if let dependencyItem = dependencies[dependency] {
-            // If the item is already busy resolving, bail out and wait for the existing resolution to be complete
-            if dependencyItem.state == .obtaining || dependencyItem.state == .refreshing {
-                return
-            }
-            
-            // Return if the dependency is already up to date
-            if dependencyItem.state == .resolved && !dependencyItem.isExpired() && !forceRefresh {
-                NotificationCenter.default.post(name: Notification.Name(rawValue: InjectorDependencyManager.dependencyResolved), object: self, userInfo: ["dependency": dependency])
-                return
-            }
-            
-            // Check for input needed to resolve dependency
-            var hasRequiredInput = true
-            var sendInput: [String: String] = [:]
-            for key in dependencyItem.requiresInput {
-                if let inputValue = input?[key] {
-                    sendInput[key] = inputValue
-                } else {
-                    hasRequiredInput = false
+    public func filteredBaseDependencies(_ dependencies: [InjectorDependency]) -> [InjectorDependency] {
+        var baseDependencies: [InjectorDependency] = []
+        for dependency in dependencies {
+            var foundBase = false
+            for checkDependency in dependency.dependencies {
+                if dependencies.filter({ el in el === checkDependency }).count == 0 {
+                    foundBase = true
                     break
                 }
             }
-            
-            // Try to resolve the dependency or fail without enough input
-            if hasRequiredInput {
-                dependencyItem.state = dependencyItem.state == .resolved || dependencyItem.state == .refreshError ? .refreshing : .obtaining
-                dependencyItem.resolve(input: sendInput, completion: { success in
-                    if success {
-                        dependencyItem.resetExpiration()
-                        dependencyItem.state = .resolved
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: InjectorDependencyManager.dependencyResolved), object: self, userInfo: ["dependency": dependency])
-                    } else {
-                        dependencyItem.state = dependencyItem.state == .refreshing ? .refreshError : .obtainError
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: InjectorDependencyManager.dependencyFailed), object: self, userInfo: ["dependency": dependency, "reason": "resolveError"])
-                    }
-                })
-            } else {
-                NotificationCenter.default.post(name: Notification.Name(rawValue: InjectorDependencyManager.dependencyFailed), object: self, userInfo: ["dependency": dependency, "reason": "missingInput"])
+            if !foundBase {
+                baseDependencies.append(dependency)
             }
+        }
+        return baseDependencies
+    }
+    
+    public func filteredDependencies(_ dependencies: [InjectorDependency], forState: InjectorDependencyState, includeBase: Bool = true) -> [InjectorDependency] {
+        var filteredList: [InjectorDependency] = []
+        for dependency in dependencies {
+            if dependency.state.isKindOfState(forState) {
+                filteredList.append(dependency)
+            }
+            if includeBase {
+                filteredList.append(contentsOf: filteredDependencies(dependency.dependencies, forState: forState))
+            }
+        }
+        return removedDuplicateDependencies(filteredList)
+    }
+    
+    public func filteredDependencies(_ dependencies: [InjectorDependency], excludingState: InjectorDependencyState, includeBase: Bool = true) -> [InjectorDependency] {
+        var filteredList: [InjectorDependency] = []
+        for dependency in dependencies {
+            if !dependency.state.isKindOfState(excludingState) {
+                filteredList.append(dependency)
+            }
+            if includeBase {
+                filteredList.append(contentsOf: filteredDependencies(dependency.dependencies, excludingState: excludingState))
+            }
+        }
+        return removedDuplicateDependencies(filteredList)
+    }
+
+    private func removedDuplicateDependencies(_ dependencies: [InjectorDependency]) -> [InjectorDependency] {
+        var result: [InjectorDependency] = []
+        for dependency in dependencies {
+            var foundItem = false
+            for checkDuplicate in result {
+                if checkDuplicate === dependency {
+                    foundItem = true
+                    break
+                }
+            }
+            if !foundItem {
+                result.append(dependency)
+            }
+        }
+        return result
+    }
+
+
+    // ---
+    // MARK: Resolving dependencies
+    // ---
+    
+    public func resolveDependency(dependency: InjectorDependency, forceRefresh: Bool = false, input: [String: String]? = nil) {
+        // If the item is already busy loading or refreshing, bail out and wait for the existing resolution to be complete
+        if dependency.state.isKindOfState(.loading) {
+            return
+        }
+        
+        // Return if the dependency is already up to date
+        if dependency.state.isKindOfState(.resolved) && !dependency.isExpired() && !forceRefresh {
+            NotificationCenter.default.post(name: Notification.Name(rawValue: InjectorDependencyManager.dependencyResolved), object: self, userInfo: ["dependency": dependency])
+            return
+        }
+        
+        // Check for input needed to resolve dependency
+        var hasRequiredInput = true
+        var sendInput: [String: String] = [:]
+        for key in dependency.requiresInput {
+            if let inputValue = input?[key] {
+                sendInput[key] = inputValue
+            } else {
+                hasRequiredInput = false
+                break
+            }
+        }
+        
+        // Try to resolve the dependency or fail without enough input
+        if hasRequiredInput {
+            dependency.state = dependency.state.isKindOfState(.resolved) ? .refreshing : .loading
+            dependency.resolve(input: sendInput, completion: { success in
+                if success {
+                    dependency.resetExpiration()
+                    dependency.state = .resolved
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: InjectorDependencyManager.dependencyResolved), object: self, userInfo: ["dependency": dependency])
+                } else {
+                    dependency.state = dependency.state.isKindOfState(.resolved) ? .refreshError : .error
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: InjectorDependencyManager.dependencyFailed), object: self, userInfo: ["dependency": dependency, "reason": "resolveError"])
+                }
+            })
         } else {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: InjectorDependencyManager.dependencyFailed), object: self, userInfo: ["dependency": dependency, "reason": "notExists"])
+            NotificationCenter.default.post(name: Notification.Name(rawValue: InjectorDependencyManager.dependencyFailed), object: self, userInfo: ["dependency": dependency, "reason": "missingInput"])
         }
     }
 
@@ -182,9 +196,9 @@ public class InjectorDependencyManager {
 
     public func generateInjectableData() -> [String: Any] {
         var data: [String: Any] = [:]
-        for (name, dependency) in dependencies {
+        for dependency in dependencies {
             if let injectionData = dependency.obtainInjectableData() {
-                data[name] = injectionData
+                data[dependency.name] = injectionData
             }
         }
         return data

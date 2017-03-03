@@ -8,13 +8,20 @@
 
 import Foundation
 
-public enum InjectorDependencyState {
+public enum InjectorDependencyState: Int {
     
-    case pending
-    case obtaining
-    case refreshing
-    case resolved
-    case obtainError
-    case refreshError
+    case idle = 0
+    case loading = 1
+    case resolved = 2
+    case refreshing = 3
+    case error = 4
+    case refreshError = 6
+    
+    func isKindOfState(_ state: InjectorDependencyState) -> Bool {
+        if state == .idle && self == .idle {
+            return true
+        }
+        return (rawValue & state.rawValue) == state.rawValue
+    }
 
 }
