@@ -26,7 +26,7 @@ open class DataInjector {
         return targetData
     }
     
-    open func foundDependencies() -> [String] {
+    open func foundDependencies() -> [InjectorDependency] {
         return []
     }
     

@@ -84,8 +84,8 @@ open class JoinStringInjector: DataInjector {
     // MARK: Dependencies
     // ---
 
-    override open func foundDependencies() -> [String] {
-        if let dependency = InjectorDependencyManager.shared.dependencyNameFrom(injectSource: item ?? "") {
+    override open func foundDependencies() -> [InjectorDependency] {
+        if let dependency = InjectorDependencyManager.shared.dependencyFrom(injectSource: item ?? "") {
             return [dependency]
         }
         return []

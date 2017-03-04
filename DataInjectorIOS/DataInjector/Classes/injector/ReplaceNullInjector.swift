@@ -49,7 +49,7 @@ open class ReplaceNullInjector: DataInjector {
     // MARK: Dependencies
     // ---
 
-    override open func foundDependencies() -> [String] {
+    override open func foundDependencies() -> [InjectorDependency] {
         return []
     }
     

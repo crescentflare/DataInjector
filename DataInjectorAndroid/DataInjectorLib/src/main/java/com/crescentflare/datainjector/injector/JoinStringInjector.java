@@ -1,6 +1,7 @@
 package com.crescentflare.datainjector.injector;
 
 import com.crescentflare.datainjector.conversion.InjectorConv;
+import com.crescentflare.datainjector.dependency.InjectorDependency;
 import com.crescentflare.datainjector.dependency.InjectorDependencyManager;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 
@@ -155,9 +156,9 @@ public class JoinStringInjector extends DataInjector
     // Dependencies
     // ---
 
-    public List<String> findDependencies()
+    public List<InjectorDependency> findDependencies()
     {
-        String dependency = InjectorDependencyManager.instance.dependencyNameFrom(item);
+        InjectorDependency dependency = InjectorDependencyManager.instance.dependencyFromInjectSource(item);
         if (dependency != null)
         {
             return Collections.singletonList(dependency);
