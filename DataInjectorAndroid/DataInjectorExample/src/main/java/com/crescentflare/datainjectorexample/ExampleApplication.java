@@ -27,7 +27,7 @@ public class ExampleApplication extends Application
     {
         super.onCreate();
         context = this;
-        InjectorDependencyManager.instance.addDependency("customers", new MockDependency(R.raw.customer_list));
-        InjectorDependencyManager.instance.addDependency("products", new MockDependency(R.raw.product_list));
+        InjectorDependencyManager.instance.addDependency(new MockDependency("customers", R.raw.customer_list));
+        InjectorDependencyManager.instance.addDependency(new MockDependency("products", R.raw.product_list));
     }
 }

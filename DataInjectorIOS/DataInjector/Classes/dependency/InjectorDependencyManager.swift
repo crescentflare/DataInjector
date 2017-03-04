@@ -87,7 +87,7 @@ public class InjectorDependencyManager {
         for dependency in dependencies {
             var foundBase = false
             for checkDependency in dependency.dependencies {
-                if dependencies.filter({ el in el === checkDependency }).count == 0 {
+                if dependencies.filter({ el in el === checkDependency }).count > 0 {
                     foundBase = true
                     break
                 }

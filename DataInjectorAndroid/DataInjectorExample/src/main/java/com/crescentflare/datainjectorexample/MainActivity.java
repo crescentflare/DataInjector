@@ -7,7 +7,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.crescentflare.datainjector.dependency.InjectorDependency;
 import com.crescentflare.datainjector.dependency.InjectorDependencyManager;
+import com.crescentflare.datainjector.dependency.InjectorDependencyState;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 import com.crescentflare.datainjectorexample.recyclerview.MainAdapter;
 
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
     // Constants
     // ---
 
-    private static final List<String> dependencies = Collections.singletonList("customers");
+    private static final List<InjectorDependency> dependencies = InjectorDependencyManager.instance.getDependencies(Collections.singletonList("customers"));
 
 
     // ---
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
         recyclerAdapter.setItemClickListener(this);
 
         // Determine if dependencies are open
-        dependenciesOpen = InjectorDependencyManager.instance.getUnresolvedDependencies(dependencies).size() > 0;
+        dependenciesOpen = InjectorDependencyManager.instance.filterDependenciesExcludingState(dependencies, InjectorDependencyState.Resolved).size() > 0;
     }
 
 
@@ -69,10 +71,10 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
         InjectorDependencyManager.instance.addUpdateListener(this);
         if (dependenciesOpen)
         {
-            List<String> dependenciesLeft = InjectorDependencyManager.instance.getUnresolvedDependencies(dependencies);
+            List<InjectorDependency> dependenciesLeft = InjectorDependencyManager.instance.filterDependenciesExcludingState(dependencies, InjectorDependencyState.Resolved);
             if (dependenciesLeft.size() > 0)
             {
-                for (String dependency : dependenciesLeft)
+                for (InjectorDependency dependency : dependenciesLeft)
                 {
                     InjectorDependencyManager.instance.resolveDependency(dependency);
                 }
@@ -109,11 +111,11 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
     // ---
 
     @Override
-    public void onDependencyResolved(String dependency)
+    public void onDependencyResolved(InjectorDependency dependency)
     {
         if (dependenciesOpen)
         {
-            List<String> dependenciesLeft = InjectorDependencyManager.instance.getUnresolvedDependencies(dependencies);
+            List<InjectorDependency> dependenciesLeft = InjectorDependencyManager.instance.filterDependenciesExcludingState(dependencies, InjectorDependencyState.Resolved);
             if (dependenciesLeft.size() == 0)
             {
                 dependenciesOpen = false;
@@ -123,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
     }
 
     @Override
-    public void onDependencyFailed(String dependency, String reason)
+    public void onDependencyFailed(InjectorDependency dependency, String reason)
     {
     }
 

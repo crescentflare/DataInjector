@@ -23,7 +23,7 @@ public class InjectorDependencyManager
     // Members
     // ---
 
-    private Map<String, InjectorDependency> dependencies = new HashMap<>();
+    private List<InjectorDependency> dependencies = new ArrayList<>();
     private List<DependencyUpdateListener> updateListeners = new ArrayList<>();
 
 
@@ -40,14 +40,34 @@ public class InjectorDependencyManager
     // Dependency management
     // ---
 
-    public void addDependency(String name, InjectorDependency dependency)
+    public void addDependency(InjectorDependency dependency)
     {
-        dependencies.put(name, dependency);
+        dependencies.add(dependency);
     }
 
     public InjectorDependency getDependency(String name)
     {
-        return dependencies.get(name);
+        for (InjectorDependency dependency : dependencies)
+        {
+            if (dependency.getName().equals(name))
+            {
+                return dependency;
+            }
+        }
+        return null;
+    }
+
+    public List<InjectorDependency> getDependencies(List<String> names)
+    {
+        List<InjectorDependency> dependencyList = new ArrayList<>();
+        for (InjectorDependency dependency : dependencies)
+        {
+            if (names.contains(dependency.getName()))
+            {
+                dependencyList.add(dependency);
+            }
+        }
+        return dependencyList;
     }
 
     public String dependencyNameFrom(String injectSource)
@@ -65,203 +85,163 @@ public class InjectorDependencyManager
 
 
     // ---
+    // Filtering dependencies
+    // ---
+
+    public List<InjectorDependency> filterBaseDependencies(List<InjectorDependency> dependencies)
+    {
+        List<InjectorDependency> baseDependencies = new ArrayList<>();
+        for (InjectorDependency dependency : dependencies)
+        {
+            boolean foundBase = false;
+            for (InjectorDependency checkDependency : dependency.getDependencies())
+            {
+                if (dependencies.contains(checkDependency))
+                {
+                    foundBase = true;
+                    break;
+                }
+            }
+            if (!foundBase)
+            {
+                baseDependencies.add(dependency);
+            }
+        }
+        return baseDependencies;
+    }
+
+    public List<InjectorDependency> filterDependenciesForState(List<InjectorDependency> dependencies, InjectorDependencyState state)
+    {
+        return filterDependenciesForState(dependencies, state, true);
+    }
+
+    public List<InjectorDependency> filterDependenciesForState(List<InjectorDependency> dependencies, InjectorDependencyState state, boolean includeBase)
+    {
+        List<InjectorDependency> filteredList = new ArrayList<>();
+        for (InjectorDependency dependency : dependencies)
+        {
+            if (dependency.getState().isTypeOfState(state))
+            {
+                filteredList.add(dependency);
+            }
+            if (includeBase)
+            {
+                filteredList.addAll(filterDependenciesForState(dependency.getDependencies(), state));
+            }
+        }
+        return new ArrayList<>(new HashSet<>(filteredList));
+    }
+
+    public List<InjectorDependency> filterDependenciesExcludingState(List<InjectorDependency> dependencies, InjectorDependencyState state)
+    {
+        return filterDependenciesExcludingState(dependencies, state, true);
+    }
+
+    public List<InjectorDependency> filterDependenciesExcludingState(List<InjectorDependency> dependencies, InjectorDependencyState state, boolean includeBase)
+    {
+        List<InjectorDependency> filteredList = new ArrayList<>();
+        for (InjectorDependency dependency : dependencies)
+        {
+            if (!dependency.getState().isTypeOfState(state))
+            {
+                filteredList.add(dependency);
+            }
+            if (includeBase)
+            {
+                filteredList.addAll(filterDependenciesExcludingState(dependency.getDependencies(), state));
+            }
+        }
+        return new ArrayList<>(new HashSet<>(filteredList));
+    }
+
+
+    // ---
     // Resolving dependencies
     // ---
 
-    public List<String> getDependenciesInProgress(List<String> checkDependencies)
-    {
-        return getDependenciesInProgress(checkDependencies, true);
-    }
-
-    public List<String> getDependenciesInProgress(List<String> checkDependencies, boolean includeBase)
-    {
-        List<String> inProgress = new ArrayList<>();
-        for (String checkDependency : checkDependencies)
-        {
-            InjectorDependency dependencyItem = dependencies.get(checkDependency);
-            if (dependencyItem != null)
-            {
-                if (dependencyItem.getState() == InjectorDependencyState.Obtaining || dependencyItem.getState() == InjectorDependencyState.Refreshing)
-                {
-                    inProgress.add(checkDependency);
-                }
-                if (includeBase)
-                {
-                    inProgress.addAll(getDependenciesInProgress(dependencyItem.getDependencies(), true));
-                }
-            }
-        }
-        return new ArrayList<>(new HashSet<>(inProgress));
-    }
-
-    public List<String> getDependenciesWithError(List<String> checkDependencies)
-    {
-        return getDependenciesWithError(checkDependencies, true);
-    }
-
-    public List<String> getDependenciesWithError(List<String> checkDependencies, boolean includeBase)
-    {
-        List<String> withError = new ArrayList<>();
-        for (String checkDependency : checkDependencies)
-        {
-            InjectorDependency dependencyItem = dependencies.get(checkDependency);
-            if (dependencyItem != null)
-            {
-                if (dependencyItem.isError())
-                {
-                    withError.add(checkDependency);
-                }
-                if (includeBase)
-                {
-                    withError.addAll(getDependenciesWithError(dependencyItem.getDependencies(), true));
-                }
-            }
-        }
-        return new ArrayList<>(new HashSet<>(withError));
-    }
-
-    public List<String> getUnresolvedDependencies(List<String> checkDependencies)
-    {
-        return getUnresolvedDependencies(checkDependencies, true);
-    }
-
-    public List<String> getUnresolvedDependencies(List<String> checkDependencies, boolean includeBase)
-    {
-        List<String> unresolvedDependencies = new ArrayList<>();
-        for (String checkDependency : checkDependencies)
-        {
-            InjectorDependency dependencyItem = dependencies.get(checkDependency);
-            if (dependencyItem != null)
-            {
-                if (dependencyItem.getState() != InjectorDependencyState.Resolved && dependencyItem.getState() != InjectorDependencyState.Refreshing && dependencyItem.getState() != InjectorDependencyState.RefreshError)
-                {
-                    unresolvedDependencies.add(checkDependency);
-                }
-                if (includeBase)
-                {
-                    unresolvedDependencies.addAll(getUnresolvedDependencies(dependencyItem.getDependencies(), true));
-                }
-            }
-        }
-        return new ArrayList<>(new HashSet<>(unresolvedDependencies));
-    }
-
-    public List<String> getUnresolvedBaseDependencies(List<String> checkDependencies)
-    {
-        List<String> baseDependencies = new ArrayList<>();
-        for (String checkDependency : checkDependencies)
-        {
-            InjectorDependency dependencyItem = dependencies.get(checkDependency);
-            if (dependencyItem != null)
-            {
-                List<String> recursiveBaseDependencies = getUnresolvedBaseDependencies(dependencyItem.getDependencies());
-                if (recursiveBaseDependencies.size() > 0)
-                {
-                    baseDependencies.addAll(recursiveBaseDependencies);
-                }
-                else
-                {
-                    baseDependencies.addAll(getUnresolvedDependencies(dependencyItem.getDependencies(), true));
-                }
-            }
-        }
-        return new ArrayList<>(new HashSet<>(baseDependencies));
-    }
-
-    public void resolveDependency(String dependency)
+    public void resolveDependency(InjectorDependency dependency)
     {
         resolveDependency(dependency, false, null);
     }
 
-    public void resolveDependency(String dependency, boolean forceRefresh)
+    public void resolveDependency(InjectorDependency dependency, boolean forceRefresh)
     {
         resolveDependency(dependency, forceRefresh, null);
     }
 
-    public void resolveDependency(String dependency, Map<String, String> input)
+    public void resolveDependency(InjectorDependency dependency, Map<String, String> input)
     {
         resolveDependency(dependency, false, input);
     }
 
-    public void resolveDependency(final String dependency, boolean forceRefresh, Map<String, String> input)
+    public void resolveDependency(final InjectorDependency dependency, boolean forceRefresh, Map<String, String> input)
     {
-        final InjectorDependency dependencyItem = dependencies.get(dependency);
-        if (dependencyItem != null)
+        // If the item is already busy resolving, bail out and wait for the existing resolution to be complete
+        if (dependency.getState().isTypeOfState(InjectorDependencyState.Loading))
         {
-            // If the item is already busy resolving, bail out and wait for the existing resolution to be complete
-            if (dependencyItem.getState() == InjectorDependencyState.Obtaining || dependencyItem.getState() == InjectorDependencyState.Refreshing)
-            {
-                return;
-            }
+            return;
+        }
 
-            // Return if the dependency is already up to date
-            if (dependencyItem.getState() == InjectorDependencyState.Resolved && !dependencyItem.isExpired() && !forceRefresh)
+        // Return if the dependency is already up to date
+        if (dependency.getState().isTypeOfState(InjectorDependencyState.Resolved) && !dependency.isExpired() && !forceRefresh)
+        {
+            for (DependencyUpdateListener listener : updateListeners)
             {
-                for (DependencyUpdateListener listener : updateListeners)
-                {
-                    listener.onDependencyResolved(dependency);
-                }
-                return;
+                listener.onDependencyResolved(dependency);
             }
+            return;
+        }
 
-            // Check for input needed to resolve dependency
-            boolean hasRequiredInput = true;
-            Map<String, String> sendInput = new HashMap<>();
-            for (String key : dependencyItem.getRequiresInput())
+        // Check for input needed to resolve dependency
+        boolean hasRequiredInput = true;
+        Map<String, String> sendInput = new HashMap<>();
+        for (String key : dependency.getRequiresInput())
+        {
+            if (input != null && input.containsKey(key))
             {
-                if (input != null && input.containsKey(key))
-                {
-                    sendInput.put(key, input.get(key));
-                }
-                else
-                {
-                    hasRequiredInput = false;
-                    break;
-                }
-            }
-
-            // Try to resolve the dependency or fail without enough input
-            if (hasRequiredInput)
-            {
-                dependencyItem.setState(dependencyItem.getState() == InjectorDependencyState.Resolved || dependencyItem.getState() == InjectorDependencyState.RefreshError ? InjectorDependencyState.Refreshing : InjectorDependencyState.Obtaining);
-                dependencyItem.resolve(sendInput, new InjectorDependency.CompleteListener()
-                {
-                    @Override
-                    public void onResolveResult(boolean success)
-                    {
-                        if (success)
-                        {
-                            dependencyItem.resetExpiration();
-                            dependencyItem.setState(InjectorDependencyState.Resolved);
-                            for (DependencyUpdateListener listener : updateListeners)
-                            {
-                                listener.onDependencyResolved(dependency);
-                            }
-                        }
-                        else
-                        {
-                            dependencyItem.setState(dependencyItem.getState() == InjectorDependencyState.Refreshing ? InjectorDependencyState.RefreshError : InjectorDependencyState.ObtainError);
-                            for (DependencyUpdateListener listener : updateListeners)
-                            {
-                                listener.onDependencyFailed(dependency, "resolveError");
-                            }
-                        }
-                    }
-                });
+                sendInput.put(key, input.get(key));
             }
             else
             {
-                for (DependencyUpdateListener listener : updateListeners)
-                {
-                    listener.onDependencyFailed(dependency, "missingInput");
-                }
+                hasRequiredInput = false;
+                break;
             }
+        }
+
+        // Try to resolve the dependency or fail without enough input
+        if (hasRequiredInput)
+        {
+            dependency.setState(dependency.getState().isTypeOfState(InjectorDependencyState.Resolved) ? InjectorDependencyState.Refreshing : InjectorDependencyState.Loading);
+            dependency.resolve(sendInput, new InjectorDependency.CompleteListener()
+            {
+                @Override
+                public void onResolveResult(boolean success)
+                {
+                    if (success)
+                    {
+                        dependency.resetExpiration();
+                        dependency.setState(InjectorDependencyState.Resolved);
+                        for (DependencyUpdateListener listener : updateListeners)
+                        {
+                            listener.onDependencyResolved(dependency);
+                        }
+                    }
+                    else
+                    {
+                        dependency.setState(dependency.getState().isTypeOfState(InjectorDependencyState.Resolved) ? InjectorDependencyState.RefreshError : InjectorDependencyState.Error);
+                        for (DependencyUpdateListener listener : updateListeners)
+                        {
+                            listener.onDependencyFailed(dependency, "resolveError");
+                        }
+                    }
+                }
+            });
         }
         else
         {
             for (DependencyUpdateListener listener : updateListeners)
             {
-                listener.onDependencyFailed(dependency, "notExists");
+                listener.onDependencyFailed(dependency, "missingInput");
             }
         }
     }
@@ -274,13 +254,12 @@ public class InjectorDependencyManager
     public Map<String, Object> generateInjectableData()
     {
         Map<String, Object> data = new HashMap<>();
-        for (String name : dependencies.keySet())
+        for (InjectorDependency dependency : dependencies)
         {
-            InjectorDependency dependency = dependencies.get(name);
             Object injectionData = dependency.obtainInjectableData();
             if (injectionData != null)
             {
-                data.put(name, injectionData);
+                data.put(dependency.getName(), injectionData);
             }
         }
         return data;
@@ -309,7 +288,7 @@ public class InjectorDependencyManager
 
     public interface DependencyUpdateListener
     {
-        void onDependencyResolved(String dependency);
-        void onDependencyFailed(String dependency, String reason);
+        void onDependencyResolved(InjectorDependency dependency);
+        void onDependencyFailed(InjectorDependency dependency, String reason);
     }
 }

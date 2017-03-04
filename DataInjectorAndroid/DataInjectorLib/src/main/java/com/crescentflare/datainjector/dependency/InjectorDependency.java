@@ -1,12 +1,6 @@
 package com.crescentflare.datainjector.dependency;
 
-import com.crescentflare.datainjector.conversion.InjectorConv;
-import com.crescentflare.datainjector.utility.InjectorDataDetector;
-import com.crescentflare.datainjector.utility.InjectorDataType;
-import com.crescentflare.datainjector.utility.InjectorUtil;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,19 +14,21 @@ public class InjectorDependency
     // Members
     // ---
 
+    private String name;
     private int lastUpdated = 0;
-    private InjectorDependencyState state = InjectorDependencyState.Pending;
+    private InjectorDependencyState state = InjectorDependencyState.Idle;
     private int expiration = -1;
     private List<String> requiresInput = new ArrayList<>();
-    private List<String> dependencies = new ArrayList<>();
+    private List<InjectorDependency> dependencies = new ArrayList<>();
 
 
     // ---
     // Initialization
     // ---
 
-    public InjectorDependency()
+    public InjectorDependency(String name)
     {
+        this.name = name;
     }
 
 
@@ -67,7 +63,7 @@ public class InjectorDependency
 
     public boolean isError()
     {
-        return state == InjectorDependencyState.ObtainError || state == InjectorDependencyState.RefreshError;
+        return state.isTypeOfState(InjectorDependencyState.Error);
     }
 
 
@@ -84,6 +80,11 @@ public class InjectorDependency
     // ---
     // Change values
     // ---
+
+    public String getName()
+    {
+        return name;
+    }
 
     public InjectorDependencyState getState()
     {
@@ -110,12 +111,12 @@ public class InjectorDependency
         this.requiresInput = requiresInput;
     }
 
-    public List<String> getDependencies()
+    public List<InjectorDependency> getDependencies()
     {
         return dependencies;
     }
 
-    public void setDependencies(List<String> dependencies)
+    public void setDependencies(List<InjectorDependency> dependencies)
     {
         this.dependencies = dependencies;
     }

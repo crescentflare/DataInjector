@@ -39,9 +39,10 @@ public class MockDependency extends InjectorDependency
     // Initialization
     // ---
 
-    public MockDependency(int rawResource)
+    public MockDependency(String name, int rawResource)
     {
         // Add basic injectors
+        super(name);
         injectors.addAll(Arrays.asList(
                 new SnakeToCamelCaseInjector(),
                 new ReplaceNullInjector()
