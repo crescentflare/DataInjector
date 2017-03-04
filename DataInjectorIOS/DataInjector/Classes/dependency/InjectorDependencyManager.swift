@@ -125,7 +125,7 @@ public class InjectorDependencyManager {
         return removedDuplicateDependencies(filteredList)
     }
 
-    private func removedDuplicateDependencies(_ dependencies: [InjectorDependency]) -> [InjectorDependency] {
+    public func removedDuplicateDependencies(_ dependencies: [InjectorDependency]) -> [InjectorDependency] {
         var result: [InjectorDependency] = []
         for dependency in dependencies {
             var foundItem = false
