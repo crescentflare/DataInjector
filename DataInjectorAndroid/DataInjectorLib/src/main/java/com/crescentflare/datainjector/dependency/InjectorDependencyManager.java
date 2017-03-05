@@ -31,7 +31,7 @@ public class InjectorDependencyManager
     // Initialization
     // ---
 
-    private InjectorDependencyManager()
+    public InjectorDependencyManager()
     {
     }
 
@@ -81,6 +81,11 @@ public class InjectorDependencyManager
             }
         }
         return null;
+    }
+
+    public List<InjectorDependency> removeDuplicateDependencies(List<InjectorDependency> dependencies)
+    {
+        return new ArrayList<>(new HashSet<>(dependencies));
     }
 
 

@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// A base injector class which can be used as a generic interface to execute an injection operation
 open class DataInjector {
     
     // ---

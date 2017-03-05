@@ -8,6 +8,8 @@
 
 import Foundation
 
+/// A manager class keeping track of all dependencies, also protects against a dependency
+/// resolving itself unnecessarily. Mainly used as a singleton
 public class InjectorDependencyManager {
     
     // --
@@ -36,7 +38,7 @@ public class InjectorDependencyManager {
     // MARK: Initialization
     // ---
     
-    private init() {
+    public init() {
     }
 
 

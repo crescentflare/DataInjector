@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// A type of condition element used in the injector condition class
 enum InjectorConditionType: String {
 
     // ---

@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// An injector linking multiple datasets together by a common field (like ID)
 open class LinkDataInjector: DataInjector {
     
     // ---

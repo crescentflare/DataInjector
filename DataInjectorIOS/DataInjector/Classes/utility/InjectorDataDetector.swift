@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// A utility to help parse data types from a string used in conditions or mappers
 public class InjectorDataDetector {
     
     // ---

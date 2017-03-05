@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// An item in an injector condition sequence
 private class InjectorConditionItem {
     
     let conditionType: InjectorConditionType
@@ -22,6 +23,7 @@ private class InjectorConditionItem {
     
 }
 
+/// A utility which can be used to parse a condition string and check for its result
 public class InjectorCondition {
     
     // ---

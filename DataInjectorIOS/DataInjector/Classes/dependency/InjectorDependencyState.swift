@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// The state of the dependency using values which can be used as flags for bitwise comparisons
 public enum InjectorDependencyState: Int {
     
     case idle = 0

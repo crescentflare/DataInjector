@@ -8,6 +8,8 @@
 
 import Foundation
 
+/// A base class to define a dependency which can be resolved by various means,
+/// like reading a file or executing an API call
 open class InjectorDependency {
     
     // ---

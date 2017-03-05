@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// A utility to easily obtain or inject values within data sets (like arrays and dictionaries)
 public class InjectorUtil {
     
     // ---

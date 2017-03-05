@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// A utility which parses a mapping string and can map the query into one of the results
 public class InjectorMapper {
     
     // ---

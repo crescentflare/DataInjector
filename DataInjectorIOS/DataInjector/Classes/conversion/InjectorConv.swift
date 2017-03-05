@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// A utility class to easily convert between data types
 public class InjectorConv {
     
     // ---

@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// The type of data used by utilities which need string parsing
 public enum InjectorDataType {
     
     case unknown

@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// An injector joining multiple strings together with an optional delimiter
 open class JoinStringInjector: DataInjector {
     
     // ---
