@@ -9,7 +9,8 @@
 Pod::Spec.new do |s|
   s.name             = 'DataInjector'
   s.version          = '0.1.0'
-  s.summary          = 'Easily map and manipulate dictionaries.'
+  s.swift_version    = '5.0'
+  s.summary          = 'Easily map and manipulate nested dictionaries.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +19,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-Data injector is a project to easily manipulate JSON data before being handled by the application. For example, to map restful API responses into view models together with view content or to fix API responses.
+Data injector is a project to easily manipulate dictionaries before being handled by the application. For example, to map JSON data of restful API responses into view models together with view content or to fix API responses.
                        DESC
 
   s.homepage         = 'https://github.com/crescentflare/DataInjector'
@@ -33,7 +34,7 @@ Data injector is a project to easily manipulate JSON data before being handled b
   s.source_files = 'DataInjectorIOS/DataInjector/Classes/**/*'
   
   # s.resource_bundles = {
-  #   'DataInjector' => ['DataInjector/Assets/*.png']
+  #   'DataInjector' => ['DataInjectorIOS/DataInjector/Assets/*.png']
   # }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'

@@ -24,7 +24,7 @@ open class SnakeToCamelCaseInjector: DataInjector {
     // ---
     
     public static func camelCaseString(from snakeCaseString: String) -> String {
-        let stringItems = snakeCaseString.characters.split(separator: "_").map(String.init)
+        let stringItems = snakeCaseString.split(separator: "_").map(String.init)
         var resultString = snakeCaseString
         if stringItems.count > 1 {
             resultString = stringItems[0]

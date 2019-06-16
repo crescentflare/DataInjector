@@ -38,7 +38,7 @@ public class InjectorDataDetector {
         return .unknown
     }
     
-    public static func detectFromString(_ value: String, start: String.CharacterView.Index? = nil) -> InjectorDataType {
+    public static func detectFromString(_ value: String, start: String.Index? = nil) -> InjectorDataType {
         var offsetString = value
         if start != nil {
             offsetString = value.substring(from: start!)
@@ -53,29 +53,29 @@ public class InjectorDataDetector {
             return .boolean
         } else if offsetString.hasPrefix("empty") {
             return .empty
-        } else if offsetString.characters.count > 0 && (offsetString.characters[offsetString.startIndex] >= "0" && offsetString.characters[offsetString.startIndex] <= "9") {
+        } else if offsetString.count > 0 && (offsetString[offsetString.startIndex] >= "0" && offsetString[offsetString.startIndex] <= "9") {
             return containsDot(numberString: offsetString) ? .decimalNumber : .number
-        } else if offsetString.characters.count > 1 && offsetString.characters[offsetString.startIndex] == "-" && (offsetString.characters[offsetString.index(after: offsetString.startIndex)] >= "0" && offsetString.characters[offsetString.index(after: offsetString.startIndex)] <= "9") {
+        } else if offsetString.count > 1 && offsetString[offsetString.startIndex] == "-" && (offsetString[offsetString.index(after: offsetString.startIndex)] >= "0" && offsetString[offsetString.index(after: offsetString.startIndex)] <= "9") {
             return containsDot(numberString: offsetString) ? .decimalNumber : .number
         }
         return .string
     }
     
-    public static func endOfTypeString(type: InjectorDataType, value: String, start: String.CharacterView.Index? = nil) -> String.CharacterView.Index? {
+    public static func endOfTypeString(type: InjectorDataType, value: String, start: String.Index? = nil) -> String.Index? {
         var checkStart = start ?? value.startIndex
         var offsetString = value.substring(from: checkStart)
         if type == .string && (offsetString.hasPrefix("'") || offsetString.hasPrefix("\"")) {
-            let findEndChar = offsetString.characters[offsetString.startIndex]
+            let findEndChar = offsetString[offsetString.startIndex]
             checkStart = value.index(after: checkStart)
-            for index in value.characters.indices[checkStart..<value.endIndex] {
-                if value.characters[index] == findEndChar {
+            for index in value.indices[checkStart..<value.endIndex] {
+                if value[index] == findEndChar {
                     return value.index(after: index)
                 }
             }
         } else if type == .number || type == .decimalNumber {
             checkStart = value.index(after: checkStart)
-            for index in value.characters.indices[checkStart..<value.endIndex] {
-                if !(value.characters[index] >= "0" && value.characters[index] <= "9") && value.characters[index] != "." {
+            for index in value.indices[checkStart..<value.endIndex] {
+                if !(value[index] >= "0" && value[index] <= "9") && value[index] != "." {
                     return index
                 }
             }
@@ -97,8 +97,8 @@ public class InjectorDataDetector {
     // ---
     
     private static func containsDot(numberString: String) -> Bool {
-        for index in numberString.characters.indices {
-            let chr = numberString.characters[index]
+        for index in numberString.indices {
+            let chr = numberString[index]
             if chr == "." {
                 return true
             }

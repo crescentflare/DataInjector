@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: Lifecycle callbacks
     // --
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         InjectorDependencyManager.shared.addDependency(MockDependency(name: "customers", filename: "customer_list"))
         InjectorDependencyManager.shared.addDependency(MockDependency(name: "products", filename: "product_list"))
         return true

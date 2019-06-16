@@ -71,7 +71,7 @@ public class InjectorDependencyManager {
     
     public func dependencyFrom(injectSource: String) -> InjectorDependency? {
         if !injectSource.hasPrefix("@.") && injectSource.hasPrefix("@") {
-            let sourcePath = injectSource.characters.split(separator: ".").map(String.init)
+            let sourcePath = injectSource.split(separator: ".").map(String.init)
             if sourcePath.count > 0 {
                 return dependency(forName: sourcePath[0].substring(from: sourcePath[0].index(after: sourcePath[0].startIndex)))
             }

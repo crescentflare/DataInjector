@@ -44,8 +44,8 @@ enum InjectorConditionType: String {
 
     static func isReservedCharacter(chr: Character) -> Bool {
         for value in allValues() {
-            if value.rawValue.characters.count > 0 {
-                let firstChr = value.rawValue.characters[value.rawValue.startIndex]
+            if value.rawValue.count > 0 {
+                let firstChr = value.rawValue[value.rawValue.startIndex]
                 if firstChr == chr {
                     return true
                 }

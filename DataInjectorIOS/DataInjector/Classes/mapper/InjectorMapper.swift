@@ -41,7 +41,7 @@ public class InjectorMapper {
         }
         
         // Loop through mapping and find items
-        var curPos: String.CharacterView.Index? = checkMapping.startIndex
+        var curPos: String.Index? = checkMapping.startIndex
         var findingData = true
         while findingData {
             // Reset state
@@ -50,7 +50,7 @@ public class InjectorMapper {
             
             // Find the item type for the mapping key
             let keyType = InjectorDataDetector.detectFromString(checkMapping, start: curPos)
-            var endPos: String.CharacterView.Index? = InjectorDataDetector.endOfTypeString(type: keyType, value: checkMapping, start: curPos)
+            var endPos: String.Index? = InjectorDataDetector.endOfTypeString(type: keyType, value: checkMapping, start: curPos)
             if endPos == nil {
                 endPos = findAssignmentSeparator(checkMapping, start: curPos)
             }
@@ -149,7 +149,7 @@ public class InjectorMapper {
     // MARK: Helper
     // ---
     
-    private func obtainObject(type: InjectorDataType, mapping: String, start: String.CharacterView.Index, end: String.CharacterView.Index) -> Any? {
+    private func obtainObject(type: InjectorDataType, mapping: String, start: String.Index, end: String.Index) -> Any? {
         var item = mapping.substring(with: start..<end).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         if type == .string {
             var quoteChr = item[item.startIndex]
@@ -190,24 +190,24 @@ public class InjectorMapper {
         return nil
     }
     
-    private func findNonSpace(_ string: String, start: String.CharacterView.Index?) -> String.CharacterView.Index? {
+    private func findNonSpace(_ string: String, start: String.Index?) -> String.Index? {
         if start == nil {
             return nil
         }
-        for index in string.characters.indices[start!..<string.endIndex] {
-            if string.characters[index] != " " {
+        for index in string.indices[start!..<string.endIndex] {
+            if string[index] != " " {
                 return index
             }
         }
         return nil
     }
     
-    private func findAssignmentSeparator(_ string: String, start: String.CharacterView.Index?) -> String.CharacterView.Index? {
+    private func findAssignmentSeparator(_ string: String, start: String.Index?) -> String.Index? {
         if start == nil {
             return nil
         }
         var foundMinus = false
-        for index in string.characters.indices[start!..<string.endIndex] {
+        for index in string.indices[start!..<string.endIndex] {
             if string[index] == ">" && foundMinus {
                 return string.index(before: index)
             }
@@ -216,12 +216,12 @@ public class InjectorMapper {
         return nil
     }
     
-    private func findDividerSeparator(_ string: String, start: String.CharacterView.Index?) -> String.CharacterView.Index? {
+    private func findDividerSeparator(_ string: String, start: String.Index?) -> String.Index? {
         if start == nil {
             return nil
         }
-        for index in string.characters.indices[start!..<string.endIndex] {
-            if string.characters[index] == "," {
+        for index in string.indices[start!..<string.endIndex] {
+            if string[index] == "," {
                 return index
             }
         }

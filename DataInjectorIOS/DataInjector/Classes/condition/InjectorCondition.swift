@@ -38,10 +38,10 @@ public class InjectorCondition {
     // ---
     
     public init(condition: String, fullRefData: [String: Any]? = nil, subRefData: [String: Any]? = nil) {
-        if condition.characters.count == 0 {
+        if condition.count == 0 {
             return
         }
-        var curPos: String.CharacterView.Index? = condition.startIndex
+        var curPos: String.Index? = condition.startIndex
         var findingData = true
         while findingData {
             // Reset state
@@ -50,13 +50,13 @@ public class InjectorCondition {
             
             // Check for condition operator or comparison type
             if curPos != nil && curPos != condition.endIndex {
-                let curChr = condition.characters[curPos!]
+                let curChr = condition[curPos!]
                 if InjectorConditionType.isReservedCharacter(chr: curChr) {
                     var foundType = InjectorConditionType.unknown
                     if let nextIndex = condition.index(curPos!, offsetBy: 2, limitedBy: condition.endIndex) {
                         let checkTypeString = condition.substring(with: curPos!..<nextIndex)
                         for checkType in InjectorConditionType.allValues() {
-                            if checkType.rawValue.characters.count == 2 {
+                            if checkType.rawValue.count == 2 {
                                 if checkTypeString.hasPrefix(checkType.rawValue) {
                                     foundType = checkType
                                     break
@@ -65,7 +65,7 @@ public class InjectorCondition {
                         }
                         if foundType == .unknown {
                             for checkType in InjectorConditionType.allValues() {
-                                if checkType.rawValue.characters.count == 1 {
+                                if checkType.rawValue.count == 1 {
                                     if checkTypeString.hasPrefix(checkType.rawValue) {
                                         foundType = checkType
                                         break
@@ -76,7 +76,7 @@ public class InjectorCondition {
                     }
                     if foundType != .unknown {
                         items.append(InjectorConditionItem(conditionType: foundType, valueType: .unknown, value: nil))
-                        curPos = condition.index(curPos!, offsetBy: foundType.rawValue.characters.count)
+                        curPos = condition.index(curPos!, offsetBy: foundType.rawValue.count)
                     } else {
                         break
                     }
@@ -92,7 +92,7 @@ public class InjectorCondition {
             // Check for value type
             let valueType = InjectorDataDetector.detectFromString(condition, start: curPos)
             if valueType != .unknown {
-                var endPos: String.CharacterView.Index? = InjectorDataDetector.endOfTypeString(type: valueType, value: condition, start: curPos)
+                var endPos: String.Index? = InjectorDataDetector.endOfTypeString(type: valueType, value: condition, start: curPos)
                 if endPos == nil {
                     endPos = findReservedCharacter(condition, start: curPos)
                 }
@@ -177,7 +177,7 @@ public class InjectorCondition {
             } else if secondItem.valueType == .boolean {
                 return InjectorConv.toBool(from: firstItem.value) == InjectorConv.toBool(from: secondItem.value)
             } else if secondItem.valueType == .empty {
-                return firstItem.valueType == .empty || (firstItem.valueType == .string && (InjectorConv.toString(from: firstItem.value)?.characters.count ?? 0) == 0)
+                return firstItem.valueType == .empty || (firstItem.valueType == .string && (InjectorConv.toString(from: firstItem.value)?.count ?? 0) == 0)
             }
             return false
         case .notEquals:
@@ -190,7 +190,7 @@ public class InjectorCondition {
             } else if secondItem.valueType == .boolean {
                 return InjectorConv.toBool(from: firstItem.value) != InjectorConv.toBool(from: secondItem.value)
             } else if secondItem.valueType == .empty {
-                return firstItem.valueType != .empty || (firstItem.valueType == .string && (InjectorConv.toString(from: firstItem.value)?.characters.count ?? 0) > 0)
+                return firstItem.valueType != .empty || (firstItem.valueType == .string && (InjectorConv.toString(from: firstItem.value)?.count ?? 0) > 0)
             }
             return false
         case .bigger:
@@ -231,7 +231,7 @@ public class InjectorCondition {
     // MARK: Parse helpers
     // ---
     
-    private func obtainObject(type: InjectorDataType, condition: String, start: String.CharacterView.Index, end: String.CharacterView.Index, fullRefData: [String: Any]?, subRefData: [String: Any]?) -> Any? {
+    private func obtainObject(type: InjectorDataType, condition: String, start: String.Index, end: String.Index, fullRefData: [String: Any]?, subRefData: [String: Any]?) -> Any? {
         var item = condition.substring(with: start..<end).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         if type == .string {
             var quoteChr = item[item.startIndex]
@@ -272,24 +272,24 @@ public class InjectorCondition {
         return nil
     }
 
-    private func findNonSpace(_ string: String, start: String.CharacterView.Index?) -> String.CharacterView.Index? {
+    private func findNonSpace(_ string: String, start: String.Index?) -> String.Index? {
         if start == nil {
             return nil
         }
-        for index in string.characters.indices[start!..<string.endIndex] {
-            if string.characters[index] != " " {
+        for index in string.indices[start!..<string.endIndex] {
+            if string[index] != " " {
                 return index
             }
         }
         return nil
     }
 
-    private func findReservedCharacter(_ string: String, start: String.CharacterView.Index?) -> String.CharacterView.Index? {
+    private func findReservedCharacter(_ string: String, start: String.Index?) -> String.Index? {
         if start == nil {
             return nil
         }
-        for index in string.characters.indices[start!..<string.endIndex] {
-            if InjectorConditionType.isReservedCharacter(chr: string.characters[index]) {
+        for index in string.indices[start!..<string.endIndex] {
+            if InjectorConditionType.isReservedCharacter(chr: string[index]) {
                 return index
             }
         }

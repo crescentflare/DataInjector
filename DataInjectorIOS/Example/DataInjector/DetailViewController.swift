@@ -41,7 +41,7 @@ class DetailViewController: UIViewController, UITableViewDataSource {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.estimatedRowHeight = tableView.rowHeight
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         dependenciesOpen = InjectorDependencyManager.shared.filteredDependencies(DetailViewController.dependencies, excludingState: .resolved).count > 0
         if !dependenciesOpen {
             refreshDisplayedData()
@@ -72,7 +72,7 @@ class DetailViewController: UIViewController, UITableViewDataSource {
     // MARK: Dependency handling
     // --
 
-    func dependenciesDidUpdate() {
+    @objc func dependenciesDidUpdate() {
         if dependenciesOpen {
             let dependenciesLeft = InjectorDependencyManager.shared.filteredDependencies(DetailViewController.dependencies, excludingState: .resolved)
             if dependenciesLeft.count == 0 {

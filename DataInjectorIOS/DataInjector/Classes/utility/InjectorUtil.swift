@@ -47,7 +47,7 @@ public class InjectorUtil {
     // ---
 
     public static func itemFromDictionary(_ dictionary: [String: Any], path: String?, separator: Character = ".") -> Any? {
-        if let splittedPath = path?.characters.split(separator: separator).map(String.init) {
+        if let splittedPath = path?.split(separator: separator).map(String.init) {
             return itemFromDictionary(dictionary, path: splittedPath)
         }
         return nil
@@ -72,7 +72,7 @@ public class InjectorUtil {
     }
 
     public static func setItemOnDictionary(_ dictionary: inout [String: Any], path: String?, separator: Character = ".", value: Any?) {
-        if let splittedPath = path?.characters.split(separator: separator).map(String.init) {
+        if let splittedPath = path?.split(separator: separator).map(String.init) {
             setItemOnDictionary(&dictionary, path: splittedPath, value: value)
         }
     }
@@ -105,7 +105,7 @@ public class InjectorUtil {
     // ---
 
     public static func itemFromArray(_ array: [Any], path: String?, separator: Character = ".") -> Any? {
-        if let splittedPath = path?.characters.split(separator: separator).map(String.init) {
+        if let splittedPath = path?.split(separator: separator).map(String.init) {
             return itemFromArray(array, path: splittedPath)
         }
         return nil
@@ -133,7 +133,7 @@ public class InjectorUtil {
     }
 
     public static func setItemOnArray(_ array: inout [Any], path: String?, separator: Character = ".", value: Any?) {
-        if let splittedPath = path?.characters.split(separator: separator).map(String.init) {
+        if let splittedPath = path?.split(separator: separator).map(String.init) {
             setItemOnArray(&array, path: splittedPath, value: value)
         }
     }

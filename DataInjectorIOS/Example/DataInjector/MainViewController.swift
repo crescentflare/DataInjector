@@ -66,7 +66,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: Dependency handling
     // --
 
-    func dependenciesDidUpdate() {
+    @objc func dependenciesDidUpdate() {
         if dependenciesOpen {
             let dependenciesLeft = InjectorDependencyManager.shared.filteredDependencies(MainViewController.dependencies, excludingState: .resolved)
             if dependenciesLeft.count == 0 {

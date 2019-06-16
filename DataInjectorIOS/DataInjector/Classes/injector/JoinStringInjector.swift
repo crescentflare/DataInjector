@@ -60,7 +60,7 @@ open class JoinStringInjector: DataInjector {
             if removeOriginals {
                 for fromItem in fromItems {
                     if !fromItem.hasPrefix("~.") && fromItem.hasPrefix("~") {
-                        InjectorUtil.setItemOnDictionary(&modifyDict, path: fromItem.substring(from: fromItem.characters.index(after: fromItem.startIndex)), value: nil)
+                        InjectorUtil.setItemOnDictionary(&modifyDict, path: fromItem.substring(from: fromItem.index(after: fromItem.startIndex)), value: nil)
                     }
                 }
             }
@@ -70,7 +70,7 @@ open class JoinStringInjector: DataInjector {
             if removeOriginals {
                 for fromItem in fromItems {
                     if !fromItem.hasPrefix("~.") && fromItem.hasPrefix("~") {
-                        InjectorUtil.setItemOnArray(&modifyArray, path: fromItem.substring(from: fromItem.characters.index(after: fromItem.startIndex)), value: nil)
+                        InjectorUtil.setItemOnArray(&modifyArray, path: fromItem.substring(from: fromItem.index(after: fromItem.startIndex)), value: nil)
                     }
                 }
             }
