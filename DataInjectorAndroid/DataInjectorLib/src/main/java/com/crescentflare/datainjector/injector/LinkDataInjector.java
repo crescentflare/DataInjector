@@ -12,7 +12,7 @@ import java.util.Map;
  * Data injector: link datasets
  * Inject one data set into another by a common field that links them together (such as ID)
  */
-public class LinkDataInjector extends DataInjector
+public class LinkDataInjector extends BaseInjector
 {
     // ---
     // Members

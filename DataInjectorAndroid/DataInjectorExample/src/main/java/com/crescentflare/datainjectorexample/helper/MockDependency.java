@@ -3,7 +3,7 @@ package com.crescentflare.datainjectorexample.helper;
 import android.os.Handler;
 
 import com.crescentflare.datainjector.dependency.InjectorDependency;
-import com.crescentflare.datainjector.injector.DataInjector;
+import com.crescentflare.datainjector.injector.BaseInjector;
 import com.crescentflare.datainjector.injector.JoinStringInjector;
 import com.crescentflare.datainjector.injector.ReplaceNullInjector;
 import com.crescentflare.datainjector.injector.SnakeToCamelCaseInjector;
@@ -30,7 +30,7 @@ public class MockDependency extends InjectorDependency
     // Members
     // ---
 
-    private List<DataInjector> injectors = new ArrayList<>();
+    private List<BaseInjector> injectors = new ArrayList<>();
     private List<Object> storedJson = null;
     private int rawResourceId;
 
@@ -96,7 +96,7 @@ public class MockDependency extends InjectorDependency
                         {
                             for (Object item : processedJson)
                             {
-                                for (DataInjector injector : injectors)
+                                for (BaseInjector injector : injectors)
                                 {
                                     injector.apply(item, null, null);
                                 }

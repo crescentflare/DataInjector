@@ -11,13 +11,13 @@ import java.util.List;
  * Data injector: the base class
  * Classes derived from this base class can be used as a data injector
  */
-public class DataInjector
+public class BaseInjector
 {
     // ---
     // Initialization
     // ---
 
-    public DataInjector()
+    public BaseInjector()
     {
     }
 

@@ -11,7 +11,7 @@ import java.util.Map;
  * Data injector: remove or replace null values
  * Traverses a data set recursively removing null values or replacing them with the given defaults
  */
-public class ReplaceNullInjector extends DataInjector
+public class ReplaceNullInjector extends BaseInjector
 {
     // ---
     // Initialization

@@ -11,7 +11,7 @@ import java.util.Map;
  * Data injector: snake case conversion
  * Converts each entry key in the data set from snake case to camel case recursively
  */
-public class SnakeToCamelCaseInjector extends DataInjector
+public class SnakeToCamelCaseInjector extends BaseInjector
 {
     // ---
     // Initialization
