@@ -270,7 +270,7 @@ public final class DataInjector
                 System.arraycopy(pathComponents, 1, subPathComponents, 0, count);
                 return new Path(subPathComponents);
             }
-            return new Path("");
+            return new Path();
         }
     }
 
