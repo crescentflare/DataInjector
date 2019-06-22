@@ -9,7 +9,7 @@
 import Foundation
 
 /// An injector joining multiple strings together with an optional delimiter
-open class JoinStringInjector: DataInjector {
+open class JoinStringInjector: BaseInjector {
     
     // ---
     // MARK: Members
@@ -48,7 +48,7 @@ open class JoinStringInjector: DataInjector {
         var finalString = ""
         var firstItem = false
         for fromItem in fromItems {
-            if let concatString = InjectorConv.toString(from: DataInjector.obtainValue(item: fromItem, targetData: targetData, subTargetData: nil, referencedData: referencedData, subReferencedData: subReferencedData)) {
+            if let concatString = InjectorConv.toString(from: BaseInjector.obtainValue(item: fromItem, targetData: targetData, subTargetData: nil, referencedData: referencedData, subReferencedData: subReferencedData)) {
                 if !firstItem {
                     finalString += delimiter
                 }

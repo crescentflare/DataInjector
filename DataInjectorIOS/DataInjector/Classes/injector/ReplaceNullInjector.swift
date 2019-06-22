@@ -9,7 +9,7 @@
 import Foundation
 
 /// An injector filtering out or replacing null values
-open class ReplaceNullInjector: DataInjector {
+open class ReplaceNullInjector: BaseInjector {
     
     // ---
     // MARK: Initialization

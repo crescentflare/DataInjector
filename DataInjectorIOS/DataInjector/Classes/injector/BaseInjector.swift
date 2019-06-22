@@ -1,5 +1,5 @@
 //
-//  DataInjector.swift
+//  BaseInjector.swift
 //  DataInjector Pod
 //
 //  Library injector: the base class
@@ -9,7 +9,7 @@
 import Foundation
 
 /// A base injector class which can be used as a generic interface to execute an injection operation
-open class DataInjector {
+open class BaseInjector {
     
     // ---
     // MARK: Initialization

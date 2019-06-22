@@ -14,7 +14,7 @@ class MockDependency: InjectorDependency {
     // MARK: Members
     // --
     
-    private var injectors: [DataInjector] = [
+    private var injectors: [BaseInjector] = [
         SnakeToCamelCaseInjector(),
         ReplaceNullInjector()
     ]

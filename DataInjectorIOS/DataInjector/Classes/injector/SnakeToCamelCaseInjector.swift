@@ -9,7 +9,7 @@
 import Foundation
 
 /// An injector converting snake case into camel case for object keys
-open class SnakeToCamelCaseInjector: DataInjector {
+open class SnakeToCamelCaseInjector: BaseInjector {
     
     // ---
     // MARK: Initialization
