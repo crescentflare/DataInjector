@@ -40,12 +40,12 @@ public class DataInjectorTest
         );
 
         // Apply manual injection to change the price
-        DataInjector.Result result = DataInjector.instance.inject(inventoryMap, "clothing.shirts.small", new DataInjector.ModifyCallback()
+        DataInjector.Result result = DataInjector.inject(inventoryMap, "clothing.shirts.small", new DataInjector.ModifyCallback()
         {
             @Override
             public DataInjector.Result modify(Object originalData)
             {
-                return new DataInjector.Result("8.95");
+                return DataInjector.Result.withModifiedObject("8.95");
             }
         });
 
@@ -78,12 +78,12 @@ public class DataInjectorTest
         List<List<Integer>> nestedNumbers = Arrays.asList(evenNumbers, oddNumbers);
 
         // Apply manual injection to change the number
-        DataInjector.Result result = DataInjector.instance.inject(nestedNumbers, "1.2", new DataInjector.ModifyCallback()
+        DataInjector.Result result = DataInjector.inject(nestedNumbers, "1.2", new DataInjector.ModifyCallback()
         {
             @Override
             public DataInjector.Result modify(Object originalData)
             {
-                return new DataInjector.Result(5);
+                return DataInjector.Result.withModifiedObject(5);
             }
         });
 

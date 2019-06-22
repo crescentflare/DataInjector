@@ -48,6 +48,8 @@ android {
 }
 
 dependencies {
+    compileOnly 'org.jetbrains:annotations:16.0.2'
+
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.json:org.json:2.0'
 }

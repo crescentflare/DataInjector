@@ -3,6 +3,9 @@ package com.crescentflare.datainjector.injector;
 import com.crescentflare.datainjector.conversion.InjectorConv;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,20 +15,13 @@ import java.util.Map;
  * Data injector: manually modify data
  * Search for an item in a nested data structure and return the modified result
  */
-public class DataInjector
+public final class DataInjector
 {
     // --
-    // Singleton instance
+    // Private constructor, this is a static class
     // --
 
-    public static DataInjector instance = new DataInjector();
-
-
-    // --
-    // Initialization
-    // --
-
-    public DataInjector()
+    private DataInjector()
     {
     }
 
@@ -34,12 +30,15 @@ public class DataInjector
     // Modify data
     // --
 
-    public Result inject(Object data, String path, ModifyCallback modifyCallback)
+    @NotNull
+    public static Result inject(@Nullable Object data, @NotNull String path, @NotNull ModifyCallback modifyCallback)
     {
         return inject(data, new Path(path), modifyCallback);
     }
 
-    public Result inject(Object data, Path path, ModifyCallback modifyCallback)
+    @SuppressWarnings("WeakerAccess")
+    @NotNull
+    public static Result inject(@Nullable Object data, @NotNull Path path, @NotNull ModifyCallback modifyCallback)
     {
         if (path.hasElements())
         {
@@ -48,26 +47,27 @@ public class DataInjector
                 Map<String, Object> dataMap = InjectorUtil.asStringObjectMap(data);
                 if (dataMap != null)
                 {
-                    Object originalData = dataMap.get(path.firstElement());
+                    String mapIndex = path.firstElement();
+                    Object originalData = dataMap.get(mapIndex);
                     Result result = inject(originalData, path.deeperPath(), modifyCallback);
-                    if (result.isError())
+                    if (result.hasError())
                     {
                         return result;
                     }
                     if (result.getModifiedObject() != originalData)
                     {
                         HashMap<String, Object> modifiedMap = new HashMap<>();
-                        modifiedMap.put(path.firstElement(), result.getModifiedObject());
+                        modifiedMap.put(mapIndex, result.getModifiedObject());
                         for (String key : dataMap.keySet())
                         {
-                            if (!key.equals(path.firstElement()))
+                            if (!key.equals(mapIndex))
                             {
                                 modifiedMap.put(key, dataMap.get(key));
                             }
                         }
-                        return new Result(modifiedMap);
+                        return Result.withModifiedObject(modifiedMap);
                     }
-                    return new Result(data);
+                    return Result.withModifiedObject(data);
                 }
             }
             else if (data instanceof List)
@@ -81,7 +81,7 @@ public class DataInjector
                     {
                         Object originalData = dataList.get(index);
                         Result result = inject(originalData, path.deeperPath(), modifyCallback);
-                        if (result.isError())
+                        if (result.hasError())
                         {
                             return result;
                         }
@@ -99,18 +99,30 @@ public class DataInjector
                                     modifiedList.add(dataList.get(i));
                                 }
                             }
-                            return new Result(modifiedList);
+                            return Result.withModifiedObject(modifiedList);
                         }
-                        return new Result(data);
+                        return Result.withModifiedObject(data);
+                    }
+                    else
+                    {
+                        return Result.withError(Error.IndexInvalid);
                     }
                 }
+            }
+            else
+            {
+                return Result.withError(Error.NoIndexedCollection);
             }
         }
         else
         {
-            return modifyCallback.modify(data);
+            Result result = modifyCallback.modify(data);
+            if (result != null)
+            {
+                return result;
+            }
         }
-        return new Result(null);
+        return Result.withError(Error.Unknown);
     }
 
 
@@ -118,25 +130,66 @@ public class DataInjector
     // Inject result class
     // --
 
-    public static class Result
+    public static final class Result
     {
         private Object modifiedObject;
-        private boolean error;
+        private Error error;
+        private Object customInfo;
 
-        public Result(Object modifiedObject)
+        private Result()
         {
-            this.modifiedObject = modifiedObject;
-            this.error = modifiedObject == null;
+            // Private constructor, should be created with factory methods
         }
 
-        Object getModifiedObject()
+        public static Result withModifiedObject(@Nullable Object modifiedObject)
+        {
+            Result result = new Result();
+            result.modifiedObject = modifiedObject;
+            return result;
+        }
+
+        @SuppressWarnings("WeakerAccess")
+        public static Result withError(@NotNull Error error)
+        {
+            Result result = new Result();
+            result.error = error;
+            return result;
+        }
+
+        @SuppressWarnings("unused")
+        public static Result withCustomError(@NotNull Object customInfo)
+        {
+            Result result = new Result();
+            result.error = Error.Custom;
+            result.customInfo = customInfo;
+            return result;
+        }
+
+        @SuppressWarnings("WeakerAccess")
+        @Nullable
+        public Object getModifiedObject()
         {
             return modifiedObject;
         }
 
-        boolean isError()
+        @SuppressWarnings("unused")
+        @Nullable
+        public Error getError()
         {
             return error;
+        }
+
+        @SuppressWarnings("WeakerAccess")
+        public boolean hasError()
+        {
+            return error != null;
+        }
+
+        @SuppressWarnings("unused")
+        @Nullable
+        public Object getCustomInfo()
+        {
+            return customInfo;
         }
     }
 
@@ -145,13 +198,20 @@ public class DataInjector
     // Path helper class
     // --
 
-    public static class Path
+    public static final class Path
     {
         private String[] pathComponents;
 
-        public Path(String path)
+        @SuppressWarnings("unused")
+        public Path()
         {
-            if (path != null && !path.isEmpty())
+            pathComponents = new String[0];
+        }
+
+        @SuppressWarnings("WeakerAccess")
+        public Path(@NotNull String path)
+        {
+            if (!path.isEmpty())
             {
                 pathComponents = path.split("\\.");
             }
@@ -161,26 +221,47 @@ public class DataInjector
             }
         }
 
-        public Path(String[] pathComponents)
+        @SuppressWarnings("WeakerAccess")
+        public Path(@NotNull String[] pathComponents)
         {
             this.pathComponents = pathComponents;
         }
 
-        String firstElement()
+        @SuppressWarnings("WeakerAccess")
+        @Nullable
+        public String firstElement()
         {
             if (pathComponents.length > 0)
             {
                 return pathComponents[0];
             }
-            return "";
+            return null;
         }
 
-        boolean hasElements()
+        @Nullable
+        public String nextElement()
+        {
+            if (pathComponents.length > 1)
+            {
+                return pathComponents[1];
+            }
+            return null;
+        }
+
+        @SuppressWarnings("WeakerAccess")
+        public boolean hasElements()
         {
             return pathComponents.length > 0;
         }
 
-        Path deeperPath()
+        public boolean hasNextElement()
+        {
+            return pathComponents.length > 1;
+        }
+
+        @SuppressWarnings("WeakerAccess")
+        @NotNull
+        public Path deeperPath()
         {
             if (pathComponents.length > 0)
             {
@@ -200,6 +281,19 @@ public class DataInjector
 
     public interface ModifyCallback
     {
-        Result modify(Object originalData);
+        Result modify(@Nullable Object originalData);
+    }
+
+
+    // --
+    // Error enum
+    // --
+
+    public enum Error
+    {
+        Unknown,
+        NoIndexedCollection,
+        IndexInvalid,
+        Custom
     }
 }
