@@ -102,4 +102,34 @@ public class DataInjectorTest
         Assert.assertSame(resultList.get(0), evenNumbers);
         Assert.assertNotSame(resultList.get(1), oddNumbers);
     }
+
+
+    @Test
+    @SuppressWarnings("all")
+    public void injectMixed() throws Exception
+    {
+        // Set up structure
+        List<Integer> numberSequence = Arrays.asList(0, 1, 2, 3, 5, 8);
+        Map<String, Object> dictionary = InjectorUtil.initMap(
+                "first", "1st",
+                "second", "4th",
+                "third", "3rd"
+        );
+        List<Object> randomItems = Arrays.asList(numberSequence, dictionary);
+
+        // Apply manual injection to change the dictionary
+        DataInjector.Result result = DataInjector.inject(randomItems, "1.second", new DataInjector.ModifyCallback()
+        {
+            @Override
+            public DataInjector.Result modify(Object originalData)
+            {
+                return DataInjector.Result.withModifiedObject("2nd");
+            }
+        });
+
+        // Check the result
+        List<Object> resultList = (List<Object>)result.getModifiedObject();
+        Map<String, Object> resultDictionary = (Map<String, Object>)resultList.get(1);
+        Assert.assertEquals(resultDictionary.get("second"), "2nd");
+    }
 }
