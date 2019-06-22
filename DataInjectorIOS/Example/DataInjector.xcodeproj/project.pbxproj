@@ -14,6 +14,7 @@
 		0471FCEF1E2017DF0002D837 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 0471FCEE1E2017DF0002D837 /* data */; };
 		04840A541DEE1292005F6855 /* InjectorConvTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04840A441DEE10D9005F6855 /* InjectorConvTests.swift */; };
 		04840A591DEE1D3C005F6855 /* InjectorUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04840A571DEE1D14005F6855 /* InjectorUtilTests.swift */; };
+		04840DDA22BE724700A52B68 /* DataInjectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04840DD922BE724700A52B68 /* DataInjectorTests.swift */; };
 		048935E31DF0B768002B2E5E /* InjectorConditionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048935E11DF0B74D002B2E5E /* InjectorConditionTests.swift */; };
 		04CF11CB1E4A609000B1304D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CF11CA1E4A609000B1304D /* MainViewController.swift */; };
 		04CF11CE1E4A66C300B1304D /* SimpleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CF11CD1E4A66C300B1304D /* SimpleCell.swift */; };
@@ -46,6 +47,7 @@
 		04840A441DEE10D9005F6855 /* InjectorConvTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectorConvTests.swift; sourceTree = "<group>"; };
 		04840A4A1DEE1287005F6855 /* DataInjector_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DataInjector_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04840A571DEE1D14005F6855 /* InjectorUtilTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectorUtilTests.swift; sourceTree = "<group>"; };
+		04840DD922BE724700A52B68 /* DataInjectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataInjectorTests.swift; sourceTree = "<group>"; };
 		048935E11DF0B74D002B2E5E /* InjectorConditionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectorConditionTests.swift; sourceTree = "<group>"; };
 		04CF11CA1E4A609000B1304D /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		04CF11CD1E4A66C300B1304D /* SimpleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleCell.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				04840DD922BE724700A52B68 /* DataInjectorTests.swift */,
 				048935E11DF0B74D002B2E5E /* InjectorConditionTests.swift */,
 				04840A441DEE10D9005F6855 /* InjectorConvTests.swift */,
 				040E5CE11DF01C6B00968B1C /* InjectorDataDetectorTests.swift */,
@@ -372,6 +375,7 @@
 				040E5CE81DF05C0900968B1C /* InjectorMapperTests.swift in Sources */,
 				048935E31DF0B768002B2E5E /* InjectorConditionTests.swift in Sources */,
 				04840A591DEE1D3C005F6855 /* InjectorUtilTests.swift in Sources */,
+				04840DDA22BE724700A52B68 /* DataInjectorTests.swift in Sources */,
 				04840A541DEE1292005F6855 /* InjectorConvTests.swift in Sources */,
 				040E5CE31DF01C8100968B1C /* InjectorDataDetectorTests.swift in Sources */,
 			);

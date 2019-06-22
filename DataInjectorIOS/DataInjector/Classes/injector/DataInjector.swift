@@ -25,7 +25,7 @@ public class DataInjectorResult {
     public let error: DataInjectorError?
     public let customInfo: Any?
 
-    public init(withModifiedObject: Any) {
+    public init(withModifiedObject: Any?) {
         modifiedObject = withModifiedObject
         error = nil
         customInfo = nil
@@ -122,17 +122,25 @@ public class DataInjector {
                     if result.hasError() {
                         return result
                     }
-                    if result.modifiedObject as AnyObject !== originalData as AnyObject {
-                        var modifiedDict = [String: Any?]()
-                        modifiedDict[dictIndex] = result.modifiedObject
-                        for (key, value) in intoDict {
-                            if key != dictIndex {
-                                modifiedDict[key] = value
-                            }
-                        }
+                    var modifiedDict = intoDict
+                    modifiedDict[dictIndex] = result.modifiedObject
+                    return DataInjectorResult(withModifiedObject: modifiedDict)
+                }
+                return DataInjectorResult(withError: .indexInvalid)
+            } else if let intoDict = into as? [String: Any] {
+                if let dictIndex = path.firstElement(), let originalData = intoDict[dictIndex] {
+                    let result = inject(into: originalData, path: path.deeperPath(), modifyCallback: modifyCallback)
+                    if result.hasError() {
+                        return result
+                    }
+                    if let modifiedObject = result.modifiedObject {
+                        var modifiedDict = intoDict
+                        modifiedDict[dictIndex] = modifiedObject
                         return DataInjectorResult(withModifiedObject: modifiedDict)
                     }
-                    return DataInjectorResult(withModifiedObject: intoDict)
+                    var modifiedNullDict: [String: Any?] = intoDict
+                    modifiedNullDict[dictIndex] = result.modifiedObject
+                    return DataInjectorResult(withModifiedObject: modifiedNullDict)
                 }
                 return DataInjectorResult(withError: .indexInvalid)
             } else if let intoArray = into as? [Any?] {
@@ -143,18 +151,27 @@ public class DataInjector {
                     if result.hasError() {
                         return result
                     }
-                    if result.modifiedObject as AnyObject !== originalData as AnyObject {
-                        var modifiedArray = [Any?]()
-                        for i in intoArray.indices {
-                            if i == index {
-                                modifiedArray.append(result.modifiedObject)
-                            } else {
-                                modifiedArray.append(intoArray[i])
-                            }
-                        }
+                    var modifiedArray = intoArray
+                    modifiedArray[index] = result.modifiedObject
+                    return DataInjectorResult(withModifiedObject: modifiedArray)
+                }
+                return DataInjectorResult(withError: .indexInvalid)
+            } else if let intoArray = into as? [Any] {
+                let index = InjectorConv.toInt(from: path.firstElement()) ?? -1
+                if index >= 0 && index < intoArray.count {
+                    let originalData = intoArray[index]
+                    let result = inject(into: originalData, path: path.deeperPath(), modifyCallback: modifyCallback)
+                    if result.hasError() {
+                        return result
+                    }
+                    if let modifiedObject = result.modifiedObject {
+                        var modifiedArray = intoArray
+                        modifiedArray[index] = modifiedObject
                         return DataInjectorResult(withModifiedObject: modifiedArray)
                     }
-                    return DataInjectorResult(withModifiedObject: intoArray)
+                    var modifiedNullArray: [Any?] = intoArray
+                    modifiedNullArray[index] = result.modifiedObject
+                    return DataInjectorResult(withModifiedObject: modifiedNullArray)
                 }
                 return DataInjectorResult(withError: .indexInvalid)
             } else {
