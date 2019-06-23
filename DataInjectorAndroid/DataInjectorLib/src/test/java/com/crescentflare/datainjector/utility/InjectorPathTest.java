@@ -3,6 +3,9 @@ package com.crescentflare.datainjector.utility;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.Map;
+
 /**
  * Utility test: data injector path
  */
@@ -76,5 +79,39 @@ public class InjectorPathTest
         InjectorPath path = new InjectorPath("item.subItem.deeperItem");
         path = path.deeperPath();
         Assert.assertEquals(path.toString(), "subItem.deeperItem");
+    }
+
+    @Test
+    public void seekPathForMap() throws Exception
+    {
+        // Set up mixed map
+        Map<String, Object> mixedMap = InjectorUtil.initMap(
+                "furniture", Arrays.asList(
+                        InjectorUtil.initMap(
+                                "$marker", "chair",
+                                "type", "chair",
+                                "price", "51.95"
+                        ),
+                        InjectorUtil.initMap(
+                                "type", "table",
+                                "price", "132.95"
+                        )
+                ),
+                "lighting", Arrays.asList(
+                        InjectorUtil.initMap(
+                                "type", "lightBulb",
+                                "price", "9.95"
+                        ),
+                        InjectorUtil.initMap(
+                                "$marker", "sensor",
+                                "type", "sensor",
+                                "price", "19.95"
+                        )
+                )
+        );
+
+        // Check if the path can be indexed to the template items
+        Assert.assertEquals(InjectorPath.seekPathForMap(mixedMap, "$marker", "chair").toString(), "furniture.0");
+        Assert.assertEquals(InjectorPath.seekPathForMap(mixedMap, "$marker", "sensor").toString(), "lighting.1");
     }
 }

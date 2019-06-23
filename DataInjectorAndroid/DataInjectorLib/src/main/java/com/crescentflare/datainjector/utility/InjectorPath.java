@@ -3,6 +3,9 @@ package com.crescentflare.datainjector.utility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Data injector utility: a target for data injection
  * Use a path to point to a nested data item to be read or modified
@@ -103,6 +106,47 @@ public final class InjectorPath
             return new InjectorPath(subPathComponents);
         }
         return new InjectorPath();
+    }
+
+    @Nullable
+    public static InjectorPath seekPathForMap(@Nullable Object data, @NotNull String markerKey, @NotNull String value)
+    {
+        if (data instanceof Map)
+        {
+            Map<String, Object> dataMap = InjectorUtil.asStringObjectMap(data);
+            if (dataMap != null)
+            {
+                Object testObject = dataMap.get(markerKey);
+                if (testObject instanceof String && testObject.equals(value))
+                {
+                    return new InjectorPath();
+                }
+                for (String mapKey : dataMap.keySet())
+                {
+                    InjectorPath result = seekPathForMap(dataMap.get(mapKey), markerKey, value);
+                    if (result != null)
+                    {
+                        return new InjectorPath(mapKey + "." + result.toString());
+                    }
+                }
+            }
+        }
+        else if (data instanceof List)
+        {
+            List<Object> dataList = InjectorUtil.asObjectList(data);
+            if (dataList != null)
+            {
+                for (int i = 0; i < dataList.size(); i++)
+                {
+                    InjectorPath result = seekPathForMap(dataList.get(i), markerKey, value);
+                    if (result != null)
+                    {
+                        return new InjectorPath("" + i + "." + result.toString());
+                    }
+                }
+            }
+        }
+        return null;
     }
 
 
