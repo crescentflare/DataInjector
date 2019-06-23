@@ -110,7 +110,7 @@ public class InjectorPathTest
                 )
         );
 
-        // Check if the path can be indexed to the template items
+        // Check if the path can be indexed to the marker items
         Assert.assertEquals(InjectorPath.seekPathForMap(mixedMap, "$marker", "chair").toString(), "furniture.0");
         Assert.assertEquals(InjectorPath.seekPathForMap(mixedMap, "$marker", "sensor").toString(), "lighting.1");
     }

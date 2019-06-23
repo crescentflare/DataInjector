@@ -68,6 +68,45 @@ public class InjectorPath {
         }
         return InjectorPath()
     }
+    
+    public class func seekPathForMap(data: Any?, markerKey: String, value: String) -> InjectorPath? {
+        if let dataDict = data as? [String: Any?] {
+            if let testString = dataDict[markerKey] as? String {
+                if testString == value {
+                    return InjectorPath()
+                }
+            }
+            for (key, dictValue) in dataDict {
+                if let result = seekPathForMap(data: dictValue, markerKey: markerKey, value: value) {
+                    return InjectorPath(path: key + "." + result.asStringPath())
+                }
+            }
+        } else if let dataDict = data as? [String: Any] {
+            if let testString = dataDict[markerKey] as? String {
+                if testString == value {
+                    return InjectorPath()
+                }
+            }
+            for (key, dictValue) in dataDict {
+                if let result = seekPathForMap(data: dictValue, markerKey: markerKey, value: value) {
+                    return InjectorPath(path: key + "." + result.asStringPath())
+                }
+            }
+        } else if let dataArray = data as? [Any?] {
+            for i in dataArray.indices {
+                if let result = seekPathForMap(data: dataArray[i], markerKey: markerKey, value: value) {
+                    return InjectorPath(path: "\(i)." + result.asStringPath())
+                }
+            }
+        } else if let dataArray = data as? [Any] {
+            for i in dataArray.indices {
+                if let result = seekPathForMap(data: dataArray[i], markerKey: markerKey, value: value) {
+                    return InjectorPath(path: "\(i)." + result.asStringPath())
+                }
+            }
+        }
+        return nil
+    }
 
 
     // --

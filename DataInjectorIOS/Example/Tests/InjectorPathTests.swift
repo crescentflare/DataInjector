@@ -63,5 +63,37 @@ class InjectorPathTests: XCTestCase {
         let deeperPath = path.deeperPath()
         XCTAssertEqual(deeperPath.asStringPath(), "subItem.deeperItem")
     }
+    
+    func testSeekPathForMap() {
+        // Set up mixed structure
+        let mixedStructure = [
+            "furniture": [
+                [
+                    "$marker": "chair",
+                    "type": "chair",
+                    "price": "51.95"
+                ],
+                [
+                    "type": "table",
+                    "price": "132.95"
+                ]
+            ],
+            "lighting": [
+                [
+                    "type": "lightBulb",
+                    "price": "9.95"
+                ],
+                [
+                    "$marker": "sensor",
+                    "type": "sensor",
+                    "price": "19.95"
+                ]
+            ]
+        ]
+
+        // Check if the path can be indexed to the marker items
+        XCTAssertEqual(InjectorPath.seekPathForMap(data: mixedStructure, markerKey: "$marker", value: "chair")?.asStringPath(), "furniture.0");
+        XCTAssertEqual(InjectorPath.seekPathForMap(data: mixedStructure, markerKey: "$marker", value: "sensor")?.asStringPath(), "lighting.1");
+    }
 
 }
