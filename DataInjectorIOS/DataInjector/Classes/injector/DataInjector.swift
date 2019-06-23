@@ -62,6 +62,42 @@ public class DataInjector {
 
     
     // ---
+    // MARK: Obtain data
+    // ---
+
+    public class func get(from: Any?, path: String) -> Any? {
+        return get(from: from, path: InjectorPath(path: path))
+    }
+    
+    public class func get(from: Any?, path: InjectorPath) -> Any? {
+        if path.hasElements() {
+            if let fromDict = from as? [String: Any?] {
+                if let dictIndex = path.firstElement() {
+                    return get(from: fromDict[dictIndex] ?? nil, path: path.deeperPath())
+                }
+            } else if let fromDict = from as? [String: Any] {
+                if let dictIndex = path.firstElement() {
+                    return get(from: fromDict[dictIndex], path: path.deeperPath())
+                }
+            } else if let fromArray = from as? [Any?] {
+                let index = InjectorConv.toInt(from: path.firstElement()) ?? -1
+                if index >= 0 && index < fromArray.count {
+                    return get(from: fromArray[index], path: path.deeperPath())
+                }
+            } else if let fromArray = from as? [Any] {
+                let index = InjectorConv.toInt(from: path.firstElement()) ?? -1
+                if index >= 0 && index < fromArray.count {
+                    return get(from: fromArray[index], path: path.deeperPath())
+                }
+            }
+        } else {
+            return from
+        }
+        return nil
+    }
+    
+    
+    // ---
     // MARK: Modify data
     // ---
 

@@ -45,19 +45,16 @@ class DataInjectorTests: XCTestCase {
         })
 
         // Check that only the injection target has been modified
-        let resultDict = result.modifiedObject as! [String: [String: Any?]?]
-        let resultShirtDict = resultDict["clothing"]!!["shirts"] as! [String: Any?]
-        XCTAssertEqual(resultShirtDict["small"] as! String, "8.95")
-        XCTAssertEqual(resultShirtDict["large"] as! String, "11.95")
+        XCTAssertEqual(DataInjector.get(from: result.modifiedObject, path: "clothing.shirts.small") as! String, "8.95")
+        XCTAssertEqual(DataInjector.get(from: result.modifiedObject, path: "clothing.shirts.large") as! String, "11.95")
 
         // The original dictionary structure shouldn't be modified
         XCTAssertEqual(inventoryDict["clothing"]!["shirts"]!["small"], "9.95")
 
         // When changing the original data, the modified result should not change
         inventoryDict["clothing"]!["trousers"]!["medium"] = "39.95"
-        let resultTrousersDict = resultDict["clothing"]!!["trousers"] as! [String: Any?]
         XCTAssertEqual(inventoryDict["clothing"]!["trousers"]!["medium"], "39.95")
-        XCTAssertEqual(resultTrousersDict["medium"] as! String, "49.95")
+        XCTAssertEqual(DataInjector.get(from: result.modifiedObject, path: "clothing.trousers.medium") as! String, "49.95")
     }
     
     
@@ -78,9 +75,8 @@ class DataInjectorTests: XCTestCase {
         })
 
         // Check that only the injection target has been modified
-        let resultNumbers = result.modifiedObject as! [[Int]]
-        XCTAssertEqual(resultNumbers[1][2], 5)
-        XCTAssertEqual(resultNumbers[1][3], 7)
+        XCTAssertEqual(DataInjector.get(from: result.modifiedObject, path: "1.2") as! Int, 5)
+        XCTAssertEqual(DataInjector.get(from: result.modifiedObject, path: "1.3") as! Int, 7)
 
         // The original array structure shouldn't be modified
         XCTAssertEqual(nestedNumbers[1][2], 6)
@@ -88,7 +84,7 @@ class DataInjectorTests: XCTestCase {
         // When changing the original data, the modified result should not change
         nestedNumbers[0][4] = 10
         XCTAssertEqual(nestedNumbers[0][4], 10)
-        XCTAssertEqual(resultNumbers[0][4], 8)
+        XCTAssertEqual(DataInjector.get(from: result.modifiedObject, path: "0.4") as! Int, 8)
     }
     
     
@@ -113,9 +109,7 @@ class DataInjectorTests: XCTestCase {
         })
         
         // Check the result
-        let resultArray = result.modifiedObject as! [Any]
-        let resultDictionary = resultArray[1] as! [String: String]
-        XCTAssertEqual(resultDictionary["second"], "2nd")
+        XCTAssertEqual(DataInjector.get(from: result.modifiedObject, path: "1.second") as! String, "2nd")
     }
 
 }
