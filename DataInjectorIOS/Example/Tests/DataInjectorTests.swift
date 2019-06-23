@@ -4,9 +4,9 @@ import XCTest
 
 class DataInjectorTests: XCTestCase {
     
-    // ---
+    // --
     // MARK: Test injecting in a nested dictionary
-    // ---
+    // --
 
     func testInjectDicts() {
         // Set up dictionary
@@ -61,9 +61,9 @@ class DataInjectorTests: XCTestCase {
     }
     
     
-    // ---
+    // --
     // MARK: Test injecting in a nested array
-    // ---
+    // --
     
     func testInjectArrays() {
         // Set up array
@@ -92,9 +92,9 @@ class DataInjectorTests: XCTestCase {
     }
     
     
-    // ---
+    // --
     // MARK: Test injecting in a mixed structure
-    // ---
+    // --
     
     func testInjectMixed() {
         // Set up structure

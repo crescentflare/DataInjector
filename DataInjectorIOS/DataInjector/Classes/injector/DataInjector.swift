@@ -49,50 +49,6 @@ public class DataInjectorResult {
 
 }
 
-/// A class to hold a path of the target to modify
-public class DataInjectorPath {
-    
-    private var pathComponents = [String]()
-    
-    public init() {
-        // No implementation
-    }
-    
-    public init(path: String) {
-        if !path.isEmpty {
-            pathComponents = path.split(separator: ".").map(String.init)
-        }
-    }
-    
-    public init(pathComponents: [String]) {
-        self.pathComponents = pathComponents
-    }
-    
-    public func firstElement() -> String? {
-        return pathComponents.first
-    }
-    
-    public func nextElement() -> String? {
-        return pathComponents.count > 1 ? pathComponents[1] : nil
-    }
-    
-    public func hasElements() -> Bool {
-        return pathComponents.count > 0
-    }
-    
-    public func hasNextElement() -> Bool {
-        return pathComponents.count > 1
-    }
-    
-    public func deeperPath() -> DataInjectorPath {
-        if pathComponents.count > 0 {
-            return DataInjectorPath(pathComponents: Array(pathComponents.dropFirst()))
-        }
-        return DataInjectorPath()
-    }
-    
-}
-
 /// An injector duplicating an item depending on the given data source(s)
 public class DataInjector {
     
@@ -110,10 +66,10 @@ public class DataInjector {
     // ---
 
     public class func inject(into: Any?, path: String, modifyCallback: (_ originalData: Any?) -> DataInjectorResult) -> DataInjectorResult {
-        return inject(into: into, path: DataInjectorPath(path: path), modifyCallback: modifyCallback)
+        return inject(into: into, path: InjectorPath(path: path), modifyCallback: modifyCallback)
     }
     
-    public class func inject(into: Any?, path: DataInjectorPath, modifyCallback: (_ originalData: Any?) -> DataInjectorResult) -> DataInjectorResult {
+    public class func inject(into: Any?, path: InjectorPath, modifyCallback: (_ originalData: Any?) -> DataInjectorResult) -> DataInjectorResult {
         if path.hasElements() {
             if let intoDict = into as? [String: Any?] {
                 if let dictIndex = path.firstElement() {

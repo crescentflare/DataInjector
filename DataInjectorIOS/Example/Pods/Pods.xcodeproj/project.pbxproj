@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		045EB83C22BFB37D00DA667F /* InjectorPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045EB83B22BFB37D00DA667F /* InjectorPath.swift */; };
 		04840DD822BE626F00A52B68 /* DataInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04840DD722BE626F00A52B68 /* DataInjector.swift */; };
 		04C15DB8B2F783DDFF8A1C68EDBBFAB9 /* LinkDataInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AB52D02D55F6DB8E4B668D7A4C09EC /* LinkDataInjector.swift */; };
 		0F962820EE1CC35B129DF12E1C59C0E7 /* DuplicateInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638DCD56B0C1A14D8086DFE466525305 /* DuplicateInjector.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		045EB83B22BFB37D00DA667F /* InjectorPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectorPath.swift; sourceTree = "<group>"; };
 		04840DD722BE626F00A52B68 /* DataInjector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataInjector.swift; sourceTree = "<group>"; };
 		04C8E7892146607B7138E902B329391A /* DataInjector-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DataInjector-prefix.pch"; sourceTree = "<group>"; };
 		0EB60BEA29BF0D5FD6FB28ED8CDCD355 /* Pods-DataInjector_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DataInjector_Tests-Info.plist"; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 			children = (
 				4A2B222F3970AD5E4A5EB4E21CC0AB89 /* InjectorDataDetector.swift */,
 				935B78DFB4729A70008AC7E09A3B53DE /* InjectorDataType.swift */,
+				045EB83B22BFB37D00DA667F /* InjectorPath.swift */,
 				244E968B89A8955D18AD2EF52AD1D881 /* InjectorUtil.swift */,
 			);
 			name = utility;
@@ -494,6 +497,7 @@
 				33401F0C546D491E12F5DFAC3710499F /* InjectorDependency.swift in Sources */,
 				EA9CAE15330E3A948B26F99B931C68AA /* InjectorDependencyManager.swift in Sources */,
 				C9D85C2932D38FC6FF5E1A2DE4576E5A /* InjectorDependencyState.swift in Sources */,
+				045EB83C22BFB37D00DA667F /* InjectorPath.swift in Sources */,
 				DCCBF05ACAAEBB8F71CEA34B1F2F443B /* InjectorMapper.swift in Sources */,
 				AE79EFA0045E10D0A3C041D561FBF304 /* InjectorUtil.swift in Sources */,
 				C49737CDE513532B3197E582DF167B01 /* JoinStringInjector.swift in Sources */,
