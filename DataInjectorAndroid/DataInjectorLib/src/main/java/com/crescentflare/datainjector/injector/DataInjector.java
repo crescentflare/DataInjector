@@ -1,6 +1,7 @@
 package com.crescentflare.datainjector.injector;
 
 import com.crescentflare.datainjector.conversion.InjectorConv;
+import com.crescentflare.datainjector.utility.InjectorPath;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -33,12 +34,12 @@ public final class DataInjector
     @NotNull
     public static Result inject(@Nullable Object data, @NotNull String path, @NotNull ModifyCallback modifyCallback)
     {
-        return inject(data, new Path(path), modifyCallback);
+        return inject(data, new InjectorPath(path), modifyCallback);
     }
 
     @SuppressWarnings("WeakerAccess")
     @NotNull
-    public static Result inject(@Nullable Object data, @NotNull Path path, @NotNull ModifyCallback modifyCallback)
+    public static Result inject(@Nullable Object data, @NotNull InjectorPath path, @NotNull ModifyCallback modifyCallback)
     {
         if (path.hasElements())
         {
@@ -190,87 +191,6 @@ public final class DataInjector
         public Object getCustomInfo()
         {
             return customInfo;
-        }
-    }
-
-
-    // --
-    // Path helper class
-    // --
-
-    public static final class Path
-    {
-        private String[] pathComponents;
-
-        @SuppressWarnings("unused")
-        public Path()
-        {
-            pathComponents = new String[0];
-        }
-
-        @SuppressWarnings("WeakerAccess")
-        public Path(@NotNull String path)
-        {
-            if (!path.isEmpty())
-            {
-                pathComponents = path.split("\\.");
-            }
-            else
-            {
-                pathComponents = new String[0];
-            }
-        }
-
-        @SuppressWarnings("WeakerAccess")
-        public Path(@NotNull String[] pathComponents)
-        {
-            this.pathComponents = pathComponents;
-        }
-
-        @SuppressWarnings("WeakerAccess")
-        @Nullable
-        public String firstElement()
-        {
-            if (pathComponents.length > 0)
-            {
-                return pathComponents[0];
-            }
-            return null;
-        }
-
-        @Nullable
-        public String nextElement()
-        {
-            if (pathComponents.length > 1)
-            {
-                return pathComponents[1];
-            }
-            return null;
-        }
-
-        @SuppressWarnings("WeakerAccess")
-        public boolean hasElements()
-        {
-            return pathComponents.length > 0;
-        }
-
-        public boolean hasNextElement()
-        {
-            return pathComponents.length > 1;
-        }
-
-        @SuppressWarnings("WeakerAccess")
-        @NotNull
-        public Path deeperPath()
-        {
-            if (pathComponents.length > 0)
-            {
-                int count = pathComponents.length - 1;
-                String[] subPathComponents = new String[count];
-                System.arraycopy(pathComponents, 1, subPathComponents, 0, count);
-                return new Path(subPathComponents);
-            }
-            return new Path();
         }
     }
 
