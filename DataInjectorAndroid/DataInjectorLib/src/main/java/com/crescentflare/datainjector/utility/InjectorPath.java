@@ -3,8 +3,6 @@ package com.crescentflare.datainjector.utility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-
 /**
  * Data injector utility: a target for data injection
  * Use a path to point to a nested data item to be read or modified
@@ -22,6 +20,7 @@ public final class InjectorPath
     // Initialization
     // --
 
+    @SuppressWarnings("WeakerAccess")
     public InjectorPath()
     {
         pathComponents = new String[0];
@@ -32,6 +31,7 @@ public final class InjectorPath
         this(path, ".");
     }
 
+    @SuppressWarnings("WeakerAccess")
     public InjectorPath(@NotNull String path, @NotNull String separator)
     {
         if (!path.isEmpty())
@@ -44,6 +44,7 @@ public final class InjectorPath
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     public InjectorPath(@NotNull String[] pathComponents)
     {
         this.pathComponents = pathComponents;
@@ -64,6 +65,7 @@ public final class InjectorPath
         return null;
     }
 
+    @SuppressWarnings("WeakerAccess")
     @Nullable
     public String nextElement()
     {
@@ -79,6 +81,7 @@ public final class InjectorPath
         return pathComponents.length > 0;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public boolean hasNextElement()
     {
         return pathComponents.length > 1;

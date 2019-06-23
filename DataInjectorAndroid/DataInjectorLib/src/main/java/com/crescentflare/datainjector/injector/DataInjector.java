@@ -28,6 +28,51 @@ public final class DataInjector
 
 
     // --
+    // Obtain data
+    // --
+
+    @Nullable
+    public static Object get(@Nullable Object data, @NotNull String path)
+    {
+        return get(data, new InjectorPath(path));
+    }
+
+    @Nullable
+    public static Object get(@Nullable Object data, @NotNull InjectorPath path)
+    {
+        if (path.hasElements())
+        {
+            if (data instanceof Map)
+            {
+                Map<String, Object> dataMap = InjectorUtil.asStringObjectMap(data);
+                if (dataMap != null)
+                {
+                    return get(dataMap.get(path.firstElement()), path.deeperPath());
+                }
+            }
+            else if (data instanceof List)
+            {
+                List<Object> dataList = InjectorUtil.asObjectList(data);
+                if (dataList != null)
+                {
+                    Integer boxedIndex = InjectorConv.toInteger(path.firstElement());
+                    int index = boxedIndex != null ? boxedIndex : -1;
+                    if (index >= 0 && index < dataList.size())
+                    {
+                        return get(dataList.get(index), path.deeperPath());
+                    }
+                }
+            }
+        }
+        else
+        {
+            return data;
+        }
+        return null;
+    }
+
+
+    // --
     // Modify data
     // --
 

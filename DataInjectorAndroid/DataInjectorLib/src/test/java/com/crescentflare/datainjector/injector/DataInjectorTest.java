@@ -16,7 +16,6 @@ import java.util.Map;
 public class DataInjectorTest
 {
     @Test
-    @SuppressWarnings("all")
     public void injectMaps() throws Exception
     {
         // Set up map objects
@@ -50,10 +49,8 @@ public class DataInjectorTest
         });
 
         // Check that only the injection target has been modified
-        Map<String, Map<String, Object>> resultMap = (Map<String, Map<String, Object>>)result.getModifiedObject();
-        Map<String, Object> resultShirtMap = (Map<String, Object>)resultMap.get("clothing").get("shirts");
-        Assert.assertEquals(resultShirtMap.get("small"), "8.95");
-        Assert.assertEquals(resultShirtMap.get("large"), "11.95");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "clothing.shirts.small"), "8.95");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "clothing.shirts.large"), "11.95");
 
         // The original map structure shouldn't be modified
         Assert.assertSame(inventoryMap.get("tools"), toolsMap);
@@ -62,14 +59,13 @@ public class DataInjectorTest
         Assert.assertEquals(shirtsMap.get("small"), "9.95");
 
         // The instances within the derived map structure in the result should only change if there was a modified object in it
-        Assert.assertNotSame(resultMap, inventoryMap);
-        Assert.assertNotSame(shirtsMap, resultMap.get("clothing").get("shirts"));
-        Assert.assertNotSame(clothingMap, resultMap.get("clothing"));
-        Assert.assertSame(toolsMap, resultMap.get("tools"));
+        Assert.assertNotSame(result.getModifiedObject(), inventoryMap);
+        Assert.assertNotSame(shirtsMap, DataInjector.get(result.getModifiedObject(), "clothing.shirts"));
+        Assert.assertNotSame(clothingMap, DataInjector.get(result.getModifiedObject(), "clothing"));
+        Assert.assertSame(toolsMap, DataInjector.get(result.getModifiedObject(), "tools"));
     }
 
     @Test
-    @SuppressWarnings("all")
     public void injectArrays() throws Exception
     {
         // Set up array objects
@@ -88,9 +84,8 @@ public class DataInjectorTest
         });
 
         // Check that only the injection target has been modified
-        List<List<Integer>> resultList = (List<List<Integer>>)result.getModifiedObject();
-        Assert.assertEquals(resultList.get(1).get(2).intValue(), 5);
-        Assert.assertEquals(resultList.get(1).get(3).intValue(), 7);
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "1.2"), 5);
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "1.3"), 7);
 
         // The original array structure shouldn't be modified
         Assert.assertSame(nestedNumbers.get(0), evenNumbers);
@@ -98,14 +93,13 @@ public class DataInjectorTest
         Assert.assertEquals(oddNumbers.get(2).intValue(), 6);
 
         // The instances within the derived array structure in the result should only change if there was a modified object in it
-        Assert.assertNotSame(resultList, nestedNumbers);
-        Assert.assertSame(resultList.get(0), evenNumbers);
-        Assert.assertNotSame(resultList.get(1), oddNumbers);
+        Assert.assertNotSame(result.getModifiedObject(), nestedNumbers);
+        Assert.assertSame(DataInjector.get(result.getModifiedObject(), "0"), evenNumbers);
+        Assert.assertNotSame(DataInjector.get(result.getModifiedObject(), "1"), oddNumbers);
     }
 
 
     @Test
-    @SuppressWarnings("all")
     public void injectMixed() throws Exception
     {
         // Set up structure
@@ -128,8 +122,6 @@ public class DataInjectorTest
         });
 
         // Check the result
-        List<Object> resultList = (List<Object>)result.getModifiedObject();
-        Map<String, Object> resultDictionary = (Map<String, Object>)resultList.get(1);
-        Assert.assertEquals(resultDictionary.get("second"), "2nd");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "1.second"), "2nd");
     }
 }
