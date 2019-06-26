@@ -7,6 +7,7 @@
 
 import UIKit
 import DataInjector
+import BitletSynchronizer
 
 class DetailViewController: UIViewController, UITableViewDataSource {
 
@@ -14,7 +15,7 @@ class DetailViewController: UIViewController, UITableViewDataSource {
     // MARK: Constants
     // --
     
-    private static let dependencies = InjectorDependencyManager.shared.dependencies(forNames: ["customers", "products"])
+    private let dependencies = [Bitlets.customers, Bitlets.products]
 
     
     // --
@@ -29,7 +30,6 @@ class DetailViewController: UIViewController, UITableViewDataSource {
     // --
     
     var customerId: String?
-    private var dependenciesOpen = false
     private var showCustomerProducts: [[String: Any]]?
     
 
@@ -42,53 +42,39 @@ class DetailViewController: UIViewController, UITableViewDataSource {
         tableView.dataSource = self
         tableView.estimatedRowHeight = tableView.rowHeight
         tableView.rowHeight = UITableView.automaticDimension
-        dependenciesOpen = InjectorDependencyManager.shared.filteredDependencies(DetailViewController.dependencies, excludingState: .resolved).count > 0
-        if !dependenciesOpen {
-            refreshDisplayedData()
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        InjectorDependencyManager.shared.addDataObserver(self, selector: #selector(dependenciesDidUpdate), name: InjectorDependencyManager.dependencyResolved)
-        if dependenciesOpen {
-            let dependenciesLeft = InjectorDependencyManager.shared.filteredDependencies(DetailViewController.dependencies, excludingState: .resolved)
-            if dependenciesLeft.count > 0 {
-                for dependency in dependenciesLeft {
-                    InjectorDependencyManager.shared.resolveDependency(dependency: dependency)
+        let checkCaches = dependencies.map { $0.cacheKey }
+        if !BitletSynchronizer.shared.anyCacheInState(.loadingOrRefreshing, forKeys: checkCaches) && !BitletSynchronizer.shared.anyCacheInState(.unavailable, forKeys: checkCaches) {
+            refreshDisplayedData()
+        }
+        loadData(forced: false)
+    }
+    
+    
+    // --
+    // MARK: Data loading
+    // --
+
+    private func loadData(forced: Bool) {
+        let checkCaches = dependencies.map { $0.cacheKey }
+        for dependency in dependencies {
+            BitletSynchronizer.shared.loadBitlet(dependency, cacheKey: dependency.cacheKey, forced: forced, completion: { data, error in
+                if !BitletSynchronizer.shared.anyCacheInState(.loadingOrRefreshing, forKeys: checkCaches) {
+                    self.refreshDisplayedData()
                 }
-            } else {
-                dependenciesOpen = false
-                refreshDisplayedData()
-            }
+            })
         }
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        InjectorDependencyManager.shared.removeDataObserver(self, name: InjectorDependencyManager.dependencyResolved)
-    }
 
-    
-    // --
-    // MARK: Dependency handling
-    // --
-
-    @objc func dependenciesDidUpdate() {
-        if dependenciesOpen {
-            let dependenciesLeft = InjectorDependencyManager.shared.filteredDependencies(DetailViewController.dependencies, excludingState: .resolved)
-            if dependenciesLeft.count == 0 {
-                dependenciesOpen = false
-                refreshDisplayedData()
-            }
-        }
-    }
-    
     func refreshDisplayedData() {
         // Reset data set to display
         showCustomerProducts = nil
         
         // Look up dependency data
-        let customers = InjectorDependencyManager.shared.dependency(forName: "customers")?.obtainInjectableData() as? [[String: Any]]
-        let products = InjectorDependencyManager.shared.dependency(forName: "products")?.obtainInjectableData() as? [[String: Any]]
+        let customers = (BitletSynchronizer.shared.cachedBitlet(forKey: Bitlets.customers.cacheKey) as? JsonArray)?.itemList as? [[String: Any]]
+        let products = (BitletSynchronizer.shared.cachedBitlet(forKey: Bitlets.products.cacheKey) as? JsonArray)?.itemList as? [[String: Any]]
         
         // Find the products of the given customer id
         let customer = LinkDataInjector.findDataItem(onDataArray: customers ?? [], forValue: customerId, usingKey: "id")

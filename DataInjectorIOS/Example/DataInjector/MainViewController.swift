@@ -7,6 +7,7 @@
 
 import UIKit
 import DataInjector
+import BitletSynchronizer
 
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -14,7 +15,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: Constants
     // --
     
-    private static let dependencies = InjectorDependencyManager.shared.dependencies(forNames: ["customers"])
+    private let dependencies = [Bitlets.customers]
     
     
     // --
@@ -25,13 +26,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     
     // --
-    // MARK: Members
-    // --
-    
-    private var dependenciesOpen = false
-    
-
-    // --
     // MARK: Lifecycle
     // --
 
@@ -39,40 +33,29 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        dependenciesOpen = InjectorDependencyManager.shared.filteredDependencies(MainViewController.dependencies, excludingState: .resolved).count > 0
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        InjectorDependencyManager.shared.addDataObserver(self, selector: #selector(dependenciesDidUpdate), name: InjectorDependencyManager.dependencyResolved)
-        if dependenciesOpen {
-            let dependenciesLeft = InjectorDependencyManager.shared.filteredDependencies(MainViewController.dependencies, excludingState: .resolved)
-            if dependenciesLeft.count > 0 {
-                for dependency in dependenciesLeft {
-                    InjectorDependencyManager.shared.resolveDependency(dependency: dependency)
-                }
-            } else {
-                dependenciesOpen = false
-                tableView.reloadData()
-            }
+        let checkCaches = dependencies.map { $0.cacheKey }
+        if !BitletSynchronizer.shared.anyCacheInState(.loadingOrRefreshing, forKeys: checkCaches) && !BitletSynchronizer.shared.anyCacheInState(.unavailable, forKeys: checkCaches) {
+            tableView.reloadData()
         }
+        loadData(forced: false)
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        InjectorDependencyManager.shared.removeDataObserver(self, name: InjectorDependencyManager.dependencyResolved)
-    }
-
     
     // --
-    // MARK: Dependency handling
+    // MARK: Data loading
     // --
 
-    @objc func dependenciesDidUpdate() {
-        if dependenciesOpen {
-            let dependenciesLeft = InjectorDependencyManager.shared.filteredDependencies(MainViewController.dependencies, excludingState: .resolved)
-            if dependenciesLeft.count == 0 {
-                dependenciesOpen = false
-                tableView.reloadData()
-            }
+    private func loadData(forced: Bool) {
+        let checkCaches = dependencies.map { $0.cacheKey }
+        for dependency in dependencies {
+            BitletSynchronizer.shared.loadBitlet(dependency, cacheKey: dependency.cacheKey, forced: forced, completion: { data, error in
+                if !BitletSynchronizer.shared.anyCacheInState(.loadingOrRefreshing, forKeys: checkCaches) {
+                    self.tableView.reloadData()
+                }
+            })
         }
     }
     
@@ -91,18 +74,20 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     // --
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let customerData = InjectorDependencyManager.shared.dependency(forName: "customers")?.obtainInjectableData() as? [Any] {
-            return customerData.count
+        if let customerData = BitletSynchronizer.shared.cachedBitlet(forKey: Bitlets.customers.cacheKey) as? JsonArray {
+            return customerData.itemList.count
         }
         return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let customerData = InjectorDependencyManager.shared.dependency(forName: "customers")?.obtainInjectableData() as? [[String: Any]] {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "SimpleCell") as? SimpleCell {
-                cell.identifier = InjectorConv.toString(from: customerData[indexPath.row]["id"])
-                cell.label = InjectorConv.toString(from: customerData[indexPath.row]["fullName"])
-                return cell
+        if let customerData = BitletSynchronizer.shared.cachedBitlet(forKey: Bitlets.customers.cacheKey) as? JsonArray {
+            if let customerList = customerData.itemList as? [[String: Any]] {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "SimpleCell") as? SimpleCell {
+                    cell.identifier = InjectorConv.toString(from: customerList[indexPath.row]["id"])
+                    cell.label = InjectorConv.toString(from: customerList[indexPath.row]["fullName"])
+                    return cell
+                }
             }
         }
         return UITableViewCell()
@@ -117,4 +102,3 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
 }
-

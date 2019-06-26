@@ -47,15 +47,6 @@ open class ReplaceNullInjector: BaseInjector {
     
 
     // ---
-    // MARK: Dependencies
-    // ---
-
-    override open func foundDependencies() -> [InjectorDependency] {
-        return []
-    }
-    
-
-    // ---
     // MARK: Internal data processing
     // ---
     

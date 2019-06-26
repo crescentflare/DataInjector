@@ -86,14 +86,5 @@ open class LinkDataInjector: BaseInjector {
         }
         return targetData
     }
-    
-
-    // ---
-    // MARK: Dependencies
-    // ---
-
-    override open func foundDependencies() -> [InjectorDependency] {
-        return []
-    }
 
 }

@@ -4,6 +4,7 @@ platform :ios, '8.0'
 
 target 'DataInjector_Example' do
   pod 'DataInjector', :path => '../../'
+  pod 'BitletSynchronizer', '~> 0.3.8'
 
   target 'DataInjector_Tests' do
     inherit! :search_paths

@@ -27,10 +27,6 @@ open class BaseInjector {
         return targetData
     }
     
-    open func foundDependencies() -> [InjectorDependency] {
-        return []
-    }
-    
 
     // ---
     // MARK: Helper

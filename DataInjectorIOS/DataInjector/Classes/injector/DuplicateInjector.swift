@@ -70,14 +70,5 @@ open class DuplicateInjector: BaseInjector {
     override open func appliedInjection(targetData: Any, subTargetData: Any?, referencedData: Any? = nil, subReferencedData: Any? = nil) -> Any {
         return targetData
     }
-    
-
-    // ---
-    // MARK: Dependencies
-    // ---
-
-    override open func foundDependencies() -> [InjectorDependency] {
-        return []
-    }
 
 }

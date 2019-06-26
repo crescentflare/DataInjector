@@ -79,17 +79,5 @@ open class JoinStringInjector: BaseInjector {
         }
         return targetData
     }
-    
 
-    // ---
-    // MARK: Dependencies
-    // ---
-
-    override open func foundDependencies() -> [InjectorDependency] {
-        if let dependency = InjectorDependencyManager.shared.dependencyFrom(injectSource: item ?? "") {
-            return [dependency]
-        }
-        return []
-    }
-    
 }

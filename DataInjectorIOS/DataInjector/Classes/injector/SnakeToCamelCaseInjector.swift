@@ -60,15 +60,6 @@ open class SnakeToCamelCaseInjector: BaseInjector {
     
 
     // ---
-    // MARK: Dependencies
-    // ---
-
-    override open func foundDependencies() -> [InjectorDependency] {
-        return []
-    }
-    
-
-    // ---
     // MARK: Helper
     // ---
     
