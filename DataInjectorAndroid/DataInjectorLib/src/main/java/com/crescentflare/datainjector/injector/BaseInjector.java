@@ -1,11 +1,6 @@
 package com.crescentflare.datainjector.injector;
 
-import com.crescentflare.datainjector.dependency.InjectorDependency;
-import com.crescentflare.datainjector.dependency.InjectorDependencyState;
 import com.crescentflare.datainjector.utility.InjectorUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Data injector: the base class
@@ -53,11 +48,6 @@ public class BaseInjector
 
     public void onApply(Object targetData, Object subTargetData, Object referencedData, Object subReferencedData)
     {
-    }
-
-    public List<InjectorDependency> findDependencies()
-    {
-        return new ArrayList<>();
     }
 
 

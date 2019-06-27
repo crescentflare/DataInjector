@@ -2,7 +2,8 @@ package com.crescentflare.datainjectorexample.helper;
 
 import android.os.Handler;
 
-import com.crescentflare.datainjector.dependency.InjectorDependency;
+import com.crescentflare.bitletsynchronizer.bitlet.BitletHandler;
+import com.crescentflare.bitletsynchronizer.bitlet.BitletObserver;
 import com.crescentflare.datainjector.injector.BaseInjector;
 import com.crescentflare.datainjector.injector.JoinStringInjector;
 import com.crescentflare.datainjector.injector.ReplaceNullInjector;
@@ -19,37 +20,33 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
- * Define a dependency for the dependency manager which can resolve itself through the example mock JSON files
+ * Define a bitlet which can load an example mock JSON file and executes a number of data injectors
  */
-public class MockDependency extends InjectorDependency
+public class MockBitlet implements BitletHandler<MockBitlet.ObjectArray>
 {
     // ---
     // Members
     // ---
 
-    private List<BaseInjector> injectors = new ArrayList<>();
-    private List<Object> storedJson = null;
     private int rawResourceId;
+    private String cacheKey;
+    private List<BaseInjector> injectors = new ArrayList<>();
 
 
     // ---
     // Initialization
     // ---
 
-    public MockDependency(String name, int rawResource)
+    public MockBitlet(int rawResourceId, String cacheKey)
     {
-        // Add basic injectors
-        super(name);
+        this.rawResourceId = rawResourceId;
+        this.cacheKey = cacheKey;
         injectors.addAll(Arrays.asList(
                 new SnakeToCamelCaseInjector(),
                 new ReplaceNullInjector()
         ));
-
-        // Store loading resource and add extra injector for the customer list
-        rawResourceId = rawResource;
         if (rawResourceId == R.raw.customer_list)
         {
             injectors.add(new JoinStringInjector("fullName", Arrays.asList("~firstName", "~middleName", "~lastName"), " ", true));
@@ -58,13 +55,12 @@ public class MockDependency extends InjectorDependency
 
 
     // ---
-    // Data access
+    // Get cache key
     // ---
 
-    @Override
-    public Object obtainInjectableData()
+    public String getCacheKey()
     {
-        return storedJson;
+        return cacheKey;
     }
 
 
@@ -72,8 +68,7 @@ public class MockDependency extends InjectorDependency
     // Resolving
     // ---
 
-    @Override
-    public void resolve(Map<String, String> input, final CompleteListener completeListener)
+    public void load(final BitletObserver<ObjectArray> observer)
     {
         final Handler handler = new Handler();
         final int rawResourceId = this.rawResourceId;
@@ -85,12 +80,14 @@ public class MockDependency extends InjectorDependency
                 // First load and process the data
                 List<Object> processedJson = null;
                 InputStream stream = ExampleApplication.context.getResources().openRawResource(rawResourceId);
+                String hash = "unknown";
                 if (stream != null)
                 {
                     String jsonString = readFromInputStream(stream);
                     if (jsonString != null)
                     {
                         Type type = new TypeToken<List<Object>>(){}.getType();
+                        hash = HashUtil.generateMD5(jsonString);
                         processedJson = new Gson().fromJson(jsonString, type);
                         if (processedJson != null)
                         {
@@ -107,6 +104,7 @@ public class MockDependency extends InjectorDependency
 
                 // Then apply the changes on the main thread, wait for half a second to simulate a delay in network traffic
                 final List<Object> applyJson = processedJson;
+                final String applyHash = hash;
                 handler.postDelayed(new Runnable()
                 {
                     @Override
@@ -114,9 +112,16 @@ public class MockDependency extends InjectorDependency
                     {
                         if (applyJson != null)
                         {
-                            storedJson = applyJson;
+                            ObjectArray objectArray = new ObjectArray();
+                            objectArray.setItemList(applyJson);
+                            observer.setBitlet(objectArray);
                         }
-                        completeListener.onResolveResult(applyJson != null);
+                        else
+                        {
+                            observer.setException(new Exception("bitlet invalid"));
+                        }
+                        observer.setBitletHash(applyHash);
+                        observer.finish();
                     }
                 }, 500);
             }
@@ -154,5 +159,25 @@ public class MockDependency extends InjectorDependency
         {
         }
         return result;
+    }
+
+
+    // ---
+    // Interface for wrapping an object array in a bitlet
+    // ---
+
+    public static class ObjectArray
+    {
+        private List<Object> itemList = new ArrayList<>();
+
+        public List<Object> getItemList()
+        {
+            return itemList;
+        }
+
+        public void setItemList(List<Object> items)
+        {
+            itemList = items;
+        }
     }
 }

@@ -8,11 +8,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
-import com.crescentflare.datainjector.dependency.InjectorDependency;
-import com.crescentflare.datainjector.dependency.InjectorDependencyManager;
-import com.crescentflare.datainjector.dependency.InjectorDependencyState;
+import com.crescentflare.bitletsynchronizer.bitlet.BitletResultObserver;
+import com.crescentflare.bitletsynchronizer.cache.BitletCacheEntry;
+import com.crescentflare.bitletsynchronizer.synchronizer.BitletSynchronizer;
 import com.crescentflare.datainjector.injector.LinkDataInjector;
 import com.crescentflare.datainjector.utility.InjectorUtil;
+import com.crescentflare.datainjectorexample.helper.Bitlets;
+import com.crescentflare.datainjectorexample.helper.MockBitlet;
 import com.crescentflare.datainjectorexample.recyclerview.DetailAdapter;
 
 import java.util.Arrays;
@@ -22,14 +24,14 @@ import java.util.Map;
 /**
  * The detail activity shows a list of products for a given customer in the example
  */
-public class DetailActivity extends AppCompatActivity implements InjectorDependencyManager.DependencyUpdateListener
+public class DetailActivity extends AppCompatActivity
 {
     // ---
     // Constants
     // ---
 
     private static final String ARG_CUSTOMER_ID = "arg_customer_id";
-    private static final List<InjectorDependency> dependencies = InjectorDependencyManager.instance.getDependencies(Arrays.asList("customers", "products"));
+    private static final List<MockBitlet> dependencies = Arrays.asList(Bitlets.customers, Bitlets.products);
 
 
     // ---
@@ -37,7 +39,6 @@ public class DetailActivity extends AppCompatActivity implements InjectorDepende
     // ---
 
     private DetailAdapter recyclerAdapter = new DetailAdapter();
-    private boolean dependenciesOpen = false;
 
 
     // ---
@@ -70,13 +71,6 @@ public class DetailActivity extends AppCompatActivity implements InjectorDepende
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(recyclerAdapter);
-
-        // Determine if dependencies are open
-        dependenciesOpen = InjectorDependencyManager.instance.filterDependenciesExcludingState(dependencies, InjectorDependencyState.Resolved).size() > 0;
-        if (!dependenciesOpen)
-        {
-            updateViews();
-        }
     }
 
 
@@ -88,30 +82,16 @@ public class DetailActivity extends AppCompatActivity implements InjectorDepende
     protected void onResume()
     {
         super.onResume();
-        InjectorDependencyManager.instance.addUpdateListener(this);
-        if (dependenciesOpen)
+        String[] checkCaches = new String[dependencies.size()];
+        for (int i = 0; i < dependencies.size(); i++)
         {
-            List<InjectorDependency> dependenciesLeft = InjectorDependencyManager.instance.filterDependenciesExcludingState(dependencies, InjectorDependencyState.Resolved);
-            if (dependenciesLeft.size() > 0)
-            {
-                for (InjectorDependency dependency : dependenciesLeft)
-                {
-                    InjectorDependencyManager.instance.resolveDependency(dependency);
-                }
-            }
-            else
-            {
-                dependenciesOpen = false;
-                updateViews();
-            }
+            checkCaches[i] = dependencies.get(i).getCacheKey();
         }
-    }
-
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-        InjectorDependencyManager.instance.removeUpdateListener(this);
+        if (!BitletSynchronizer.instance.anyCacheInState(BitletCacheEntry.State.LoadingOrRefreshing, checkCaches) && !BitletSynchronizer.instance.anyCacheInState(BitletCacheEntry.State.Unavailable, checkCaches))
+        {
+            updateViews();
+        }
+        loadData(false);
     }
 
 
@@ -137,12 +117,22 @@ public class DetailActivity extends AppCompatActivity implements InjectorDepende
 
     public void updateViews()
     {
-        // Look up dependency data
-        List<Map<String, Object>> customers = InjectorUtil.asStringObjectMapList(InjectorDependencyManager.instance.getDependency("customers").obtainInjectableData());
-        List<Map<String, Object>> products = InjectorUtil.asStringObjectMapList(InjectorDependencyManager.instance.getDependency("products").obtainInjectableData());
+        // Look up bitlet data
+        Object customers = BitletSynchronizer.instance.getCachedBitlet(Bitlets.customers.getCacheKey());
+        Object products = BitletSynchronizer.instance.getCachedBitlet(Bitlets.products.getCacheKey());
+        List<Object> customerList = null;
+        List<Object> productList = null;
+        if (customers instanceof MockBitlet.ObjectArray)
+        {
+            customerList = ((MockBitlet.ObjectArray)customers).getItemList();
+        }
+        if (products instanceof MockBitlet.ObjectArray)
+        {
+            productList = ((MockBitlet.ObjectArray)products).getItemList();
+        }
 
         // Find the products of the given customer id
-        Map<String, Object> customer = LinkDataInjector.findDataItem(customers, getIntent().getStringExtra(ARG_CUSTOMER_ID), "id");
+        Map<String, Object> customer = LinkDataInjector.findDataItem(InjectorUtil.asStringObjectMapList(customerList), getIntent().getStringExtra(ARG_CUSTOMER_ID), "id");
         List<Map<String, Object>> customerProducts = null;
         if (customer != null)
         {
@@ -150,31 +140,35 @@ public class DetailActivity extends AppCompatActivity implements InjectorDepende
         }
 
         // If everything is there, link the product details to the customer product list
-        LinkDataInjector.linkDataArray(customerProducts, products, "id");
+        LinkDataInjector.linkDataArray(customerProducts, InjectorUtil.asStringObjectMapList(productList), "id");
         recyclerAdapter.setItems(customerProducts);
     }
 
 
     // ---
-    // Dependency handling
+    // Data loading
     // ---
 
-    @Override
-    public void onDependencyResolved(InjectorDependency dependency)
+    private void loadData(boolean forced)
     {
-        if (dependenciesOpen)
+        final String[] checkCaches = new String[dependencies.size()];
+        for (int i = 0; i < dependencies.size(); i++)
         {
-            List<InjectorDependency> dependenciesLeft = InjectorDependencyManager.instance.filterDependenciesExcludingState(dependencies, InjectorDependencyState.Resolved);
-            if (dependenciesLeft.size() == 0)
-            {
-                dependenciesOpen = false;
-                updateViews();
-            }
+            checkCaches[i] = dependencies.get(i).getCacheKey();
         }
-    }
-
-    @Override
-    public void onDependencyFailed(InjectorDependency dependency, String reason)
-    {
+        for (MockBitlet dependency : dependencies)
+        {
+            BitletSynchronizer.instance.load(dependency, dependency.getCacheKey(), forced, new BitletResultObserver.SimpleCompletionListener<MockBitlet.ObjectArray>()
+            {
+                @Override
+                public void onFinish(MockBitlet.ObjectArray bitlet, Throwable exception)
+                {
+                    if (!BitletSynchronizer.instance.anyCacheInState(BitletCacheEntry.State.LoadingOrRefreshing, checkCaches))
+                    {
+                        updateViews();
+                    }
+                }
+            });
+        }
     }
 }

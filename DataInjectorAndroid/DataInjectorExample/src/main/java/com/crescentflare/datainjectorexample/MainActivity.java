@@ -7,10 +7,12 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.crescentflare.datainjector.dependency.InjectorDependency;
-import com.crescentflare.datainjector.dependency.InjectorDependencyManager;
-import com.crescentflare.datainjector.dependency.InjectorDependencyState;
+import com.crescentflare.bitletsynchronizer.bitlet.BitletResultObserver;
+import com.crescentflare.bitletsynchronizer.cache.BitletCacheEntry;
+import com.crescentflare.bitletsynchronizer.synchronizer.BitletSynchronizer;
 import com.crescentflare.datainjector.utility.InjectorUtil;
+import com.crescentflare.datainjectorexample.helper.Bitlets;
+import com.crescentflare.datainjectorexample.helper.MockBitlet;
 import com.crescentflare.datainjectorexample.recyclerview.MainAdapter;
 
 import java.util.Collections;
@@ -20,13 +22,13 @@ import java.util.Map;
 /**
  * The main activity shows a list of customers in the example
  */
-public class MainActivity extends AppCompatActivity implements InjectorDependencyManager.DependencyUpdateListener, MainAdapter.ItemClickListener
+public class MainActivity extends AppCompatActivity implements MainAdapter.ItemClickListener
 {
     // ---
     // Constants
     // ---
 
-    private static final List<InjectorDependency> dependencies = InjectorDependencyManager.instance.getDependencies(Collections.singletonList("customers"));
+    private static final List<MockBitlet> dependencies = Collections.singletonList(Bitlets.customers);
 
 
     // ---
@@ -34,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
     // ---
 
     private MainAdapter recyclerAdapter = new MainAdapter();
-    private boolean dependenciesOpen = false;
 
 
     // ---
@@ -54,9 +55,6 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(recyclerAdapter);
         recyclerAdapter.setItemClickListener(this);
-
-        // Determine if dependencies are open
-        dependenciesOpen = InjectorDependencyManager.instance.filterDependenciesExcludingState(dependencies, InjectorDependencyState.Resolved).size() > 0;
     }
 
 
@@ -68,30 +66,16 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
     protected void onResume()
     {
         super.onResume();
-        InjectorDependencyManager.instance.addUpdateListener(this);
-        if (dependenciesOpen)
+        String[] checkCaches = new String[dependencies.size()];
+        for (int i = 0; i < dependencies.size(); i++)
         {
-            List<InjectorDependency> dependenciesLeft = InjectorDependencyManager.instance.filterDependenciesExcludingState(dependencies, InjectorDependencyState.Resolved);
-            if (dependenciesLeft.size() > 0)
-            {
-                for (InjectorDependency dependency : dependenciesLeft)
-                {
-                    InjectorDependencyManager.instance.resolveDependency(dependency);
-                }
-            }
-            else
-            {
-                dependenciesOpen = false;
-                updateViews();
-            }
+            checkCaches[i] = dependencies.get(i).getCacheKey();
         }
-    }
-
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-        InjectorDependencyManager.instance.removeUpdateListener(this);
+        if (!BitletSynchronizer.instance.anyCacheInState(BitletCacheEntry.State.LoadingOrRefreshing, checkCaches) && !BitletSynchronizer.instance.anyCacheInState(BitletCacheEntry.State.Unavailable, checkCaches))
+        {
+            updateViews();
+        }
+        loadData(false);
     }
 
 
@@ -99,34 +83,43 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
     // View creation
     // ---
 
-    public void updateViews()
+    private void updateViews()
     {
-        List<Map<String, Object>> customerItems = InjectorUtil.asStringObjectMapList(InjectorDependencyManager.instance.getDependency("customers").obtainInjectableData());
-        recyclerAdapter.setItems(customerItems);
-    }
-
-
-    // ---
-    // Dependency handling
-    // ---
-
-    @Override
-    public void onDependencyResolved(InjectorDependency dependency)
-    {
-        if (dependenciesOpen)
+        Object customers = BitletSynchronizer.instance.getCachedBitlet(Bitlets.customers.getCacheKey());
+        if (customers instanceof MockBitlet.ObjectArray)
         {
-            List<InjectorDependency> dependenciesLeft = InjectorDependencyManager.instance.filterDependenciesExcludingState(dependencies, InjectorDependencyState.Resolved);
-            if (dependenciesLeft.size() == 0)
-            {
-                dependenciesOpen = false;
-                updateViews();
-            }
+            List<Object> itemList = ((MockBitlet.ObjectArray)customers).getItemList();
+            List<Map<String, Object>> customerItems = InjectorUtil.asStringObjectMapList(itemList);
+            recyclerAdapter.setItems(customerItems);
         }
     }
 
-    @Override
-    public void onDependencyFailed(InjectorDependency dependency, String reason)
+
+    // ---
+    // Data loading
+    // ---
+
+    private void loadData(boolean forced)
     {
+        final String[] checkCaches = new String[dependencies.size()];
+        for (int i = 0; i < dependencies.size(); i++)
+        {
+            checkCaches[i] = dependencies.get(i).getCacheKey();
+        }
+        for (MockBitlet dependency : dependencies)
+        {
+            BitletSynchronizer.instance.load(dependency, dependency.getCacheKey(), forced, new BitletResultObserver.SimpleCompletionListener<MockBitlet.ObjectArray>()
+            {
+                @Override
+                public void onFinish(MockBitlet.ObjectArray bitlet, Throwable exception)
+                {
+                    if (!BitletSynchronizer.instance.anyCacheInState(BitletCacheEntry.State.LoadingOrRefreshing, checkCaches))
+                    {
+                        updateViews();
+                    }
+                }
+            });
+        }
     }
 
 
@@ -137,9 +130,17 @@ public class MainActivity extends AppCompatActivity implements InjectorDependenc
     @Override
     public void onClickedItem(int index)
     {
+        // Get customer item list
+        Object customers = BitletSynchronizer.instance.getCachedBitlet(Bitlets.customers.getCacheKey());
+        List<Map<String, Object>> customerItems = null;
+        if (customers instanceof MockBitlet.ObjectArray)
+        {
+            List<Object> itemList = ((MockBitlet.ObjectArray) customers).getItemList();
+            customerItems = InjectorUtil.asStringObjectMapList(itemList);
+        }
+
         // Fetch customer ID from index
         String customerId = null;
-        List<Object> customerItems = InjectorUtil.asObjectList(InjectorDependencyManager.instance.getDependency("customers").obtainInjectableData());
         if (customerItems != null && index < customerItems.size())
         {
             Map<String, Object> customer = InjectorUtil.asStringObjectMap(customerItems.get(index));

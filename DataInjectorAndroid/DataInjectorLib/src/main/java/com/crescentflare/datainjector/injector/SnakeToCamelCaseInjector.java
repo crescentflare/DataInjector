@@ -1,6 +1,5 @@
 package com.crescentflare.datainjector.injector;
 
-import com.crescentflare.datainjector.dependency.InjectorDependency;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 
 import java.util.ArrayList;
@@ -69,16 +68,6 @@ public class SnakeToCamelCaseInjector extends BaseInjector
     public void onApply(Object targetData, Object subTargetData, Object referencedData, Object subReferencedData)
     {
         changeToCamelCase(targetData);
-    }
-
-
-    // ---
-    // Dependencies
-    // ---
-
-    public List<InjectorDependency> findDependencies()
-    {
-        return new ArrayList<>();
     }
 
 

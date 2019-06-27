@@ -1,8 +1,6 @@
 package com.crescentflare.datainjector.injector;
 
 import com.crescentflare.datainjector.conversion.InjectorConv;
-import com.crescentflare.datainjector.dependency.InjectorDependency;
-import com.crescentflare.datainjector.dependency.InjectorDependencyManager;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 
 import java.util.ArrayList;
@@ -149,20 +147,5 @@ public class JoinStringInjector extends BaseInjector
             }
             InjectorUtil.setItemOnList(modifyList, item, finalString);
         }
-    }
-
-
-    // ---
-    // Dependencies
-    // ---
-
-    public List<InjectorDependency> findDependencies()
-    {
-        InjectorDependency dependency = InjectorDependencyManager.instance.dependencyFromInjectSource(item);
-        if (dependency != null)
-        {
-            return Collections.singletonList(dependency);
-        }
-        return new ArrayList<>();
     }
 }

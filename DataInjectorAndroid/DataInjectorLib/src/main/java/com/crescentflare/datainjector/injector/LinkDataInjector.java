@@ -1,7 +1,6 @@
 package com.crescentflare.datainjector.injector;
 
 import com.crescentflare.datainjector.conversion.InjectorConv;
-import com.crescentflare.datainjector.dependency.InjectorDependency;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 
 import java.util.ArrayList;
@@ -124,15 +123,5 @@ public class LinkDataInjector extends BaseInjector
                 }
             }
         }
-    }
-
-
-    // ---
-    // Dependencies
-    // ---
-
-    public List<InjectorDependency> findDependencies()
-    {
-        return new ArrayList<>();
     }
 }
