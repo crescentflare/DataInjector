@@ -9,7 +9,7 @@
 import Foundation
 
 /// An injector linking multiple datasets together by a common field (like ID)
-open class LinkDataInjector: BaseInjector {
+open class LinkDataInjector: BaseInjectorOld {
     
     // ---
     // MARK: Members

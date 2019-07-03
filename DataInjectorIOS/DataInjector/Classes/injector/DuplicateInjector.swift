@@ -3,7 +3,7 @@
 //  DataInjector Pod
 //
 //  Library injector: duplicate an item
-//  Duplicate an item based on one or more data sources
+//  Duplicate an item based on a data source
 //
 
 import Foundation
@@ -17,13 +17,13 @@ public enum DuplicateInjectorOptionsSortType: String {
     
 }
 
-/// An extra set of injector options for the duplicate injector to specify sorting and limitations on the data source
+/// An extra set of injector options for the duplicate injector to specify sorting and limitations on the source data
 public class DuplicateInjectorOptions {
     
-    public var sortItemPath: String?
+    public var sortItemPath: InjectorPath?
     public var sortType: DuplicateInjectorOptionsSortType = .none
     public var sortDescending: Bool = false
-    public var limitSourceItems: Int?
+    public var limit: Int?
     public var limitFromEnd: Bool = false
 
 }
@@ -35,7 +35,17 @@ open class DuplicateInjector: BaseInjector {
     // MARK: Members
     // ---
 
-    public var linkKey: String?
+    public var subInjectors = [BaseInjector]()
+    public var targetItemPath: InjectorPath?
+    public var betweenItemPath: InjectorPath?
+    public var emptyItemPath: InjectorPath?
+    public var sourceDataPath: InjectorPath?
+    public var count: Int?
+    public var sortItemPath: InjectorPath?
+    public var sortType = DuplicateInjectorOptionsSortType.none
+    public var sortDescending = false
+    public var limit: Int?
+    public var limitFromEnd = false
 
     
     // ---
@@ -50,16 +60,12 @@ open class DuplicateInjector: BaseInjector {
     // MARK: Manual injection
     // ---
 
-    public static func duplicatedItem(onData targetData: [String: Any], for dataSource: [Any], duplicateItemPath: String?, betweenItemPath: String? = nil, emptyItemPath: String? = nil, options: DuplicateInjectorOptions? = nil, createDuplicateCallback: ((Any) -> Any)? = nil) -> [String: Any] {
-        return targetData
+    public static func duplicate(targetData: Any?, targetItemPath: InjectorPath? = nil, betweenItemPath: InjectorPath? = nil, emptyItemPath: InjectorPath? = nil, count: Int, duplicateCallback: ((_ targetItem: Any?, _ sourceItem: Any?) -> InjectorResult)? = nil) -> InjectorResult {
+        return InjectorResult(withModifiedObject: targetData)
     }
 
-    public static func duplicatedItem(onData targetData: [String: Any], for dataSources: [[Any]], duplicateItemPath: String?, betweenItemPath: String? = nil, emptyItemPath: String? = nil, options: DuplicateInjectorOptions? = nil, createDuplicateCallback: ((Any) -> Any)? = nil) -> [String: Any] {
-        var mergedDataSources: [Any] = []
-        for dataSource in dataSources {
-            mergedDataSources.append(contentsOf: dataSource)
-        }
-        return duplicatedItem(onData: targetData, for: mergedDataSources, duplicateItemPath: duplicateItemPath, betweenItemPath: betweenItemPath, emptyItemPath: emptyItemPath, options: options, createDuplicateCallback: createDuplicateCallback)
+    public static func duplicate(targetData: Any?, targetItemPath: InjectorPath? = nil, betweenItemPath: InjectorPath? = nil, emptyItemPath: InjectorPath? = nil, sourceData: Any?, sourceDataPath: InjectorPath? = nil, options: DuplicateInjectorOptions? = nil, duplicateCallback: ((_ targetItem: Any?, _ sourceItem: Any?) -> InjectorResult)? = nil) -> InjectorResult {
+        return InjectorResult(withModifiedObject: targetData)
     }
 
     
@@ -67,8 +73,27 @@ open class DuplicateInjector: BaseInjector {
     // MARK: General injection
     // ---
 
-    override open func appliedInjection(targetData: Any, subTargetData: Any?, referencedData: Any? = nil, subReferencedData: Any? = nil) -> Any {
-        return targetData
+    override open func appliedInjection(targetData: Any?, sourceData: Any? = nil) -> InjectorResult {
+        if sourceData == nil {
+            return DuplicateInjector.duplicate(targetData: targetData, targetItemPath: targetItemPath, betweenItemPath: betweenItemPath, emptyItemPath: emptyItemPath, count: count ?? 0)
+        }
+        let options = DuplicateInjectorOptions()
+        options.sortItemPath = sortItemPath
+        options.sortType = sortType
+        options.sortDescending = sortDescending
+        options.limit = limit
+        options.limitFromEnd = limitFromEnd
+        return DuplicateInjector.duplicate(targetData: targetData, targetItemPath: targetItemPath, betweenItemPath: betweenItemPath, emptyItemPath: emptyItemPath, sourceData: sourceData, sourceDataPath: sourceDataPath, options: options, duplicateCallback: { targetItem, sourceItem in
+            var modifiedTargetItem = targetItem
+            for subInjector in self.subInjectors {
+                let result = subInjector.appliedInjection(targetData: modifiedTargetItem, sourceData: sourceItem)
+                if result.hasError() {
+                    return result
+                }
+                modifiedTargetItem = result.modifiedObject
+            }
+            return InjectorResult(withModifiedObject: modifiedTargetItem)
+        })
     }
 
 }

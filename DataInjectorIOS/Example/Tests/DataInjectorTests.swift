@@ -41,7 +41,7 @@ class DataInjectorTests: XCTestCase {
         
         // Apply manual injection to change the price
         let result = DataInjector.inject(into: inventoryDict, path: "clothing.shirts.small", modifyCallback: { originalData in
-            return DataInjectorResult(withModifiedObject: "8.95")
+            return InjectorResult(withModifiedObject: "8.95")
         })
 
         // Check that only the injection target has been modified
@@ -71,7 +71,7 @@ class DataInjectorTests: XCTestCase {
 
         // Apply manual injection to change the number
         let result = DataInjector.inject(into: nestedNumbers, path: "1.2", modifyCallback: { originalData in
-            return DataInjectorResult(withModifiedObject: 5)
+            return InjectorResult(withModifiedObject: 5)
         })
 
         // Check that only the injection target has been modified
@@ -105,7 +105,7 @@ class DataInjectorTests: XCTestCase {
 
         // Apply manual injection to change the dictionary
         let result = DataInjector.inject(into: randomItems, path: "1.second", modifyCallback: { originalData in
-            return DataInjectorResult(withModifiedObject: "2nd")
+            return InjectorResult(withModifiedObject: "2nd")
         })
         
         // Check the result

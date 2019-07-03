@@ -28,7 +28,7 @@ class MockBitlet: BitletHandler {
     // MARK: Members
     // --
     
-    private var injectors: [BaseInjector] = [
+    private var injectors: [BaseInjectorOld] = [
         SnakeToCamelCaseInjector(),
         ReplaceNullInjector()
     ]

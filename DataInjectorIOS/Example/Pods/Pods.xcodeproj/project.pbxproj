@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04C4DEF722C7E4FE00BB7B6F /* InjectorResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C4DEF522C7E3D600BB7B6F /* InjectorResult.swift */; };
+		04DB695F22CD2E4C00A8466F /* BaseInjectorOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DB695D22CD2DA500A8466F /* BaseInjectorOld.swift */; };
 		0566A4B214421E79FD58ACCECF5BC810 /* InjectorConv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D98036DDD048CD0C59F1918834538C /* InjectorConv.swift */; };
 		18AF31D4C87751A20BE49DCB5C47AAFF /* DataInjector-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E423C4B989CAA5223B616B9341AE5D07 /* DataInjector-dummy.m */; };
 		1FC50F36A2D86E75E5D0B9A4428E36E5 /* BitletCacheEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4E464688D86C3B5B493B8527648A8A /* BitletCacheEntry.swift */; };
@@ -71,6 +73,8 @@
 
 /* Begin PBXFileReference section */
 		04BA3674B069FF72BE50AA38A3249C51 /* DataInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DataInjector.swift; sourceTree = "<group>"; };
+		04C4DEF522C7E3D600BB7B6F /* InjectorResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectorResult.swift; sourceTree = "<group>"; };
+		04DB695D22CD2DA500A8466F /* BaseInjectorOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseInjectorOld.swift; sourceTree = "<group>"; };
 		0805186C35B5EF6956C0F03AACA9712A /* DataInjector.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = DataInjector.modulemap; sourceTree = "<group>"; };
 		0A1D3D106A0A4A8AD096B2FF5A61387E /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		0D1CEF21880AFBC5C4E457028F2B1D2B /* BitletCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BitletCache.swift; path = BitletSynchronizerIOS/BitletSynchronizer/Classes/Cache/BitletCache.swift; sourceTree = "<group>"; };
@@ -286,6 +290,7 @@
 				A7C241356DDB583DCBCE952929135CA3 /* InjectorDataDetector.swift */,
 				B2A43F5E3997A162C58CA474CDC29DCB /* InjectorDataType.swift */,
 				80D23F5E40AB6A4192D6D92B1BCD37A3 /* InjectorPath.swift */,
+				04C4DEF522C7E3D600BB7B6F /* InjectorResult.swift */,
 				ED9CB751AF9A51A4FF85F6C82D0324E4 /* InjectorUtil.swift */,
 			);
 			name = utility;
@@ -338,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				9BF2BDB951310CE6B3C65BEA701F34AE /* BaseInjector.swift */,
+				04DB695D22CD2DA500A8466F /* BaseInjectorOld.swift */,
 				04BA3674B069FF72BE50AA38A3249C51 /* DataInjector.swift */,
 				D80B82C30124E44AA641BC98E0567615 /* DuplicateInjector.swift */,
 				53F46245BA58C38C3507EF573581BE46 /* JoinStringInjector.swift */,
@@ -587,12 +593,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDE124015D6A9159F6ED682F7108D824 /* BaseInjector.swift in Sources */,
+				04C4DEF722C7E4FE00BB7B6F /* InjectorResult.swift in Sources */,
 				18AF31D4C87751A20BE49DCB5C47AAFF /* DataInjector-dummy.m in Sources */,
 				70EA54BB7113885A2555ED987D69642B /* DataInjector.swift in Sources */,
 				56B7F2905703D23F98A9E33AED1A446A /* DuplicateInjector.swift in Sources */,
 				DB309A01A0DB712AEEA4524E041273C6 /* InjectorCondition.swift in Sources */,
 				3CF3E9E2F944D9EA385A2A29060F65B7 /* InjectorConditionType.swift in Sources */,
 				0566A4B214421E79FD58ACCECF5BC810 /* InjectorConv.swift in Sources */,
+				04DB695F22CD2E4C00A8466F /* BaseInjectorOld.swift in Sources */,
 				5B05569E224960E78D2E8C049332FCC2 /* InjectorDataDetector.swift in Sources */,
 				7E9C3DD08CFAB760AA31B6FA0CE1FD49 /* InjectorDataType.swift in Sources */,
 				C804AC2B8C8100B5752039D25D7B30B6 /* InjectorMapper.swift in Sources */,

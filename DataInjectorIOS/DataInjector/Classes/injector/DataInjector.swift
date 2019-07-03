@@ -8,47 +8,6 @@
 
 import Foundation
 
-/// An enum to determine the error that occurred during modification
-public enum DataInjectorError {
-    
-    case unknown
-    case noIndexedCollection
-    case indexInvalid
-    case custom
-    
-}
-
-/// A class to hold the result of a modification
-public class DataInjectorResult {
-    
-    public let modifiedObject: Any?
-    public let error: DataInjectorError?
-    public let customInfo: Any?
-
-    public init(withModifiedObject: Any?) {
-        modifiedObject = withModifiedObject
-        error = nil
-        customInfo = nil
-    }
-
-    public init(withError: DataInjectorError) {
-        modifiedObject = nil
-        error = withError
-        customInfo = nil
-    }
-
-    public init(withCustomErrorInfo: Any) {
-        modifiedObject = nil
-        error = .custom
-        customInfo = withCustomErrorInfo
-    }
-    
-    public func hasError() -> Bool {
-        return error != nil
-    }
-
-}
-
 /// An injector duplicating an item depending on the given data source(s)
 public class DataInjector {
     
@@ -101,11 +60,11 @@ public class DataInjector {
     // MARK: Modify data
     // ---
 
-    public class func inject(into: Any?, path: String, modifyCallback: (_ originalData: Any?) -> DataInjectorResult) -> DataInjectorResult {
+    public class func inject(into: Any?, path: String, modifyCallback: (_ originalData: Any?) -> InjectorResult) -> InjectorResult {
         return inject(into: into, path: InjectorPath(path: path), modifyCallback: modifyCallback)
     }
     
-    public class func inject(into: Any?, path: InjectorPath, modifyCallback: (_ originalData: Any?) -> DataInjectorResult) -> DataInjectorResult {
+    public class func inject(into: Any?, path: InjectorPath, modifyCallback: (_ originalData: Any?) -> InjectorResult) -> InjectorResult {
         if path.hasElements() {
             if let intoDict = into as? [String: Any?] {
                 if let dictIndex = path.firstElement() {
@@ -116,9 +75,9 @@ public class DataInjector {
                     }
                     var modifiedDict = intoDict
                     modifiedDict[dictIndex] = result.modifiedObject
-                    return DataInjectorResult(withModifiedObject: modifiedDict)
+                    return InjectorResult(withModifiedObject: modifiedDict)
                 }
-                return DataInjectorResult(withError: .indexInvalid)
+                return InjectorResult(withError: .indexInvalid)
             } else if let intoDict = into as? [String: Any] {
                 if let dictIndex = path.firstElement(), let originalData = intoDict[dictIndex] {
                     let result = inject(into: originalData, path: path.deeperPath(), modifyCallback: modifyCallback)
@@ -128,13 +87,13 @@ public class DataInjector {
                     if let modifiedObject = result.modifiedObject {
                         var modifiedDict = intoDict
                         modifiedDict[dictIndex] = modifiedObject
-                        return DataInjectorResult(withModifiedObject: modifiedDict)
+                        return InjectorResult(withModifiedObject: modifiedDict)
                     }
                     var modifiedNullDict: [String: Any?] = intoDict
                     modifiedNullDict[dictIndex] = result.modifiedObject
-                    return DataInjectorResult(withModifiedObject: modifiedNullDict)
+                    return InjectorResult(withModifiedObject: modifiedNullDict)
                 }
-                return DataInjectorResult(withError: .indexInvalid)
+                return InjectorResult(withError: .indexInvalid)
             } else if let intoArray = into as? [Any?] {
                 let index = InjectorConv.toInt(from: path.firstElement()) ?? -1
                 if index >= 0 && index < intoArray.count {
@@ -145,9 +104,9 @@ public class DataInjector {
                     }
                     var modifiedArray = intoArray
                     modifiedArray[index] = result.modifiedObject
-                    return DataInjectorResult(withModifiedObject: modifiedArray)
+                    return InjectorResult(withModifiedObject: modifiedArray)
                 }
-                return DataInjectorResult(withError: .indexInvalid)
+                return InjectorResult(withError: .indexInvalid)
             } else if let intoArray = into as? [Any] {
                 let index = InjectorConv.toInt(from: path.firstElement()) ?? -1
                 if index >= 0 && index < intoArray.count {
@@ -159,15 +118,15 @@ public class DataInjector {
                     if let modifiedObject = result.modifiedObject {
                         var modifiedArray = intoArray
                         modifiedArray[index] = modifiedObject
-                        return DataInjectorResult(withModifiedObject: modifiedArray)
+                        return InjectorResult(withModifiedObject: modifiedArray)
                     }
                     var modifiedNullArray: [Any?] = intoArray
                     modifiedNullArray[index] = result.modifiedObject
-                    return DataInjectorResult(withModifiedObject: modifiedNullArray)
+                    return InjectorResult(withModifiedObject: modifiedNullArray)
                 }
-                return DataInjectorResult(withError: .indexInvalid)
+                return InjectorResult(withError: .indexInvalid)
             } else {
-                return DataInjectorResult(withError: .noIndexedCollection)
+                return InjectorResult(withError: .noIndexedCollection)
             }
         } else {
             return modifyCallback(into)
