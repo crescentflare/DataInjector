@@ -14,6 +14,9 @@ public enum InjectorError {
     case unknown
     case noIndexedCollection
     case indexInvalid
+    case targetInvalid
+    case sourceInvalid
+    case notFound
     case custom
     
 }

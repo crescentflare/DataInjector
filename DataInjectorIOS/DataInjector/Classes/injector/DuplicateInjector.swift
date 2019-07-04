@@ -3,96 +3,128 @@
 //  DataInjector Pod
 //
 //  Library injector: duplicate an item
-//  Duplicate an item based on a data source
+//  Duplicates an item in an array based on the amount of elements in a data source or an amount specified manually
 //
 
 import Foundation
 
-/// An enum to specify the sort method on the duplicate injector options
-public enum DuplicateInjectorOptionsSortType: String {
-    
-    case none = ""
-    case date = "date"
-    case string = "string"
-    
-}
-
-/// An extra set of injector options for the duplicate injector to specify sorting and limitations on the source data
-public class DuplicateInjectorOptions {
-    
-    public var sortItemPath: InjectorPath?
-    public var sortType: DuplicateInjectorOptionsSortType = .none
-    public var sortDescending: Bool = false
-    public var limit: Int?
-    public var limitFromEnd: Bool = false
-
-}
-
-/// An injector duplicating an item depending on the given data source(s)
+/// An injector duplicating an item in an array depending on the given data source or specified manually
 open class DuplicateInjector: BaseInjector {
     
-    // ---
+    // --
     // MARK: Members
-    // ---
+    // --
 
     public var subInjectors = [BaseInjector]()
     public var targetItemPath: InjectorPath?
-    public var betweenItemPath: InjectorPath?
-    public var emptyItemPath: InjectorPath?
+    public var duplicateItemIndex: Int = 0
+    public var betweenItemIndex: Int = -1
+    public var emptyItemIndex: Int = -1
     public var sourceDataPath: InjectorPath?
-    public var count: Int?
-    public var sortItemPath: InjectorPath?
-    public var sortType = DuplicateInjectorOptionsSortType.none
-    public var sortDescending = false
-    public var limit: Int?
-    public var limitFromEnd = false
+    public var overrideSourceData: Any?
+    public var count: Int = 2
 
     
-    // ---
+    // --
     // MARK: Initialization
-    // ---
+    // --
     
     public override init() {
     }
 
     
-    // ---
+    // --
     // MARK: Manual injection
-    // ---
-
-    public static func duplicate(targetData: Any?, targetItemPath: InjectorPath? = nil, betweenItemPath: InjectorPath? = nil, emptyItemPath: InjectorPath? = nil, count: Int, duplicateCallback: ((_ targetItem: Any?, _ sourceItem: Any?) -> InjectorResult)? = nil) -> InjectorResult {
-        return InjectorResult(withModifiedObject: targetData)
-    }
-
-    public static func duplicate(targetData: Any?, targetItemPath: InjectorPath? = nil, betweenItemPath: InjectorPath? = nil, emptyItemPath: InjectorPath? = nil, sourceData: Any?, sourceDataPath: InjectorPath? = nil, options: DuplicateInjectorOptions? = nil, duplicateCallback: ((_ targetItem: Any?, _ sourceItem: Any?) -> InjectorResult)? = nil) -> InjectorResult {
-        return InjectorResult(withModifiedObject: targetData)
-    }
-
+    // --
     
-    // ---
+    public static func duplicateItem(inArray: Any?, duplicateItemIndex: Int = 0, betweenItemIndex: Int = -1, emptyItemIndex: Int = -1, count: Int = 2, duplicateCallback: ((_ duplicatedItem: Any?, _ duplicateIndex: Int) -> InjectorResult)? = nil) -> InjectorResult {
+        if let inArray = inArray as? [Any?] {
+            // Fetch items for duplication
+            if duplicateItemIndex < 0 || duplicateItemIndex >= inArray.count {
+                return InjectorResult(withError: .notFound)
+            } else if betweenItemIndex >= 0 && betweenItemIndex >= inArray.count {
+                return InjectorResult(withError: .notFound)
+            } else if emptyItemIndex >= 0 && emptyItemIndex >= inArray.count {
+                return InjectorResult(withError: .notFound)
+            }
+            let duplicateItem = inArray[duplicateItemIndex]
+            let betweenItem = betweenItemIndex >= 0 && betweenItemIndex < inArray.count ? inArray[betweenItemIndex] : nil
+            let emptyItem = emptyItemIndex >= 0 && emptyItemIndex < inArray.count ? inArray[emptyItemIndex] : nil
+            
+            // Prepare new array without duplicate items
+            var modifiedArray = [Any?]()
+            for index in inArray.indices {
+                if index != duplicateItemIndex && index != betweenItemIndex && index != emptyItemIndex {
+                    modifiedArray.append(inArray[index])
+                }
+            }
+            
+            // Duplicate items
+            var insertIndex = duplicateItemIndex
+            for i in 0..<count {
+                if i > 0, let betweenItem = betweenItem {
+                    modifiedArray.insert(betweenItem, at: insertIndex)
+                    insertIndex += 1
+                }
+                if let duplicateCallback = duplicateCallback {
+                    let result = duplicateCallback(duplicateItem, i)
+                    if result.hasError() {
+                        return result
+                    }
+                    modifiedArray.insert(result.modifiedObject, at: insertIndex)
+                } else {
+                    modifiedArray.insert(duplicateItem, at: insertIndex)
+                }
+                insertIndex += 1
+            }
+            if count == 0, let emptyItem = emptyItem {
+                modifiedArray.insert(emptyItem, at: insertIndex)
+            }
+            return InjectorResult(withModifiedObject: modifiedArray)
+        }
+        return InjectorResult(withError: .targetInvalid)
+    }
+
+    public static func duplicateItem(inArray: Any?, duplicateItemIndex: Int = 0, betweenItemIndex: Int = -1, emptyItemIndex: Int = -1, sourceArray: Any?, duplicateCallback: ((_ duplicatedItem: Any?, _ sourceItem: Any?) -> InjectorResult)? = nil) -> InjectorResult {
+        if let sourceArray = sourceArray as? [Any?] {
+            return duplicateItem(inArray: inArray, duplicateItemIndex: duplicateItemIndex, betweenItemIndex: betweenItemIndex, emptyItemIndex: emptyItemIndex, count: sourceArray.count, duplicateCallback: { duplicatedItem, duplicateIndex in
+                if let duplicateCallback = duplicateCallback {
+                    return duplicateCallback(duplicatedItem, sourceArray[duplicateIndex])
+                }
+                return InjectorResult(withModifiedObject: duplicatedItem)
+            })
+        }
+        return InjectorResult(withError: .sourceInvalid)
+    }
+    
+    
+    // --
     // MARK: General injection
-    // ---
+    // --
 
     override open func appliedInjection(targetData: Any?, sourceData: Any? = nil) -> InjectorResult {
-        if sourceData == nil {
-            return DuplicateInjector.duplicate(targetData: targetData, targetItemPath: targetItemPath, betweenItemPath: betweenItemPath, emptyItemPath: emptyItemPath, count: count ?? 0)
+        // Use manual duplication count when source data is not specified
+        var useSourceData = overrideSourceData ?? sourceData
+        if useSourceData == nil {
+            return DataInjector.inject(into: targetData, path: targetItemPath ?? InjectorPath(path: ""), modifyCallback: { originalData in
+                return DuplicateInjector.duplicateItem(inArray: originalData, duplicateItemIndex: duplicateItemIndex, betweenItemIndex: betweenItemIndex, emptyItemIndex: emptyItemIndex, count: count)
+            })
         }
-        let options = DuplicateInjectorOptions()
-        options.sortItemPath = sortItemPath
-        options.sortType = sortType
-        options.sortDescending = sortDescending
-        options.limit = limit
-        options.limitFromEnd = limitFromEnd
-        return DuplicateInjector.duplicate(targetData: targetData, targetItemPath: targetItemPath, betweenItemPath: betweenItemPath, emptyItemPath: emptyItemPath, sourceData: sourceData, sourceDataPath: sourceDataPath, options: options, duplicateCallback: { targetItem, sourceItem in
-            var modifiedTargetItem = targetItem
-            for subInjector in self.subInjectors {
-                let result = subInjector.appliedInjection(targetData: modifiedTargetItem, sourceData: sourceItem)
-                if result.hasError() {
-                    return result
+        
+        // Duplicate based on source data
+        useSourceData = DataInjector.get(from: sourceData, path: sourceDataPath ?? InjectorPath(path: ""))
+        return DataInjector.inject(into: targetData, path: targetItemPath ?? InjectorPath(path: ""), modifyCallback: { originalData in
+            return DuplicateInjector.duplicateItem(inArray: originalData, duplicateItemIndex: duplicateItemIndex, betweenItemIndex: betweenItemIndex, emptyItemIndex: emptyItemIndex, sourceArray: useSourceData, duplicateCallback: { duplicatedItem, sourceItem in
+                var modifiedDuplicatedItem = duplicatedItem
+                for subInjector in self.subInjectors {
+                    let result = subInjector.appliedInjection(targetData: modifiedDuplicatedItem, sourceData: sourceItem)
+                    if result.hasError() {
+                        return result
+                    }
+                    modifiedDuplicatedItem = result.modifiedObject
                 }
-                modifiedTargetItem = result.modifiedObject
-            }
-            return InjectorResult(withModifiedObject: modifiedTargetItem)
+                return InjectorResult(withModifiedObject: modifiedDuplicatedItem)
+            })
         })
     }
 

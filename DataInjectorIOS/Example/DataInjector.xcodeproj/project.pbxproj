@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040CB00F22CE120D00446096 /* DuplicateInjectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040CB00E22CE120D00446096 /* DuplicateInjectorTests.swift */; };
 		040E5CE31DF01C8100968B1C /* InjectorDataDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040E5CE11DF01C6B00968B1C /* InjectorDataDetectorTests.swift */; };
 		040E5CE81DF05C0900968B1C /* InjectorMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040E5CE61DF05BE200968B1C /* InjectorMapperTests.swift */; };
 		041E559F1DEC6641004C4E32 /* DataInjector.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 041E559E1DEC6641004C4E32 /* DataInjector.podspec */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		040CB00E22CE120D00446096 /* DuplicateInjectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DuplicateInjectorTests.swift; sourceTree = "<group>"; };
 		040E5CE11DF01C6B00968B1C /* InjectorDataDetectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectorDataDetectorTests.swift; sourceTree = "<group>"; };
 		040E5CE61DF05BE200968B1C /* InjectorMapperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectorMapperTests.swift; sourceTree = "<group>"; };
 		041E559E1DEC6641004C4E32 /* DataInjector.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DataInjector.podspec; path = ../../DataInjector.podspec; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				04840DD922BE724700A52B68 /* DataInjectorTests.swift */,
+				040CB00E22CE120D00446096 /* DuplicateInjectorTests.swift */,
 				048935E11DF0B74D002B2E5E /* InjectorConditionTests.swift */,
 				04840A441DEE10D9005F6855 /* InjectorConvTests.swift */,
 				040E5CE11DF01C6B00968B1C /* InjectorDataDetectorTests.swift */,
@@ -386,6 +389,7 @@
 				040E5CE81DF05C0900968B1C /* InjectorMapperTests.swift in Sources */,
 				048935E31DF0B768002B2E5E /* InjectorConditionTests.swift in Sources */,
 				045EB83E22BFB57800DA667F /* InjectorPathTests.swift in Sources */,
+				040CB00F22CE120D00446096 /* DuplicateInjectorTests.swift in Sources */,
 				04840A591DEE1D3C005F6855 /* InjectorUtilTests.swift in Sources */,
 				04840DDA22BE724700A52B68 /* DataInjectorTests.swift in Sources */,
 				04840A541DEE1292005F6855 /* InjectorConvTests.swift in Sources */,
