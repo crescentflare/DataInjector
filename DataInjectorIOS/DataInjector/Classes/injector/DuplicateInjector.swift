@@ -37,7 +37,7 @@ open class DuplicateInjector: BaseInjector {
     // MARK: Manual injection
     // --
     
-    public static func duplicateItem(inArray: Any?, duplicateItemIndex: Int = 0, betweenItemIndex: Int = -1, emptyItemIndex: Int = -1, count: Int = 2, duplicateCallback: ((_ duplicatedItem: Any?, _ duplicateIndex: Int) -> InjectorResult)? = nil) -> InjectorResult {
+    public static func duplicateItem(inArray: Any?, count: Int = 2, duplicateItemIndex: Int = 0, betweenItemIndex: Int = -1, emptyItemIndex: Int = -1, duplicateCallback: ((_ duplicatedItem: Any?, _ duplicateIndex: Int) -> InjectorResult)? = nil) -> InjectorResult {
         if let inArray = inArray as? [Any?] {
             // Fetch items for duplication
             if duplicateItemIndex < 0 || duplicateItemIndex >= inArray.count {
@@ -85,9 +85,9 @@ open class DuplicateInjector: BaseInjector {
         return InjectorResult(withError: .targetInvalid)
     }
 
-    public static func duplicateItem(inArray: Any?, duplicateItemIndex: Int = 0, betweenItemIndex: Int = -1, emptyItemIndex: Int = -1, sourceArray: Any?, duplicateCallback: ((_ duplicatedItem: Any?, _ sourceItem: Any?) -> InjectorResult)? = nil) -> InjectorResult {
+    public static func duplicateItem(inArray: Any?, sourceArray: Any?, duplicateItemIndex: Int = 0, betweenItemIndex: Int = -1, emptyItemIndex: Int = -1, duplicateCallback: ((_ duplicatedItem: Any?, _ sourceItem: Any?) -> InjectorResult)? = nil) -> InjectorResult {
         if let sourceArray = sourceArray as? [Any?] {
-            return duplicateItem(inArray: inArray, duplicateItemIndex: duplicateItemIndex, betweenItemIndex: betweenItemIndex, emptyItemIndex: emptyItemIndex, count: sourceArray.count, duplicateCallback: { duplicatedItem, duplicateIndex in
+            return duplicateItem(inArray: inArray, count: sourceArray.count, duplicateItemIndex: duplicateItemIndex, betweenItemIndex: betweenItemIndex, emptyItemIndex: emptyItemIndex, duplicateCallback: { duplicatedItem, duplicateIndex in
                 if let duplicateCallback = duplicateCallback {
                     return duplicateCallback(duplicatedItem, sourceArray[duplicateIndex])
                 }
@@ -107,14 +107,14 @@ open class DuplicateInjector: BaseInjector {
         var useSourceData = overrideSourceData ?? sourceData
         if useSourceData == nil {
             return DataInjector.inject(into: targetData, path: targetItemPath ?? InjectorPath(path: ""), modifyCallback: { originalData in
-                return DuplicateInjector.duplicateItem(inArray: originalData, duplicateItemIndex: duplicateItemIndex, betweenItemIndex: betweenItemIndex, emptyItemIndex: emptyItemIndex, count: count)
+                return DuplicateInjector.duplicateItem(inArray: originalData, count: count, duplicateItemIndex: duplicateItemIndex, betweenItemIndex: betweenItemIndex, emptyItemIndex: emptyItemIndex)
             })
         }
         
         // Duplicate based on source data
         useSourceData = DataInjector.get(from: sourceData, path: sourceDataPath ?? InjectorPath(path: ""))
         return DataInjector.inject(into: targetData, path: targetItemPath ?? InjectorPath(path: ""), modifyCallback: { originalData in
-            return DuplicateInjector.duplicateItem(inArray: originalData, duplicateItemIndex: duplicateItemIndex, betweenItemIndex: betweenItemIndex, emptyItemIndex: emptyItemIndex, sourceArray: useSourceData, duplicateCallback: { duplicatedItem, sourceItem in
+            return DuplicateInjector.duplicateItem(inArray: originalData, sourceArray: useSourceData, duplicateItemIndex: duplicateItemIndex, betweenItemIndex: betweenItemIndex, emptyItemIndex: emptyItemIndex, duplicateCallback: { duplicatedItem, sourceItem in
                 var modifiedDuplicatedItem = duplicatedItem
                 for subInjector in self.subInjectors {
                     let result = subInjector.appliedInjection(targetData: modifiedDuplicatedItem, sourceData: sourceItem)
