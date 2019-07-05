@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0438BE5022CF313400B0C7F5 /* ValueInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0438BE4F22CF313400B0C7F5 /* ValueInjector.swift */; };
 		04C4DEF722C7E4FE00BB7B6F /* InjectorResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C4DEF522C7E3D600BB7B6F /* InjectorResult.swift */; };
 		04DB695F22CD2E4C00A8466F /* BaseInjectorOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DB695D22CD2DA500A8466F /* BaseInjectorOld.swift */; };
 		0566A4B214421E79FD58ACCECF5BC810 /* InjectorConv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D98036DDD048CD0C59F1918834538C /* InjectorConv.swift */; };
@@ -72,6 +73,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0438BE4F22CF313400B0C7F5 /* ValueInjector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueInjector.swift; sourceTree = "<group>"; };
 		04BA3674B069FF72BE50AA38A3249C51 /* DataInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DataInjector.swift; sourceTree = "<group>"; };
 		04C4DEF522C7E3D600BB7B6F /* InjectorResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectorResult.swift; sourceTree = "<group>"; };
 		04DB695D22CD2DA500A8466F /* BaseInjectorOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseInjectorOld.swift; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 				A4E7A6A766B14E5B46E65208D002C581 /* LinkDataInjector.swift */,
 				2F3D47862166F8D52DF4C92BB2570953 /* ReplaceNullInjector.swift */,
 				624ED3440B66300272CD2A1325FB37E6 /* SnakeToCamelCaseInjector.swift */,
+				0438BE4F22CF313400B0C7F5 /* ValueInjector.swift */,
 			);
 			name = injector;
 			path = DataInjectorIOS/DataInjector/Classes/injector;
@@ -606,6 +609,7 @@
 				C804AC2B8C8100B5752039D25D7B30B6 /* InjectorMapper.swift in Sources */,
 				E8ABEDFFEA8A6748CBB5D49359C2A8B6 /* InjectorPath.swift in Sources */,
 				CD85FDB3433E1480C2180766E7AC01E3 /* InjectorUtil.swift in Sources */,
+				0438BE5022CF313400B0C7F5 /* ValueInjector.swift in Sources */,
 				2650096391B61810C362A70058E699C3 /* JoinStringInjector.swift in Sources */,
 				98BD629ED7F55433CD3C6C1A32A30E5E /* LinkDataInjector.swift in Sources */,
 				37B93A29880B7C2F557EA9C41CD913AE /* ReplaceNullInjector.swift in Sources */,

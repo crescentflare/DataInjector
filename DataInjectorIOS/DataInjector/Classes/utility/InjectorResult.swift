@@ -17,6 +17,7 @@ public enum InjectorError {
     case targetInvalid
     case sourceInvalid
     case notFound
+    case nilNotAllowed
     case custom
     
 }
