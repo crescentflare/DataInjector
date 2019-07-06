@@ -1,5 +1,5 @@
 //
-//  ReplaceNullInjector.swift
+//  ReplaceNullInjectorOld.swift
 //  DataInjector Pod
 //
 //  Library injector: remove or replace null values
@@ -9,7 +9,7 @@
 import Foundation
 
 /// An injector filtering out or replacing null values
-open class ReplaceNullInjector: BaseInjectorOld {
+open class ReplaceNullInjectorOld: BaseInjectorOld {
     
     // ---
     // MARK: Initialization
@@ -42,7 +42,7 @@ open class ReplaceNullInjector: BaseInjectorOld {
     // ---
 
     override open func appliedInjection(targetData: Any, subTargetData: Any?, referencedData: Any? = nil, subReferencedData: Any? = nil) -> Any {
-        return ReplaceNullInjector.replacedNull(onData: targetData, with: referencedData)
+        return ReplaceNullInjectorOld.replacedNull(onData: targetData, with: referencedData)
     }
     
 

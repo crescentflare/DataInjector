@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		0438BE5022CF313400B0C7F5 /* ValueInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0438BE4F22CF313400B0C7F5 /* ValueInjector.swift */; };
+		045AAC1122D0B83B000911F1 /* ReplaceNilInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045AAC1022D0B83B000911F1 /* ReplaceNilInjector.swift */; };
 		04C4DEF722C7E4FE00BB7B6F /* InjectorResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C4DEF522C7E3D600BB7B6F /* InjectorResult.swift */; };
 		04DB695F22CD2E4C00A8466F /* BaseInjectorOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DB695D22CD2DA500A8466F /* BaseInjectorOld.swift */; };
 		0566A4B214421E79FD58ACCECF5BC810 /* InjectorConv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D98036DDD048CD0C59F1918834538C /* InjectorConv.swift */; };
 		18AF31D4C87751A20BE49DCB5C47AAFF /* DataInjector-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E423C4B989CAA5223B616B9341AE5D07 /* DataInjector-dummy.m */; };
 		1FC50F36A2D86E75E5D0B9A4428E36E5 /* BitletCacheEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4E464688D86C3B5B493B8527648A8A /* BitletCacheEntry.swift */; };
 		2650096391B61810C362A70058E699C3 /* JoinStringInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F46245BA58C38C3507EF573581BE46 /* JoinStringInjector.swift */; };
-		37B93A29880B7C2F557EA9C41CD913AE /* ReplaceNullInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3D47862166F8D52DF4C92BB2570953 /* ReplaceNullInjector.swift */; };
+		37B93A29880B7C2F557EA9C41CD913AE /* ReplaceNullInjectorOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3D47862166F8D52DF4C92BB2570953 /* ReplaceNullInjectorOld.swift */; };
 		3CF3E9E2F944D9EA385A2A29060F65B7 /* InjectorConditionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8767821DC8276430945E99348B3ECCA /* InjectorConditionType.swift */; };
 		3FCC6E63FA725068EB1C2CC334A26F69 /* BitletSynchronizer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FEA883AA7A177FCA7E87325E9C44D4D7 /* BitletSynchronizer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		42355DA05E11732EF393FDB644E17076 /* BitletOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6356D0D2EC7D994D8C81F7EF62BB6E /* BitletOperation.swift */; };
@@ -74,6 +75,7 @@
 
 /* Begin PBXFileReference section */
 		0438BE4F22CF313400B0C7F5 /* ValueInjector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueInjector.swift; sourceTree = "<group>"; };
+		045AAC1022D0B83B000911F1 /* ReplaceNilInjector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaceNilInjector.swift; sourceTree = "<group>"; };
 		04BA3674B069FF72BE50AA38A3249C51 /* DataInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DataInjector.swift; sourceTree = "<group>"; };
 		04C4DEF522C7E3D600BB7B6F /* InjectorResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectorResult.swift; sourceTree = "<group>"; };
 		04DB695D22CD2DA500A8466F /* BaseInjectorOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseInjectorOld.swift; sourceTree = "<group>"; };
@@ -86,7 +88,7 @@
 		12D98036DDD048CD0C59F1918834538C /* InjectorConv.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InjectorConv.swift; sourceTree = "<group>"; };
 		212A4FEF27F5C693EB652A487C69F0BD /* Pods-DataInjector_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DataInjector_Tests-dummy.m"; sourceTree = "<group>"; };
 		2B695EA83710D3B972303B7469A3845D /* BitletExpireTime.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BitletExpireTime.swift; path = BitletSynchronizerIOS/BitletSynchronizer/Classes/Bitlet/BitletExpireTime.swift; sourceTree = "<group>"; };
-		2F3D47862166F8D52DF4C92BB2570953 /* ReplaceNullInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReplaceNullInjector.swift; sourceTree = "<group>"; };
+		2F3D47862166F8D52DF4C92BB2570953 /* ReplaceNullInjectorOld.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReplaceNullInjectorOld.swift; sourceTree = "<group>"; };
 		2F938EA690EF64DBA6D2556C75CA2A3E /* BitletSynchronizer.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = BitletSynchronizer.xcconfig; sourceTree = "<group>"; };
 		320A558D9C2037232EB04C06E65DCA72 /* DataInjector.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DataInjector.xcconfig; sourceTree = "<group>"; };
 		3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -350,7 +352,8 @@
 				D80B82C30124E44AA641BC98E0567615 /* DuplicateInjector.swift */,
 				53F46245BA58C38C3507EF573581BE46 /* JoinStringInjector.swift */,
 				A4E7A6A766B14E5B46E65208D002C581 /* LinkDataInjector.swift */,
-				2F3D47862166F8D52DF4C92BB2570953 /* ReplaceNullInjector.swift */,
+				045AAC1022D0B83B000911F1 /* ReplaceNilInjector.swift */,
+				2F3D47862166F8D52DF4C92BB2570953 /* ReplaceNullInjectorOld.swift */,
 				624ED3440B66300272CD2A1325FB37E6 /* SnakeToCamelCaseInjector.swift */,
 				0438BE4F22CF313400B0C7F5 /* ValueInjector.swift */,
 			);
@@ -611,8 +614,9 @@
 				CD85FDB3433E1480C2180766E7AC01E3 /* InjectorUtil.swift in Sources */,
 				0438BE5022CF313400B0C7F5 /* ValueInjector.swift in Sources */,
 				2650096391B61810C362A70058E699C3 /* JoinStringInjector.swift in Sources */,
+				045AAC1122D0B83B000911F1 /* ReplaceNilInjector.swift in Sources */,
 				98BD629ED7F55433CD3C6C1A32A30E5E /* LinkDataInjector.swift in Sources */,
-				37B93A29880B7C2F557EA9C41CD913AE /* ReplaceNullInjector.swift in Sources */,
+				37B93A29880B7C2F557EA9C41CD913AE /* ReplaceNullInjectorOld.swift in Sources */,
 				E2FA7D248DF6C8DACF76B60F74A5C4F5 /* SnakeToCamelCaseInjector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

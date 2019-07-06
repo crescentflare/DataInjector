@@ -30,7 +30,7 @@ class MockBitlet: BitletHandler {
     
     private var injectors: [BaseInjectorOld] = [
         SnakeToCamelCaseInjector(),
-        ReplaceNullInjector()
+        ReplaceNullInjectorOld()
     ]
     private let filename: String
     let cacheKey: String
