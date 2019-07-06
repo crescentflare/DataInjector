@@ -22,7 +22,7 @@ open class DuplicateInjector: BaseInjector {
     public var emptyItemIndex: Int = -1
     public var sourceDataPath: InjectorPath?
     public var overrideSourceData: Any?
-    public var count: Int = 2
+    public var count: Int?
 
     
     // --
@@ -103,16 +103,16 @@ open class DuplicateInjector: BaseInjector {
     // --
 
     override open func appliedInjection(targetData: Any?, sourceData: Any? = nil) -> InjectorResult {
-        // Use manual duplication count when source data is not specified
-        var useSourceData = overrideSourceData ?? sourceData
-        if useSourceData == nil {
+        // Use manual count when specified
+        if let count = count {
             return DataInjector.inject(into: targetData, path: targetItemPath ?? InjectorPath(path: ""), modifyCallback: { originalData in
                 return DuplicateInjector.duplicateItem(inArray: originalData, count: count, duplicateItemIndex: duplicateItemIndex, betweenItemIndex: betweenItemIndex, emptyItemIndex: emptyItemIndex)
             })
         }
         
         // Duplicate based on source data
-        useSourceData = DataInjector.get(from: sourceData, path: sourceDataPath ?? InjectorPath(path: ""))
+        var useSourceData = overrideSourceData ?? sourceData
+        useSourceData = DataInjector.get(from: useSourceData, path: sourceDataPath ?? InjectorPath(path: ""))
         return DataInjector.inject(into: targetData, path: targetItemPath ?? InjectorPath(path: ""), modifyCallback: { originalData in
             return DuplicateInjector.duplicateItem(inArray: originalData, sourceArray: useSourceData, duplicateItemIndex: duplicateItemIndex, betweenItemIndex: betweenItemIndex, emptyItemIndex: emptyItemIndex, duplicateCallback: { duplicatedItem, sourceItem in
                 var modifiedDuplicatedItem = duplicatedItem
