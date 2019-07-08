@@ -10,6 +10,7 @@
 		0438BE5022CF313400B0C7F5 /* ValueInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0438BE4F22CF313400B0C7F5 /* ValueInjector.swift */; };
 		045AAC1122D0B83B000911F1 /* ReplaceNilInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045AAC1022D0B83B000911F1 /* ReplaceNilInjector.swift */; };
 		04C4DEF722C7E4FE00BB7B6F /* InjectorResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C4DEF522C7E3D600BB7B6F /* InjectorResult.swift */; };
+		04C7AEFB22D3233C00F2AA2D /* SnakeToCamelCaseInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7AEFA22D3233C00F2AA2D /* SnakeToCamelCaseInjector.swift */; };
 		04DB695F22CD2E4C00A8466F /* BaseInjectorOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DB695D22CD2DA500A8466F /* BaseInjectorOld.swift */; };
 		0566A4B214421E79FD58ACCECF5BC810 /* InjectorConv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D98036DDD048CD0C59F1918834538C /* InjectorConv.swift */; };
 		18AF31D4C87751A20BE49DCB5C47AAFF /* DataInjector-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E423C4B989CAA5223B616B9341AE5D07 /* DataInjector-dummy.m */; };
@@ -43,7 +44,7 @@
 		C804AC2B8C8100B5752039D25D7B30B6 /* InjectorMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74044211918CDD01B4CF75949BA656E9 /* InjectorMapper.swift */; };
 		CD85FDB3433E1480C2180766E7AC01E3 /* InjectorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9CB751AF9A51A4FF85F6C82D0324E4 /* InjectorUtil.swift */; };
 		DB309A01A0DB712AEEA4524E041273C6 /* InjectorCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EF779010B4B106BC7DE349CD0D5FD4 /* InjectorCondition.swift */; };
-		E2FA7D248DF6C8DACF76B60F74A5C4F5 /* SnakeToCamelCaseInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624ED3440B66300272CD2A1325FB37E6 /* SnakeToCamelCaseInjector.swift */; };
+		E2FA7D248DF6C8DACF76B60F74A5C4F5 /* SnakeToCamelCaseInjectorOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624ED3440B66300272CD2A1325FB37E6 /* SnakeToCamelCaseInjectorOld.swift */; };
 		E7DDF6568C48CD2DB3C98C2448A7A21C /* Pods-DataInjector_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D297993E715486BD000FEB01781231F /* Pods-DataInjector_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E8ABEDFFEA8A6748CBB5D49359C2A8B6 /* InjectorPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D23F5E40AB6A4192D6D92B1BCD37A3 /* InjectorPath.swift */; };
 		EC00405F8FB51FD6CF8FD9D393A8E4D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
@@ -78,6 +79,7 @@
 		045AAC1022D0B83B000911F1 /* ReplaceNilInjector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaceNilInjector.swift; sourceTree = "<group>"; };
 		04BA3674B069FF72BE50AA38A3249C51 /* DataInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DataInjector.swift; sourceTree = "<group>"; };
 		04C4DEF522C7E3D600BB7B6F /* InjectorResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectorResult.swift; sourceTree = "<group>"; };
+		04C7AEFA22D3233C00F2AA2D /* SnakeToCamelCaseInjector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnakeToCamelCaseInjector.swift; sourceTree = "<group>"; };
 		04DB695D22CD2DA500A8466F /* BaseInjectorOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseInjectorOld.swift; sourceTree = "<group>"; };
 		0805186C35B5EF6956C0F03AACA9712A /* DataInjector.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = DataInjector.modulemap; sourceTree = "<group>"; };
 		0A1D3D106A0A4A8AD096B2FF5A61387E /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -98,7 +100,7 @@
 		53F46245BA58C38C3507EF573581BE46 /* JoinStringInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JoinStringInjector.swift; sourceTree = "<group>"; };
 		5856391BD1941437BADFBF8024EED7BD /* BitletSynchronizer-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "BitletSynchronizer-prefix.pch"; sourceTree = "<group>"; };
 		5B8B9AEF4ED80772414CE93581812620 /* DataInjector.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = DataInjector.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		624ED3440B66300272CD2A1325FB37E6 /* SnakeToCamelCaseInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SnakeToCamelCaseInjector.swift; sourceTree = "<group>"; };
+		624ED3440B66300272CD2A1325FB37E6 /* SnakeToCamelCaseInjectorOld.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SnakeToCamelCaseInjectorOld.swift; sourceTree = "<group>"; };
 		647A10ECA94B4194ECA2FBB2588F4FF3 /* Pods-DataInjector_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-DataInjector_Example.modulemap"; sourceTree = "<group>"; };
 		6549BC97D6052DD91510DBB2AA4A523C /* BitletSynchronizer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BitletSynchronizer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A4E464688D86C3B5B493B8527648A8A /* BitletCacheEntry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BitletCacheEntry.swift; path = BitletSynchronizerIOS/BitletSynchronizer/Classes/Cache/BitletCacheEntry.swift; sourceTree = "<group>"; };
@@ -354,7 +356,8 @@
 				A4E7A6A766B14E5B46E65208D002C581 /* LinkDataInjector.swift */,
 				045AAC1022D0B83B000911F1 /* ReplaceNilInjector.swift */,
 				2F3D47862166F8D52DF4C92BB2570953 /* ReplaceNullInjectorOld.swift */,
-				624ED3440B66300272CD2A1325FB37E6 /* SnakeToCamelCaseInjector.swift */,
+				04C7AEFA22D3233C00F2AA2D /* SnakeToCamelCaseInjector.swift */,
+				624ED3440B66300272CD2A1325FB37E6 /* SnakeToCamelCaseInjectorOld.swift */,
 				0438BE4F22CF313400B0C7F5 /* ValueInjector.swift */,
 			);
 			name = injector;
@@ -611,13 +614,14 @@
 				7E9C3DD08CFAB760AA31B6FA0CE1FD49 /* InjectorDataType.swift in Sources */,
 				C804AC2B8C8100B5752039D25D7B30B6 /* InjectorMapper.swift in Sources */,
 				E8ABEDFFEA8A6748CBB5D49359C2A8B6 /* InjectorPath.swift in Sources */,
+				04C7AEFB22D3233C00F2AA2D /* SnakeToCamelCaseInjector.swift in Sources */,
 				CD85FDB3433E1480C2180766E7AC01E3 /* InjectorUtil.swift in Sources */,
 				0438BE5022CF313400B0C7F5 /* ValueInjector.swift in Sources */,
 				2650096391B61810C362A70058E699C3 /* JoinStringInjector.swift in Sources */,
 				045AAC1122D0B83B000911F1 /* ReplaceNilInjector.swift in Sources */,
 				98BD629ED7F55433CD3C6C1A32A30E5E /* LinkDataInjector.swift in Sources */,
 				37B93A29880B7C2F557EA9C41CD913AE /* ReplaceNullInjectorOld.swift in Sources */,
-				E2FA7D248DF6C8DACF76B60F74A5C4F5 /* SnakeToCamelCaseInjector.swift in Sources */,
+				E2FA7D248DF6C8DACF76B60F74A5C4F5 /* SnakeToCamelCaseInjectorOld.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

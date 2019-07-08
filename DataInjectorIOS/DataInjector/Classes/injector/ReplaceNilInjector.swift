@@ -3,7 +3,7 @@
 //  DataInjector Pod
 //
 //  Library injector: remove or replace nil values
-//  Traverses a data set recursively removing nil values or replacing them with the given defaults
+//  Traverses a data set and remove nil values or replace them with the given defaults (with optional recursion)
 //
 
 import Foundation

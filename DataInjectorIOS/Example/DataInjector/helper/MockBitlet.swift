@@ -29,7 +29,7 @@ class MockBitlet: BitletHandler {
     // --
     
     private var injectors: [BaseInjectorOld] = [
-        SnakeToCamelCaseInjector(),
+        SnakeToCamelCaseInjectorOld(),
         ReplaceNullInjectorOld()
     ]
     private let filename: String
