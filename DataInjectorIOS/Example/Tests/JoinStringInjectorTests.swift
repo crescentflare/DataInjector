@@ -5,12 +5,27 @@ import XCTest
 class JoinStringInjectorTests: XCTestCase {
     
     // --
-    // MARK: Test manual joining string with all items
+    // MARK: Test manual joining string with an array
     // --
 
-    func testJoinStringWithAllItems() {
-        // Set up dictionary and array
+    func testJoinStringFromArray() {
+        // Set up array
         let sampleArray = [ "Jack", "the", "Joker" ]
+        
+        // Apply manual injection to join the strings
+        let result = JoinStringInjector.joinString(fromArray: sampleArray, delimiter: " ")
+        
+        // Verify the result
+        XCTAssertEqual(result.modifiedObject as? String, "Jack the Joker")
+    }
+
+
+    // --
+    // MARK: Test manual joining string with a dictionary
+    // --
+
+    func testJoinStringFromDictionary() {
+        // Set up dictionary
         let sampleDict = [
             "firstName": "John",
             "middleName": nil,
@@ -18,33 +33,9 @@ class JoinStringInjectorTests: XCTestCase {
         ]
         
         // Apply manual injection to join the strings
-        let arrayResult = JoinStringInjector.joinString(sourceData: sampleArray, delimiter: " ")
-        let dictResult = JoinStringInjector.joinString(sourceData: sampleDict, delimiter: " ")
+        let result = JoinStringInjector.joinString(fromDictionary: sampleDict, fromItems: ["firstName", "middleName", "lastName"], delimiter: " ")
         
         // Verify the result
-        XCTAssertEqual(arrayResult.modifiedObject as? String, "Jack the Joker")
-        XCTAssertEqual(dictResult.modifiedObject as? String, "John Doe")
-    }
-
-
-    // --
-    // MARK: Test manual joining string with a specific set of items
-    // --
-
-    func testJoinStringWithGivenItems() {
-        // Set up dictionary
-        let sampleDict = [
-            "firstName": "John",
-            "middleName": nil,
-            "lastName": "Doe",
-            "address": "Injectorstreet 200",
-            "city": "Washington"
-        ]
-
-        // Apply manual injection to merge the name into a full name
-        let result = JoinStringInjector.joinString(sourceData: sampleDict, fromItems: ["firstName", "middleName", "lastName"], delimiter: " ")
-        
-        // Verify the change
         XCTAssertEqual(result.modifiedObject as? String, "John Doe")
     }
     

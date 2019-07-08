@@ -18,7 +18,7 @@ open class JoinStringInjector: BaseInjector {
     public var targetItemPath: InjectorPath?
     public var sourceDataPath: InjectorPath?
     public var overrideSourceData: Any?
-    public var fromItems: [String]?
+    public var fromItems = [String]()
     public var delimiter = ""
 
     
@@ -34,32 +34,24 @@ open class JoinStringInjector: BaseInjector {
     // MARK: Manual injection
     // --
     
-    public static func joinString(sourceData: Any?, delimiter: String = "") -> InjectorResult {
-        if let dictItem = sourceData as? [String: Any?] {
-            return joinString(sourceData: sourceData, fromItems: Array(dictItem.keys), delimiter: delimiter)
+    public static func joinString(fromArray: [Any?], delimiter: String = "") -> InjectorResult {
+        var stringItems = [String]()
+        for value in fromArray {
+            if let stringItem = value as? String {
+                stringItems.append(stringItem)
+            }
         }
-        return joinString(sourceData: sourceData, fromItems: [], delimiter: delimiter)
+        return InjectorResult(withModifiedObject: stringItems.joined(separator: delimiter))
     }
     
-    public static func joinString(sourceData: Any?, fromItems: [String], delimiter: String = "") -> InjectorResult {
-        if let dictItem = sourceData as? [String: Any?] {
-            var stringItems = [String]()
-            for item in fromItems {
-                if let stringItem = dictItem[item] as? String {
-                    stringItems.append(stringItem)
-                }
+    public static func joinString(fromDictionary: [String: Any?], fromItems: [String], delimiter: String = "") -> InjectorResult {
+        var stringItems = [String]()
+        for item in fromItems {
+            if let stringItem = fromDictionary[item] as? String {
+                stringItems.append(stringItem)
             }
-            return InjectorResult(withModifiedObject: stringItems.joined(separator: delimiter))
-        } else if let arrayItem = sourceData as? [Any?] {
-            var stringItems = [String]()
-            for value in arrayItem {
-                if let stringItem = value as? String {
-                    stringItems.append(stringItem)
-                }
-            }
-            return InjectorResult(withModifiedObject: stringItems.joined(separator: delimiter))
         }
-        return InjectorResult(withError: .sourceInvalid)
+        return InjectorResult(withModifiedObject: stringItems.joined(separator: delimiter))
     }
     
     
@@ -71,10 +63,12 @@ open class JoinStringInjector: BaseInjector {
         var useSourceData = overrideSourceData ?? sourceData
         useSourceData = DataInjector.get(from: useSourceData, path: sourceDataPath ?? InjectorPath(path: ""))
         return DataInjector.inject(into: targetData, path: targetItemPath ?? InjectorPath(path: ""), modifyCallback: { originalData in
-            if let fromItems = fromItems {
-                return JoinStringInjector.joinString(sourceData: useSourceData, fromItems: fromItems, delimiter: delimiter)
+            if let sourceDictionary = useSourceData as? [String: Any?] {
+                return JoinStringInjector.joinString(fromDictionary: sourceDictionary, fromItems: fromItems, delimiter: delimiter)
+            } else if let sourceArray = useSourceData as? [Any?] {
+                return JoinStringInjector.joinString(fromArray: sourceArray, delimiter: delimiter)
             }
-            return JoinStringInjector.joinString(sourceData: useSourceData, delimiter: delimiter)
+            return InjectorResult(withError: .sourceInvalid)
         })
     }
 
