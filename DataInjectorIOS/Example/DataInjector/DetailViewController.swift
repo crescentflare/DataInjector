@@ -77,11 +77,11 @@ class DetailViewController: UIViewController, UITableViewDataSource {
         let products = (BitletSynchronizer.shared.cachedBitlet(forKey: Bitlets.products.cacheKey) as? JsonArray)?.itemList as? [[String: Any]]
         
         // Find the products of the given customer id
-        let customer = LinkDataInjector.findDataItem(onDataArray: customers ?? [], forValue: customerId, usingKey: "id")
+        let customer = LinkDataInjector.findDataItem(inArray: customers ?? [], forValue: customerId, usingKey: "id")
         let customerProducts = customer?["products"] as? [[String: Any]]
         
         // If everything is there, link the product details to the customer product list
-        showCustomerProducts = LinkDataInjector.linkedDataArray(onData: customerProducts ?? [], with: products ?? [], linkBy: "id") as? [[String: Any]]
+        showCustomerProducts = LinkDataInjector.linkData(onArray: customerProducts ?? [], fromArray: products ?? [], usingKey: "id").modifiedObject as? [[String: Any]]
         tableView.reloadData()
     }
     

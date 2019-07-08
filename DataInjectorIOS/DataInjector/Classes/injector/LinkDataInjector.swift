@@ -9,33 +9,38 @@
 import Foundation
 
 /// An injector linking multiple datasets together by a common field (like ID)
-open class LinkDataInjector: BaseInjectorOld {
+open class LinkDataInjector: BaseInjector {
     
-    // ---
+    // --
     // MARK: Members
-    // ---
+    // --
 
-    public var linkKey: String?
+    public var targetItemPath: InjectorPath?
+    public var sourceDataPath: InjectorPath?
+    public var overrideSourceData: Any?
+    public var linkKey = "unknown"
 
     
-    // ---
+    // --
     // MARK: Initialization
-    // ---
+    // --
     
     public override init() {
     }
 
     
-    // ---
+    // --
     // MARK: Data helpers
-    // ---
+    // --
     
-    public static func findDataItem(onDataArray targetData: [[String: Any]], forValue: Any?, usingKey: String) -> [String: Any]? {
+    public static func findDataItem(inArray: [Any?], forValue: Any?, usingKey: String) -> [String: Any?]? {
         if let searchValueString = InjectorConv.toString(from: forValue) {
-            for dataItem in targetData {
-                if let compareValueString = InjectorConv.toString(from: dataItem[usingKey]) {
-                    if compareValueString == searchValueString {
-                        return dataItem
+            for arrayItem in inArray {
+                if let dictItem = arrayItem as? [String: Any?] {
+                    if let compareValueString = InjectorConv.toString(from: dictItem[usingKey] ?? nil) {
+                        if compareValueString == searchValueString {
+                            return dictItem
+                        }
                     }
                 }
             }
@@ -44,47 +49,62 @@ open class LinkDataInjector: BaseInjectorOld {
     }
     
 
-    // ---
+    // --
     // MARK: Manual injection
-    // ---
-
-    public static func linkedData(onData targetData: [String: Any], with linkedData: [[String: Any]], linkBy key: String) -> [String: Any] {
-        if let foundItem = findDataItem(onDataArray: linkedData, forValue: targetData[key], usingKey: key) {
-            var modifiedData = targetData
-            for (itemKey, itemValue) in foundItem {
-                if itemKey != key {
-                    modifiedData[itemKey] = itemValue
-                }
-            }
-            return modifiedData
-        }
-        return targetData
-    }
-
-    public static func linkedDataArray(onData targetData: [[String: Any]], with linkedData: [[String: Any]], linkBy key: String) -> Any {
-        var modifiedData: [[String: Any]] = []
-        for targetDataItem in targetData {
-            modifiedData.append(LinkDataInjector.linkedData(onData: targetDataItem, with: linkedData, linkBy: key))
-        }
-        return modifiedData
-    }
-
+    // --
     
-    // ---
-    // MARK: General injection
-    // ---
-
-    override open func appliedInjection(targetData: Any, subTargetData: Any?, referencedData: Any? = nil, subReferencedData: Any? = nil) -> Any {
-        if let key = linkKey {
-            if let linkedData = referencedData as? [[String: Any]] {
-                if let targetDataArray = targetData as? [[String: Any]] {
-                    return LinkDataInjector.linkedDataArray(onData: targetDataArray, with: linkedData, linkBy: key)
-                } else if let targetDataItem = targetData as? [String: Any] {
-                    return LinkDataInjector.linkedData(onData: targetDataItem, with: linkedData, linkBy: key)
+    public static func linkData(inDictionary: [String: Any?], fromArray: [Any?], usingKey: String) -> InjectorResult {
+        if let foundItem = findDataItem(inArray: fromArray, forValue: inDictionary[usingKey] ?? nil, usingKey: usingKey) {
+            var modifiedDictionary = [String: Any?]()
+            for (key, value) in inDictionary {
+                modifiedDictionary[key] = value
+            }
+            for (key, value) in foundItem {
+                if key != usingKey {
+                    modifiedDictionary[key] = value
                 }
             }
+            return InjectorResult(withModifiedObject: modifiedDictionary)
         }
-        return targetData
+        return InjectorResult(withModifiedObject: inDictionary)
+    }
+    
+    public static func linkData(onArray: [Any?], fromArray: [Any?], usingKey: String) -> InjectorResult {
+        var modifiedData = [[String: Any?]?]()
+        for arrayItem in onArray {
+            if let dictItem = arrayItem as? [String: Any?] {
+                let result = LinkDataInjector.linkData(inDictionary: dictItem, fromArray: fromArray, usingKey: usingKey)
+                if result.hasError() {
+                    return result
+                }
+                modifiedData.append(result.modifiedObject as? [String: Any?])
+            } else {
+                return InjectorResult(withError: .targetInvalid)
+            }
+        }
+        return InjectorResult(withModifiedObject: modifiedData)
+    }
+    
+
+    // --
+    // MARK: General injection
+    // --
+    
+    open override func appliedInjection(targetData: Any?, sourceData: Any? = nil) -> InjectorResult {
+        var useSourceData = overrideSourceData ?? sourceData
+        useSourceData = DataInjector.get(from: useSourceData, path: sourceDataPath ?? InjectorPath(path: ""))
+        return DataInjector.inject(into: targetData, path: targetItemPath ?? InjectorPath(path: ""), modifyCallback: { originalData in
+            if let sourceArray = useSourceData as? [Any?] {
+                if let targetDict = originalData as? [String: Any?] {
+                    return LinkDataInjector.linkData(inDictionary: targetDict, fromArray: sourceArray, usingKey: self.linkKey)
+                } else if let targetArray = originalData as? [Any?] {
+                    return LinkDataInjector.linkData(onArray: targetArray, fromArray: sourceArray, usingKey: self.linkKey)
+                } else {
+                    return InjectorResult(withError: .targetInvalid)
+                }
+            }
+            return InjectorResult(withError: .sourceInvalid)
+        })
     }
 
 }
