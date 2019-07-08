@@ -28,9 +28,9 @@ class MockBitlet: BitletHandler {
     // MARK: Members
     // --
     
-    private var injectors: [BaseInjectorOld] = [
-        SnakeToCamelCaseInjectorOld(),
-        ReplaceNullInjectorOld()
+    private var injectors: [BaseInjector] = [
+        SnakeToCamelCaseInjector(),
+        ReplaceNilInjector()
     ]
     private let filename: String
     let cacheKey: String
@@ -44,7 +44,11 @@ class MockBitlet: BitletHandler {
         self.filename = filename
         self.cacheKey = cacheKey
         if cacheKey == "customers" {
-            injectors.append(JoinStringInjectorOld(item: "fullName", fromItems: [ "~firstName", "~middleName", "~lastName" ], delimiter: " ", removeOriginals: true))
+            let injector = JoinStringInjector()
+            injector.targetItemPath = InjectorPath(path: "fullName")
+            injector.fromItems = [ "firstName", "middleName", "lastName" ]
+            injector.delimiter = " "
+            injectors.append(injector)
         }
     }
     
@@ -92,7 +96,9 @@ class MockBitlet: BitletHandler {
                 var processedJsonArray: [Any] = []
                 for var jsonArrayItem in jsonArray {
                     for injector in self.injectors {
-                        jsonArrayItem = injector.appliedInjection(targetData: jsonArrayItem)
+                        if let modifiedItem = injector.appliedInjection(targetData: jsonArrayItem, sourceData: jsonArrayItem).modifiedObject {
+                            jsonArrayItem = modifiedItem
+                        }
                     }
                     processedJsonArray.append(jsonArrayItem)
                 }
