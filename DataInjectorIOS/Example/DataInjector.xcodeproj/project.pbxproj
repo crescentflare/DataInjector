@@ -24,6 +24,7 @@
 		048935E31DF0B768002B2E5E /* InjectorConditionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048935E11DF0B74D002B2E5E /* InjectorConditionTests.swift */; };
 		04C7AEFD22D3355200F2AA2D /* SnakeCaseToCamelCaseInjectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7AEFC22D3355200F2AA2D /* SnakeCaseToCamelCaseInjectorTests.swift */; };
 		04C7AF0122D3488800F2AA2D /* JoinStringInjectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7AF0022D3488800F2AA2D /* JoinStringInjectorTests.swift */; };
+		04C7AF0322D3747F00F2AA2D /* LinkDataInjectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7AF0222D3747F00F2AA2D /* LinkDataInjectorTests.swift */; };
 		04CF11CB1E4A609000B1304D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CF11CA1E4A609000B1304D /* MainViewController.swift */; };
 		04CF11CE1E4A66C300B1304D /* SimpleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CF11CD1E4A66C300B1304D /* SimpleCell.swift */; };
 		04CF11D01E4A69BE00B1304D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CF11CF1E4A69BE00B1304D /* DetailViewController.swift */; };
@@ -65,6 +66,7 @@
 		048935E11DF0B74D002B2E5E /* InjectorConditionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectorConditionTests.swift; sourceTree = "<group>"; };
 		04C7AEFC22D3355200F2AA2D /* SnakeCaseToCamelCaseInjectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnakeCaseToCamelCaseInjectorTests.swift; sourceTree = "<group>"; };
 		04C7AF0022D3488800F2AA2D /* JoinStringInjectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinStringInjectorTests.swift; sourceTree = "<group>"; };
+		04C7AF0222D3747F00F2AA2D /* LinkDataInjectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkDataInjectorTests.swift; sourceTree = "<group>"; };
 		04CF11CA1E4A609000B1304D /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		04CF11CD1E4A66C300B1304D /* SimpleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleCell.swift; sourceTree = "<group>"; };
 		04CF11CF1E4A69BE00B1304D /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				045EB83D22BFB57800DA667F /* InjectorPathTests.swift */,
 				04840A571DEE1D14005F6855 /* InjectorUtilTests.swift */,
 				04C7AF0022D3488800F2AA2D /* JoinStringInjectorTests.swift */,
+				04C7AF0222D3747F00F2AA2D /* LinkDataInjectorTests.swift */,
 				045AAC1222D11166000911F1 /* ReplaceNilInjectorTests.swift */,
 				04C7AEFC22D3355200F2AA2D /* SnakeCaseToCamelCaseInjectorTests.swift */,
 				0438BE5122CF3B7600B0C7F5 /* ValueInjectorTests.swift */,
@@ -410,6 +413,7 @@
 				04840A541DEE1292005F6855 /* InjectorConvTests.swift in Sources */,
 				040E5CE31DF01C8100968B1C /* InjectorDataDetectorTests.swift in Sources */,
 				0438BE5222CF3B7700B0C7F5 /* ValueInjectorTests.swift in Sources */,
+				04C7AF0322D3747F00F2AA2D /* LinkDataInjectorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

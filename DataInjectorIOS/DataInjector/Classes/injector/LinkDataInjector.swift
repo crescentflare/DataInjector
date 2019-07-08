@@ -30,26 +30,6 @@ open class LinkDataInjector: BaseInjector {
 
     
     // --
-    // MARK: Data helpers
-    // --
-    
-    public static func findDataItem(inArray: [Any?], forValue: Any?, usingKey: String) -> [String: Any?]? {
-        if let searchValueString = InjectorConv.toString(from: forValue) {
-            for arrayItem in inArray {
-                if let dictItem = arrayItem as? [String: Any?] {
-                    if let compareValueString = InjectorConv.toString(from: dictItem[usingKey] ?? nil) {
-                        if compareValueString == searchValueString {
-                            return dictItem
-                        }
-                    }
-                }
-            }
-        }
-        return nil
-    }
-    
-
-    // --
     // MARK: Manual injection
     // --
     
@@ -86,6 +66,26 @@ open class LinkDataInjector: BaseInjector {
     }
     
 
+    // --
+    // MARK: Data helpers
+    // --
+    
+    public static func findDataItem(inArray: [Any?], forValue: Any?, usingKey: String) -> [String: Any?]? {
+        if let searchValueString = InjectorConv.toString(from: forValue) {
+            for arrayItem in inArray {
+                if let dictItem = arrayItem as? [String: Any?] {
+                    if let compareValueString = InjectorConv.toString(from: dictItem[usingKey] ?? nil) {
+                        if compareValueString == searchValueString {
+                            return dictItem
+                        }
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    
+    
     // --
     // MARK: General injection
     // --
