@@ -44,7 +44,7 @@ class MockBitlet: BitletHandler {
         self.filename = filename
         self.cacheKey = cacheKey
         if cacheKey == "customers" {
-            injectors.append(JoinStringInjector(item: "fullName", fromItems: [ "~firstName", "~middleName", "~lastName" ], delimiter: " ", removeOriginals: true))
+            injectors.append(JoinStringInjectorOld(item: "fullName", fromItems: [ "~firstName", "~middleName", "~lastName" ], delimiter: " ", removeOriginals: true))
         }
     }
     
