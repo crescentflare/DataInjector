@@ -187,11 +187,6 @@ public class InjectorUtil
         }
     }
 
-    public static boolean isMap(Object object)
-    {
-        return object != null && object instanceof Map<?, ?>;
-    }
-
     public static Map<String, Object> initMap(InjectorMapEntry<?, ?>... items)
     {
         Map<String, Object> map = new HashMap<>();
@@ -363,11 +358,6 @@ public class InjectorUtil
                 }
             }
         }
-    }
-
-    public static boolean isList(Object object)
-    {
-        return object != null && object instanceof List<?>;
     }
 
 

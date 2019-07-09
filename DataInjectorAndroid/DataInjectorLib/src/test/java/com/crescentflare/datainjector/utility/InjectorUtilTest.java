@@ -70,18 +70,6 @@ public class InjectorUtilTest
     }
 
     @Test
-    public void isMap() throws Exception
-    {
-        Map<String, Object> correctMap = InjectorUtil.initMap(
-                "first", 11,
-                "second", "string"
-        );
-        Object noMap = "string";
-        Assert.assertTrue(InjectorUtil.isMap(correctMap));
-        Assert.assertFalse(InjectorUtil.isMap(noMap));
-    }
-
-    @Test
     public void initMap() throws Exception
     {
         Map<String, Object> firstMap = InjectorUtil.initMap(
@@ -140,14 +128,5 @@ public class InjectorUtilTest
         Assert.assertEquals("modified string", InjectorUtil.itemFromList(list, "0"));
         Assert.assertEquals("newString", InjectorUtil.itemFromList(list, "1.first"));
         Assert.assertEquals(2022, InjectorUtil.itemFromList(list, "1.second"));
-    }
-
-    @Test
-    public void isList() throws Exception
-    {
-        List<Object> correctList = Arrays.asList((Object)"string", (Object)11.23);
-        Object noList = "string";
-        Assert.assertTrue(InjectorUtil.isList(correctList));
-        Assert.assertFalse(InjectorUtil.isList(noList));
     }
 }
