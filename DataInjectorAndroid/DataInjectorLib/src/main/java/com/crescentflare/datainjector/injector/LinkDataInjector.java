@@ -3,7 +3,6 @@ package com.crescentflare.datainjector.injector;
 import com.crescentflare.datainjector.conversion.InjectorConv;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,12 +43,12 @@ public class LinkDataInjector extends BaseInjector
         {
             return null;
         }
-        String searchValueString = InjectorConv.toString(value);
+        String searchValueString = InjectorConv.asString(value);
         if (searchValueString != null)
         {
             for (Map<String, Object> dataItem : targetData)
             {
-                String compareValueString = InjectorConv.toString(dataItem.get(key));
+                String compareValueString = InjectorConv.asString(dataItem.get(key));
                 if (compareValueString != null)
                 {
                     if (compareValueString.equals(searchValueString))

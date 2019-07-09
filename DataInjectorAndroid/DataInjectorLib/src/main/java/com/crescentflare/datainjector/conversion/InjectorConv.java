@@ -1,18 +1,12 @@
 package com.crescentflare.datainjector.conversion;
 
-import android.content.res.Resources;
-import android.graphics.Color;
-
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
 import java.util.TimeZone;
 
 /**
@@ -21,24 +15,137 @@ import java.util.TimeZone;
  */
 public class InjectorConv
 {
-    // ---
+    // --
     // Initialization
-    // ---
+    // --
 
     private InjectorConv()
     {
     }
 
 
-    // ---
-    // Parsing
-    // ---
+    // --
+    // Array list conversion
+    // --
 
-    public static Date toDate(Object fromObject)
+    public static List<String> asStringList(Object value)
     {
-        if (fromObject instanceof String)
+        List<String> list = new ArrayList<>();
+        if (value instanceof List)
         {
-            String stringDate = (String)fromObject;
+            List<?> valueList = (List<?>)value;
+            for (int i = 0; i < valueList.size(); i++)
+            {
+                String result = asString(valueList.get(i));
+                if (result != null)
+                {
+                    list.add(result);
+                }
+            }
+        }
+        return list;
+    }
+
+    public static List<Double> asDoubleList(Object value)
+    {
+        List<Double> list = new ArrayList<>();
+        if (value instanceof List)
+        {
+            List<?> valueList = (List<?>)value;
+            for (int i = 0; i < valueList.size(); i++)
+            {
+                Double result = asDouble(valueList.get(i));
+                if (result != null)
+                {
+                    list.add(result);
+                }
+            }
+        }
+        return list;
+    }
+
+    public static List<Float> asFloatList(Object value)
+    {
+        List<Float> list = new ArrayList<>();
+        if (value instanceof List)
+        {
+            List<?> valueList = (List<?>)value;
+            for (int i = 0; i < valueList.size(); i++)
+            {
+                Float result = asFloat(valueList.get(i));
+                if (result != null)
+                {
+                    list.add(result);
+                }
+            }
+        }
+        return list;
+    }
+
+    public static List<Integer> asIntegerList(Object value)
+    {
+        List<Integer> list = new ArrayList<>();
+        if (value instanceof List)
+        {
+            List<?> valueList = (List<?>)value;
+            for (int i = 0; i < valueList.size(); i++)
+            {
+                Integer result = asInteger(valueList.get(i));
+                if (result != null)
+                {
+                    list.add(result);
+                }
+            }
+        }
+        return list;
+    }
+
+    public static List<Boolean> asBooleanList(Object value)
+    {
+        List<Boolean> list = new ArrayList<>();
+        if (value instanceof List)
+        {
+            List<?> valueList = (List<?>)value;
+            for (int i = 0; i < valueList.size(); i++)
+            {
+                Boolean result = asBoolean(valueList.get(i));
+                if (result != null)
+                {
+                    list.add(result);
+                }
+            }
+        }
+        return list;
+    }
+
+
+    // --
+    // Date parsing
+    // --
+
+    public static List<Date> asDateList(Object value)
+    {
+        List<Date> list = new ArrayList<>();
+        if (value instanceof List)
+        {
+            List<?> valueList = (List<?>)value;
+            for (int i = 0; i < valueList.size(); i++)
+            {
+                Date result = asDate(valueList.get(i));
+                if (result != null)
+                {
+                    list.add(result);
+                }
+            }
+        }
+        return list;
+    }
+
+    public static Date asDate(Object value)
+    {
+        if (value instanceof String)
+        {
+            String stringDate = (String)value;
             List<String> formatterList = new ArrayList<>(Arrays.asList(
                     "yyyy-MM-dd'T'HH:mm:ss'Z'",
                     "yyyy-MM-dd'T'HH:mm:ssX",
@@ -66,151 +173,151 @@ public class InjectorConv
     }
 
 
-    // ---
+    // --
     // Primitive types
-    // ---
+    // --
 
-    public static String toString(Object fromObject)
+    public static String asString(Object value)
     {
-        if (fromObject instanceof String)
+        if (value instanceof String)
         {
-            return (String)fromObject;
+            return (String)value;
         }
-        else if (fromObject instanceof Double || fromObject instanceof Float || fromObject instanceof Integer || fromObject instanceof Boolean)
+        else if (value instanceof Double || value instanceof Float || value instanceof Integer || value instanceof Boolean)
         {
-            return fromObject.toString();
+            return value.toString();
         }
         return null;
     }
 
-    public static Double toDouble(Object fromObject)
+    public static Double asDouble(Object value)
     {
-        if (fromObject instanceof String)
+        if (value instanceof String)
         {
             try
             {
-                return Double.parseDouble((String)fromObject);
+                return Double.parseDouble((String)value);
             }
             catch (IllegalArgumentException ignored)
             {
             }
         }
-        else if (fromObject instanceof Double)
+        else if (value instanceof Double)
         {
-            return (Double)fromObject;
+            return (Double)value;
         }
-        else if (fromObject instanceof Float)
+        else if (value instanceof Float)
         {
-            return ((Float)fromObject).doubleValue();
+            return ((Float)value).doubleValue();
         }
-        else if (fromObject instanceof Integer)
+        else if (value instanceof Integer)
         {
-            return ((Integer)fromObject).doubleValue();
+            return ((Integer)value).doubleValue();
         }
-        else if (fromObject instanceof Boolean)
+        else if (value instanceof Boolean)
         {
-            return ((Boolean)fromObject) ? 1.0 : 0.0;
+            return ((Boolean)value) ? 1.0 : 0.0;
         }
         return null;
     }
 
-    public static Float toFloat(Object fromObject)
+    public static Float asFloat(Object value)
     {
-        if (fromObject instanceof String)
+        if (value instanceof String)
         {
             try
             {
-                return Float.parseFloat((String)fromObject);
+                return Float.parseFloat((String)value);
             }
             catch (IllegalArgumentException ignored)
             {
             }
         }
-        else if (fromObject instanceof Double)
+        else if (value instanceof Double)
         {
-            return ((Double)fromObject).floatValue();
+            return ((Double)value).floatValue();
         }
-        else if (fromObject instanceof Float)
+        else if (value instanceof Float)
         {
-            return (Float)fromObject;
+            return (Float)value;
         }
-        else if (fromObject instanceof Integer)
+        else if (value instanceof Integer)
         {
-            return ((Integer)fromObject).floatValue();
+            return ((Integer)value).floatValue();
         }
-        else if (fromObject instanceof Boolean)
+        else if (value instanceof Boolean)
         {
-            return ((Boolean)fromObject) ? 1.0f : 0.0f;
+            return ((Boolean)value) ? 1.0f : 0.0f;
         }
         return null;
     }
 
-    public static Integer toInteger(Object fromObject)
+    public static Integer asInteger(Object value)
     {
-        if (fromObject instanceof String)
+        if (value instanceof String)
         {
             try
             {
-                return Integer.parseInt((String)fromObject);
+                return Integer.parseInt((String)value);
             }
             catch (IllegalArgumentException ignored)
             {
             }
             try
             {
-                Double result = Double.parseDouble((String)fromObject);
+                Double result = Double.parseDouble((String)value);
                 return result.intValue();
             }
             catch (IllegalArgumentException ignored)
             {
             }
         }
-        else if (fromObject instanceof Double)
+        else if (value instanceof Double)
         {
-            return ((Double)fromObject).intValue();
+            return ((Double)value).intValue();
         }
-        else if (fromObject instanceof Float)
+        else if (value instanceof Float)
         {
-            return ((Float)fromObject).intValue();
+            return ((Float)value).intValue();
         }
-        else if (fromObject instanceof Integer)
+        else if (value instanceof Integer)
         {
-            return (Integer)fromObject;
+            return (Integer)value;
         }
-        else if (fromObject instanceof Boolean)
+        else if (value instanceof Boolean)
         {
-            return ((Boolean)fromObject) ? 1 : 0;
+            return ((Boolean)value) ? 1 : 0;
         }
         return null;
     }
 
-    public static Boolean toBoolean(Object fromObject)
+    public static Boolean asBoolean(Object value)
     {
-        if (fromObject instanceof String)
+        if (value instanceof String)
         {
             try
             {
-                return Boolean.parseBoolean((String)fromObject);
+                return Boolean.parseBoolean((String)value);
             }
             catch (IllegalArgumentException ignored)
             {
             }
         }
-        else if (fromObject instanceof Double)
+        else if (value instanceof Double)
         {
-            return (Double)fromObject > 0;
+            return (Double)value > 0;
         }
-        else if (fromObject instanceof Float)
+        else if (value instanceof Float)
         {
-            return (Float)fromObject > 0;
+            return (Float)value > 0;
         }
-        else if (fromObject instanceof Integer)
+        else if (value instanceof Integer)
         {
-            return (Integer)fromObject > 0;
+            return (Integer)value > 0;
         }
-        else if (fromObject instanceof Boolean)
+        else if (value instanceof Boolean)
         {
-            return (Boolean)fromObject;
+            return (Boolean)value;
         }
         return null;
     }

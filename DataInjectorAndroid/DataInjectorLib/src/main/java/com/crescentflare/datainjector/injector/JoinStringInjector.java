@@ -4,7 +4,6 @@ import com.crescentflare.datainjector.conversion.InjectorConv;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -106,7 +105,7 @@ public class JoinStringInjector extends BaseInjector
         boolean firstString = true;
         for (String fromItem : fromItems)
         {
-            String concatString = InjectorConv.toString(obtainValue(fromItem, targetData, null, referencedData, subReferencedData));
+            String concatString = InjectorConv.asString(obtainValue(fromItem, targetData, null, referencedData, subReferencedData));
             if (concatString != null)
             {
                 if (!firstString)

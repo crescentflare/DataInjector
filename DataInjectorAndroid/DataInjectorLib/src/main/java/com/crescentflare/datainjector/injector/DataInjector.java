@@ -55,7 +55,7 @@ public final class DataInjector
                 List<Object> dataList = InjectorUtil.asObjectList(data);
                 if (dataList != null)
                 {
-                    Integer boxedIndex = InjectorConv.toInteger(path.firstElement());
+                    Integer boxedIndex = InjectorConv.asInteger(path.firstElement());
                     int index = boxedIndex != null ? boxedIndex : -1;
                     if (index >= 0 && index < dataList.size())
                     {
@@ -121,7 +121,7 @@ public final class DataInjector
                 List<Object> dataList = InjectorUtil.asObjectList(data);
                 if (dataList != null)
                 {
-                    Integer boxedIndex = InjectorConv.toInteger(path.firstElement());
+                    Integer boxedIndex = InjectorConv.asInteger(path.firstElement());
                     int index = boxedIndex != null ? boxedIndex : -1;
                     if (index >= 0 && index < dataList.size())
                     {

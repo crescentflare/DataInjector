@@ -2,16 +2,10 @@ package com.crescentflare.datainjector.utility;
 
 import com.crescentflare.datainjector.conversion.InjectorConv;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
 
 /**
  * Data injector utility: utilities for data injection
@@ -428,7 +422,7 @@ public class InjectorUtil
             Map<String, Object> itemMap = asStringObjectMap(array.get(i));
             if (itemMap != null)
             {
-                String injectRef = InjectorConv.toString(itemMap.get("injectRef"));
+                String injectRef = InjectorConv.asString(itemMap.get("injectRef"));
                 if (injectRef != null && injectRef.equals(find))
                 {
                     return i;

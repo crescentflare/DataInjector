@@ -132,7 +132,7 @@ public class InjectorMapper
             InjectorDataType itemType = InjectorDataDetector.detectFromObject(item);
             if (itemType == InjectorDataType.Reference || itemType == InjectorDataType.SubReference)
             {
-                item = obtainConvertedObject(itemType, InjectorConv.toString(item), fullRefData, subRefData);
+                item = obtainConvertedObject(itemType, InjectorConv.asString(item), fullRefData, subRefData);
                 if (item == null)
                 {
                     return null;
@@ -142,28 +142,28 @@ public class InjectorMapper
             {
                 if (key instanceof String)
                 {
-                    if (key.equals(InjectorConv.toString(item)))
+                    if (key.equals(InjectorConv.asString(item)))
                     {
                         return mappingTable.get(key);
                     }
                 }
                 else if (key instanceof Double)
                 {
-                    if (key.equals(InjectorConv.toDouble(item)))
+                    if (key.equals(InjectorConv.asDouble(item)))
                     {
                         return mappingTable.get(key);
                     }
                 }
                 else if (key instanceof Integer)
                 {
-                    if (key.equals(InjectorConv.toInteger(item)))
+                    if (key.equals(InjectorConv.asInteger(item)))
                     {
                         return mappingTable.get(key);
                     }
                 }
                 else if (key instanceof Boolean)
                 {
-                    if (key.equals(InjectorConv.toBoolean(item)))
+                    if (key.equals(InjectorConv.asBoolean(item)))
                     {
                         return mappingTable.get(key);
                     }
@@ -203,11 +203,11 @@ public class InjectorMapper
             case String:
                 return item;
             case Number:
-                return InjectorConv.toInteger(item);
+                return InjectorConv.asInteger(item);
             case DecimalNumber:
-                return InjectorConv.toDouble(item);
+                return InjectorConv.asDouble(item);
             case Boolean:
-                return InjectorConv.toBoolean(item);
+                return InjectorConv.asBoolean(item);
             case Empty:
                 return null;
             case Reference:

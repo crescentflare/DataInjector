@@ -66,10 +66,10 @@ public class DetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     {
         Map<String, Object> item = items.get(position);
         DetailRecycableView itemView = (DetailRecycableView)holder.itemView;
-        Boolean paid = InjectorConv.toBoolean(item.get("paid"));
-        itemView.setTitle(InjectorConv.toString(item.get("name")));
-        itemView.setInfo(InjectorConv.toString(item.get("description")));
-        itemView.setValue(InjectorConv.toString(item.get("price")));
+        Boolean paid = InjectorConv.asBoolean(item.get("paid"));
+        itemView.setTitle(InjectorConv.asString(item.get("name")));
+        itemView.setInfo(InjectorConv.asString(item.get("description")));
+        itemView.setValue(InjectorConv.asString(item.get("price")));
         itemView.setValueColor(paid != null && paid ? Color.BLACK : Color.RED);
     }
 

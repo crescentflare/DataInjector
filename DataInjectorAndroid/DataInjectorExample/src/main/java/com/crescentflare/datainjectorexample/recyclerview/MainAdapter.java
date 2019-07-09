@@ -66,7 +66,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     {
         Map<String, Object> item = items.get(position);
         SimpleRecycableView itemView = (SimpleRecycableView)holder.itemView;
-        itemView.setText(InjectorConv.toString(item.get("fullName")));
+        itemView.setText(InjectorConv.asString(item.get("fullName")));
         itemView.setOnClickListener(new View.OnClickListener()
         {
             @Override
