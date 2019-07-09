@@ -1,5 +1,7 @@
 package com.crescentflare.datainjector.utility;
 
+import com.crescentflare.datainjector.conversion.InjectorConv;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -113,7 +115,7 @@ public final class InjectorPath
     {
         if (data instanceof Map)
         {
-            Map<String, Object> dataMap = InjectorUtil.asStringObjectMap(data);
+            Map<String, Object> dataMap = InjectorConv.asStringObjectMap(data);
             if (dataMap != null)
             {
                 Object testObject = dataMap.get(markerKey);
@@ -133,7 +135,7 @@ public final class InjectorPath
         }
         else if (data instanceof List)
         {
-            List<Object> dataList = InjectorUtil.asObjectList(data);
+            List<Object> dataList = InjectorConv.asObjectList(data);
             if (dataList != null)
             {
                 for (int i = 0; i < dataList.size(); i++)

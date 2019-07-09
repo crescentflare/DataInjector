@@ -1,5 +1,6 @@
 package com.crescentflare.datainjector.injector;
 
+import com.crescentflare.datainjector.conversion.InjectorConv;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 
 import java.util.ArrayList;
@@ -37,15 +38,15 @@ public class ReplaceNullInjector extends BaseInjector
 
     public static void replaceNull(Object targetData, Object replaceData, boolean ignoreNotExisting)
     {
-        Map<String, Object> targetMap = InjectorUtil.asStringObjectMap(targetData);
-        List<Object> targetList = InjectorUtil.asObjectList(targetData);
+        Map<String, Object> targetMap = InjectorConv.asStringObjectMap(targetData);
+        List<Object> targetList = InjectorConv.asObjectList(targetData);
         if (targetMap != null)
         {
-            processMap(targetMap, InjectorUtil.asStringObjectMap(replaceData), ignoreNotExisting);
+            processMap(targetMap, InjectorConv.asStringObjectMap(replaceData), ignoreNotExisting);
         }
         else if (targetList != null)
         {
-            processList(targetList, InjectorUtil.asObjectList(replaceData), ignoreNotExisting);
+            processList(targetList, InjectorConv.asObjectList(replaceData), ignoreNotExisting);
         }
     }
 
@@ -71,14 +72,14 @@ public class ReplaceNullInjector extends BaseInjector
         for (int i = 0; i < array.size(); i++)
         {
             Object arrayItem = array.get(i);
-            Map<String, Object> targetMap = InjectorUtil.asStringObjectMap(arrayItem);
-            List<Object> targetList = InjectorUtil.asObjectList(arrayItem);
+            Map<String, Object> targetMap = InjectorConv.asStringObjectMap(arrayItem);
+            List<Object> targetList = InjectorConv.asObjectList(arrayItem);
             if (targetMap != null)
             {
                 Map<String, Object> supplyReplaceMap = null;
                 if (replaceArray != null && i < replaceArray.size())
                 {
-                    supplyReplaceMap = InjectorUtil.asStringObjectMap(replaceArray.get(i));
+                    supplyReplaceMap = InjectorConv.asStringObjectMap(replaceArray.get(i));
                 }
                 processMap(targetMap, supplyReplaceMap, ignoreNotExisting);
                 modifiedList.add(targetMap);
@@ -88,7 +89,7 @@ public class ReplaceNullInjector extends BaseInjector
                 List<Object> supplyReplaceArray = null;
                 if (replaceArray != null && i < replaceArray.size())
                 {
-                    supplyReplaceArray = InjectorUtil.asObjectList(replaceArray.get(i));
+                    supplyReplaceArray = InjectorConv.asObjectList(replaceArray.get(i));
                 }
                 processList(targetList, supplyReplaceArray, ignoreNotExisting);
                 modifiedList.add(targetList);
@@ -126,14 +127,14 @@ public class ReplaceNullInjector extends BaseInjector
         for (String key : keys)
         {
             Object value = map.get(key);
-            Map<String, Object> mapValue = InjectorUtil.asStringObjectMap(value);
-            List<Object> listValue = InjectorUtil.asObjectList(value);
+            Map<String, Object> mapValue = InjectorConv.asStringObjectMap(value);
+            List<Object> listValue = InjectorConv.asObjectList(value);
             if (mapValue != null)
             {
                 Map<String, Object> supplyReplaceMap = null;
                 if (replaceMap != null)
                 {
-                    supplyReplaceMap = InjectorUtil.asStringObjectMap(replaceMap.get(key));
+                    supplyReplaceMap = InjectorConv.asStringObjectMap(replaceMap.get(key));
                 }
                 processMap(mapValue, supplyReplaceMap, ignoreNotExisting);
             }
@@ -142,7 +143,7 @@ public class ReplaceNullInjector extends BaseInjector
                 List<Object> supplyReplaceArray = null;
                 if (replaceMap != null)
                 {
-                    supplyReplaceArray = InjectorUtil.asObjectList(replaceMap.get(key));
+                    supplyReplaceArray = InjectorConv.asObjectList(replaceMap.get(key));
                 }
                 processList(listValue, supplyReplaceArray, ignoreNotExisting);
             }

@@ -116,8 +116,8 @@ public class JoinStringInjector extends BaseInjector
                 firstString = false;
             }
         }
-        Map<String, Object> modifyMap = InjectorUtil.asStringObjectMap(targetData);
-        List<Object> modifyList = InjectorUtil.asObjectList(targetData);
+        Map<String, Object> modifyMap = InjectorConv.asStringObjectMap(targetData);
+        List<Object> modifyList = InjectorConv.asObjectList(targetData);
         if (modifyMap != null)
         {
             if (removeOriginals)

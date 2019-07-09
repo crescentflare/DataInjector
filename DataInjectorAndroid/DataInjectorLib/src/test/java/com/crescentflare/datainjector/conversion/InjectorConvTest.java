@@ -1,12 +1,16 @@
 package com.crescentflare.datainjector.conversion;
 
+import com.crescentflare.datainjector.utility.InjectorUtil;
+
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 /**
@@ -80,6 +84,35 @@ public class InjectorConvTest
         List<Boolean> booleanList = InjectorConv.asBooleanList(mixedList);
         Assert.assertEquals(Boolean.FALSE, booleanList.get(0));
         Assert.assertEquals(Boolean.TRUE, booleanList.get(1));
+    }
+
+
+    // --
+    // Test special map and list conversion
+    // --
+
+    @Test
+    public void asStringObjectMap() throws Exception
+    {
+        Map<String, Object> correctMap = InjectorUtil.initMap(
+                "first", 11,
+                "second", "string"
+        );
+        Map<Date, String> incorrectMap = new HashMap<>();
+        incorrectMap.put(new Date(), "string");
+        Object noMap = "string";
+        Assert.assertEquals(correctMap, InjectorConv.asStringObjectMap(correctMap));
+        Assert.assertNull(InjectorConv.asStringObjectMap(incorrectMap));
+        Assert.assertNull(InjectorConv.asStringObjectMap(noMap));
+    }
+
+    @Test
+    public void asObjectList() throws Exception
+    {
+        List<?> correctList = Arrays.asList("string", 11.23);
+        Object noList = "string";
+        Assert.assertEquals(correctList, InjectorConv.asObjectList(correctList));
+        Assert.assertNull(InjectorConv.asObjectList(noList));
     }
 
 

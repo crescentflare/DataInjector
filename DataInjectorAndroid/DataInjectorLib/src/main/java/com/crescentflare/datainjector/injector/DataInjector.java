@@ -44,7 +44,7 @@ public final class DataInjector
         {
             if (data instanceof Map)
             {
-                Map<String, Object> dataMap = InjectorUtil.asStringObjectMap(data);
+                Map<String, Object> dataMap = InjectorConv.asStringObjectMap(data);
                 if (dataMap != null)
                 {
                     return get(dataMap.get(path.firstElement()), path.deeperPath());
@@ -52,7 +52,7 @@ public final class DataInjector
             }
             else if (data instanceof List)
             {
-                List<Object> dataList = InjectorUtil.asObjectList(data);
+                List<Object> dataList = InjectorConv.asObjectList(data);
                 if (dataList != null)
                 {
                     Integer boxedIndex = InjectorConv.asInteger(path.firstElement());
@@ -90,7 +90,7 @@ public final class DataInjector
         {
             if (data instanceof Map)
             {
-                Map<String, Object> dataMap = InjectorUtil.asStringObjectMap(data);
+                Map<String, Object> dataMap = InjectorConv.asStringObjectMap(data);
                 if (dataMap != null)
                 {
                     String mapIndex = path.firstElement();
@@ -118,7 +118,7 @@ public final class DataInjector
             }
             else if (data instanceof List)
             {
-                List<Object> dataList = InjectorUtil.asObjectList(data);
+                List<Object> dataList = InjectorConv.asObjectList(data);
                 if (dataList != null)
                 {
                     Integer boxedIndex = InjectorConv.asInteger(path.firstElement());

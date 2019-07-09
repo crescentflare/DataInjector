@@ -1,5 +1,6 @@
 package com.crescentflare.datainjector.injector;
 
+import com.crescentflare.datainjector.conversion.InjectorConv;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 
 import java.util.ArrayList;
@@ -47,8 +48,8 @@ public class SnakeToCamelCaseInjector extends BaseInjector
 
     public static void changeToCamelCase(Object targetData)
     {
-        Map<String, Object> targetMap = InjectorUtil.asStringObjectMap(targetData);
-        List<Object> targetList = InjectorUtil.asObjectList(targetData);
+        Map<String, Object> targetMap = InjectorConv.asStringObjectMap(targetData);
+        List<Object> targetList = InjectorConv.asObjectList(targetData);
         if (targetMap != null)
         {
             processMap(targetMap);
@@ -79,8 +80,8 @@ public class SnakeToCamelCaseInjector extends BaseInjector
     {
         for (Object arrayItem : array)
         {
-            Map<String, Object> targetMap = InjectorUtil.asStringObjectMap(arrayItem);
-            List<Object> targetList = InjectorUtil.asObjectList(arrayItem);
+            Map<String, Object> targetMap = InjectorConv.asStringObjectMap(arrayItem);
+            List<Object> targetList = InjectorConv.asObjectList(arrayItem);
             if (targetMap != null)
             {
                 processMap(targetMap);
@@ -103,8 +104,8 @@ public class SnakeToCamelCaseInjector extends BaseInjector
         {
             String newKey = stringToCamelCase(key);
             Object value = map.get(key);
-            Map<String, Object> mapValue = InjectorUtil.asStringObjectMap(value);
-            List<Object> listValue = InjectorUtil.asObjectList(value);
+            Map<String, Object> mapValue = InjectorConv.asStringObjectMap(value);
+            List<Object> listValue = InjectorConv.asObjectList(value);
             boolean adjustKey = !newKey.equals(key);
             if (adjustKey)
             {

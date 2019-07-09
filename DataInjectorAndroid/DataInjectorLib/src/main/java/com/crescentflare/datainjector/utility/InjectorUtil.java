@@ -28,8 +28,8 @@ public class InjectorUtil
 
     public static Object itemFromObject(Object object, String path)
     {
-        Map<String, Object> map = asStringObjectMap(object);
-        List<Object> list = asObjectList(object);
+        Map<String, Object> map = InjectorConv.asStringObjectMap(object);
+        List<Object> list = InjectorConv.asObjectList(object);
         if (map != null)
         {
             return itemFromMap(map, path);
@@ -43,8 +43,8 @@ public class InjectorUtil
 
     public static Object itemFromObject(Object object, String path, char separator)
     {
-        Map<String, Object> map = asStringObjectMap(object);
-        List<Object> list = asObjectList(object);
+        Map<String, Object> map = InjectorConv.asStringObjectMap(object);
+        List<Object> list = InjectorConv.asObjectList(object);
         if (map != null)
         {
             return itemFromMap(map, path, separator);
@@ -58,8 +58,8 @@ public class InjectorUtil
 
     public static Object itemFromObject(Object object, String[] path)
     {
-        Map<String, Object> map = asStringObjectMap(object);
-        List<Object> list = asObjectList(object);
+        Map<String, Object> map = InjectorConv.asStringObjectMap(object);
+        List<Object> list = InjectorConv.asObjectList(object);
         if (map != null)
         {
             return itemFromMap(map, path);
@@ -111,8 +111,8 @@ public class InjectorUtil
             {
                 return checkObject;
             }
-            Map<String, Object> checkMap = asStringObjectMap(checkObject);
-            List<Object> checkList = asObjectList(checkObject);
+            Map<String, Object> checkMap = InjectorConv.asStringObjectMap(checkObject);
+            List<Object> checkList = InjectorConv.asObjectList(checkObject);
             if (checkMap != null)
             {
                 return itemFromMap(checkMap, slicedPath(path, 1));
@@ -162,8 +162,8 @@ public class InjectorUtil
             if (path.length > 1)
             {
                 String[] nextPath = slicedPath(path, 1);
-                Map<String, Object> modifyMap = asStringObjectMap(map.get(key));
-                List<Object> modifyArray = asObjectList(map.get(key));
+                Map<String, Object> modifyMap = InjectorConv.asStringObjectMap(map.get(key));
+                List<Object> modifyArray = InjectorConv.asObjectList(map.get(key));
                 if (modifyMap != null)
                 {
                     setItemOnMap(modifyMap, nextPath, value);
@@ -185,25 +185,6 @@ public class InjectorUtil
                 }
             }
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    public static Map<String, Object> asStringObjectMap(Object object)
-    {
-        if (isMap(object))
-        {
-            Map<?, ?> map = (Map<?, ?>)object;
-            if (map.keySet().size() > 0)
-            {
-                Object firstKey = map.keySet().iterator().next();
-                if (!(firstKey instanceof String))
-                {
-                    return null;
-                }
-            }
-            return (Map<String, Object>)object;
-        }
-        return null;
     }
 
     public static boolean isMap(Object object)
@@ -290,8 +271,8 @@ public class InjectorUtil
                 {
                     return checkObject;
                 }
-                Map<String, Object> checkMap = asStringObjectMap(checkObject);
-                List<Object> checkList = asObjectList(checkObject);
+                Map<String, Object> checkMap = InjectorConv.asStringObjectMap(checkObject);
+                List<Object> checkList = InjectorConv.asObjectList(checkObject);
                 if (checkMap != null)
                 {
                     return itemFromMap(checkMap, slicedPath(path, 1));
@@ -358,8 +339,8 @@ public class InjectorUtil
                 if (path.length > 1)
                 {
                     String[] nextPath = slicedPath(path, 1);
-                    Map<String, Object> modifyMap = asStringObjectMap(list.get(index));
-                    List<Object> modifyArray = asObjectList(list.get(index));
+                    Map<String, Object> modifyMap = InjectorConv.asStringObjectMap(list.get(index));
+                    List<Object> modifyArray = InjectorConv.asObjectList(list.get(index));
                     if (modifyMap != null)
                     {
                         setItemOnMap(modifyMap, nextPath, value);
@@ -384,27 +365,6 @@ public class InjectorUtil
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public static List<Map<String, Object>> asStringObjectMapList(Object object)
-    {
-        List<?> objectList = asObjectList(object);
-        if (objectList != null)
-        {
-            if (objectList.size() > 0 && asStringObjectMap(objectList.get(0)) == null)
-            {
-                return null;
-            }
-            return (List<Map<String, Object>>)objectList;
-        }
-        return null;
-    }
-
-    @SuppressWarnings("unchecked")
-    public static List<Object> asObjectList(Object object)
-    {
-        return isList(object) ? (List<Object>)object : null;
-    }
-
     public static boolean isList(Object object)
     {
         return object != null && object instanceof List<?>;
@@ -419,7 +379,7 @@ public class InjectorUtil
     {
         for (int i = 0; i < array.size(); i++)
         {
-            Map<String, Object> itemMap = asStringObjectMap(array.get(i));
+            Map<String, Object> itemMap = InjectorConv.asStringObjectMap(array.get(i));
             if (itemMap != null)
             {
                 String injectRef = InjectorConv.asString(itemMap.get("injectRef"));

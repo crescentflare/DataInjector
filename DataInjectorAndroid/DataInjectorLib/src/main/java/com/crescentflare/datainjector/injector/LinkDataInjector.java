@@ -107,11 +107,11 @@ public class LinkDataInjector extends BaseInjector
     {
         if (linkKey != null)
         {
-            List<Map<String, Object>> linkedData = InjectorUtil.asStringObjectMapList(referencedData);
+            List<Map<String, Object>> linkedData = InjectorConv.asStringObjectMapList(referencedData);
             if (linkedData != null)
             {
-                List<Map<String, Object>> targetDataArray = InjectorUtil.asStringObjectMapList(targetData);
-                Map<String, Object> targetDataItem = InjectorUtil.asStringObjectMap(targetData);
+                List<Map<String, Object>> targetDataArray = InjectorConv.asStringObjectMapList(targetData);
+                Map<String, Object> targetDataItem = InjectorConv.asStringObjectMap(targetData);
                 if (targetDataArray != null)
                 {
                     LinkDataInjector.linkDataArray(targetDataArray, linkedData, linkKey);

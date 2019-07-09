@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 
 /**
@@ -116,6 +117,53 @@ public class InjectorConv
             }
         }
         return list;
+    }
+
+
+    // --
+    // Special list and map conversion
+    // --
+
+    @SuppressWarnings("unchecked")
+    public static List<Map<String, Object>> asStringObjectMapList(Object object)
+    {
+        List<?> objectList = asObjectList(object);
+        if (objectList != null)
+        {
+            if (objectList.size() > 0 && asStringObjectMap(objectList.get(0)) == null)
+            {
+                return null;
+            }
+            return (List<Map<String, Object>>)objectList;
+        }
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Map<String, Object> asStringObjectMap(Object value)
+    {
+        boolean isMap = value instanceof Map<?, ?>;
+        if (isMap)
+        {
+            Map<?, ?> map = (Map<?, ?>)value;
+            if (map.keySet().size() > 0)
+            {
+                Object firstKey = map.keySet().iterator().next();
+                if (!(firstKey instanceof String))
+                {
+                    return null;
+                }
+            }
+            return (Map<String, Object>)value;
+        }
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List<Object> asObjectList(Object value)
+    {
+        boolean isList = value instanceof List<?>;
+        return isList ? (List<Object>)value : null;
     }
 
 
