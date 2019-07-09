@@ -84,8 +84,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         if let customerData = BitletSynchronizer.shared.cachedBitlet(forKey: Bitlets.customers.cacheKey) as? JsonArray {
             if let customerList = customerData.itemList as? [[String: Any]] {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "SimpleCell") as? SimpleCell {
-                    cell.identifier = InjectorConv.toString(from: customerList[indexPath.row]["id"])
-                    cell.label = InjectorConv.toString(from: customerList[indexPath.row]["fullName"])
+                    cell.identifier = InjectorConv.asString(value: customerList[indexPath.row]["id"])
+                    cell.label = InjectorConv.asString(value: customerList[indexPath.row]["fullName"])
                     return cell
                 }
             }

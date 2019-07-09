@@ -71,10 +71,10 @@ open class LinkDataInjector: BaseInjector {
     // --
     
     public static func findDataItem(inArray: [Any?], forValue: Any?, usingKey: String) -> [String: Any?]? {
-        if let searchValueString = InjectorConv.toString(from: forValue) {
+        if let searchValueString = InjectorConv.asString(value: forValue) {
             for arrayItem in inArray {
                 if let dictItem = arrayItem as? [String: Any?] {
-                    if let compareValueString = InjectorConv.toString(from: dictItem[usingKey] ?? nil) {
+                    if let compareValueString = InjectorConv.asString(value: dictItem[usingKey] ?? nil) {
                         if compareValueString == searchValueString {
                             return dictItem
                         }

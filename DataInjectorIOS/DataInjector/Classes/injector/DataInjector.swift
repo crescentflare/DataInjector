@@ -39,12 +39,12 @@ public class DataInjector {
                     return get(from: fromDict[dictIndex], path: path.deeperPath())
                 }
             } else if let fromArray = from as? [Any?] {
-                let index = InjectorConv.toInt(from: path.firstElement()) ?? -1
+                let index = InjectorConv.asInt(value: path.firstElement()) ?? -1
                 if index >= 0 && index < fromArray.count {
                     return get(from: fromArray[index], path: path.deeperPath())
                 }
             } else if let fromArray = from as? [Any] {
-                let index = InjectorConv.toInt(from: path.firstElement()) ?? -1
+                let index = InjectorConv.asInt(value: path.firstElement()) ?? -1
                 if index >= 0 && index < fromArray.count {
                     return get(from: fromArray[index], path: path.deeperPath())
                 }
@@ -95,7 +95,7 @@ public class DataInjector {
                 }
                 return InjectorResult(withError: .indexInvalid)
             } else if let intoArray = into as? [Any?] {
-                let index = InjectorConv.toInt(from: path.firstElement()) ?? -1
+                let index = InjectorConv.asInt(value: path.firstElement()) ?? -1
                 if index >= 0 && index < intoArray.count {
                     let originalData: Any? = intoArray[index] ?? nil
                     let result = inject(into: originalData, path: path.deeperPath(), modifyCallback: modifyCallback)
@@ -108,7 +108,7 @@ public class DataInjector {
                 }
                 return InjectorResult(withError: .indexInvalid)
             } else if let intoArray = into as? [Any] {
-                let index = InjectorConv.toInt(from: path.firstElement()) ?? -1
+                let index = InjectorConv.asInt(value: path.firstElement()) ?? -1
                 if index >= 0 && index < intoArray.count {
                     let originalData = intoArray[index]
                     let result = inject(into: originalData, path: path.deeperPath(), modifyCallback: modifyCallback)

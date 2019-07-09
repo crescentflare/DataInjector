@@ -97,10 +97,10 @@ class DetailViewController: UIViewController, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let productData = showCustomerProducts {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "DetailCell") as? DetailCell {
-                cell.title = InjectorConv.toString(from: productData[indexPath.row]["name"])
-                cell.info = InjectorConv.toString(from: productData[indexPath.row]["description"])
-                cell.value = InjectorConv.toString(from: productData[indexPath.row]["price"])
-                cell.valueColor = (InjectorConv.toBool(from: productData[indexPath.row]["paid"]) ?? false) ? UIColor.black : UIColor.red
+                cell.title = InjectorConv.asString(value: productData[indexPath.row]["name"])
+                cell.info = InjectorConv.asString(value: productData[indexPath.row]["description"])
+                cell.value = InjectorConv.asString(value: productData[indexPath.row]["price"])
+                cell.valueColor = (InjectorConv.asBool(value: productData[indexPath.row]["paid"]) ?? false) ? UIColor.black : UIColor.red
                 return cell
             }
         }
