@@ -24,7 +24,7 @@ public class InjectorConv {
     // --
     
     public static func asStringArray(value: Any?) -> [String] {
-        var array: [String] = []
+        var array = [String]()
         if let valueArray = value as? [Any] {
             for valueItem in valueArray {
                 if let stringValue = asString(value: valueItem) {
@@ -36,7 +36,7 @@ public class InjectorConv {
     }
     
     public static func asDoubleArray(value: Any?) -> [Double] {
-        var array: [Double] = []
+        var array = [Double]()
         if let valueArray = value as? [Any] {
             for valueItem in valueArray {
                 if let doubleValue = asDouble(value: valueItem) {
@@ -48,7 +48,7 @@ public class InjectorConv {
     }
     
     public static func asFloatArray(value: Any?) -> [Float] {
-        var array: [Float] = []
+        var array = [Float]()
         if let valueArray = value as? [Any] {
             for valueItem in valueArray {
                 if let floatValue = asFloat(value: valueItem) {
@@ -60,7 +60,7 @@ public class InjectorConv {
     }
     
     public static func asIntArray(value: Any?) -> [Int] {
-        var array: [Int] = []
+        var array = [Int]()
         if let valueArray = value as? [Any] {
             for valueItem in valueArray {
                 if let intValue = asInt(value: valueItem) {
@@ -72,7 +72,7 @@ public class InjectorConv {
     }
     
     public static func asBoolArray(value: Any?) -> [Bool] {
-        var array: [Bool] = []
+        var array = [Bool]()
         if let valueArray = value as? [Any] {
             for valueItem in valueArray {
                 if let boolValue = asBool(value: valueItem) {
@@ -89,7 +89,7 @@ public class InjectorConv {
     // --
 
     public static func asDateArray(value: Any?) -> [Date] {
-        var array: [Date] = []
+        var array = [Date]()
         if let valueArray = value as? [Any] {
             for valueItem in valueArray {
                 if let dateValue = asDate(value: valueItem) {
