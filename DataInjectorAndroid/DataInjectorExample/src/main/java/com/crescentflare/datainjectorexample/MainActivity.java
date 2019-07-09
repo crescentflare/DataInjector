@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import com.crescentflare.bitletsynchronizer.bitlet.BitletResultObserver;
 import com.crescentflare.bitletsynchronizer.cache.BitletCacheEntry;
 import com.crescentflare.bitletsynchronizer.synchronizer.BitletSynchronizer;
+import com.crescentflare.datainjector.conversion.InjectorConv;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 import com.crescentflare.datainjectorexample.helper.Bitlets;
 import com.crescentflare.datainjectorexample.helper.MockBitlet;
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
         if (customers instanceof MockBitlet.ObjectArray)
         {
             List<Object> itemList = ((MockBitlet.ObjectArray)customers).getItemList();
-            List<Map<String, Object>> customerItems = InjectorUtil.asStringObjectMapList(itemList);
+            List<Map<String, Object>> customerItems = InjectorConv.asStringObjectMapList(itemList);
             recyclerAdapter.setItems(customerItems);
         }
     }
@@ -136,14 +137,14 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.ItemC
         if (customers instanceof MockBitlet.ObjectArray)
         {
             List<Object> itemList = ((MockBitlet.ObjectArray) customers).getItemList();
-            customerItems = InjectorUtil.asStringObjectMapList(itemList);
+            customerItems = InjectorConv.asStringObjectMapList(itemList);
         }
 
         // Fetch customer ID from index
         String customerId = null;
         if (customerItems != null && index < customerItems.size())
         {
-            Map<String, Object> customer = InjectorUtil.asStringObjectMap(customerItems.get(index));
+            Map<String, Object> customer = InjectorConv.asStringObjectMap(customerItems.get(index));
             if (customer != null)
             {
                 if (customer.get("id") instanceof String)

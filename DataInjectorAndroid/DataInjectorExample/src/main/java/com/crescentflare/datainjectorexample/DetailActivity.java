@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.crescentflare.bitletsynchronizer.bitlet.BitletResultObserver;
 import com.crescentflare.bitletsynchronizer.cache.BitletCacheEntry;
 import com.crescentflare.bitletsynchronizer.synchronizer.BitletSynchronizer;
+import com.crescentflare.datainjector.conversion.InjectorConv;
 import com.crescentflare.datainjector.injector.LinkDataInjector;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 import com.crescentflare.datainjectorexample.helper.Bitlets;
@@ -132,15 +133,15 @@ public class DetailActivity extends AppCompatActivity
         }
 
         // Find the products of the given customer id
-        Map<String, Object> customer = LinkDataInjector.findDataItem(InjectorUtil.asStringObjectMapList(customerList), getIntent().getStringExtra(ARG_CUSTOMER_ID), "id");
+        Map<String, Object> customer = LinkDataInjector.findDataItem(InjectorConv.asStringObjectMapList(customerList), getIntent().getStringExtra(ARG_CUSTOMER_ID), "id");
         List<Map<String, Object>> customerProducts = null;
         if (customer != null)
         {
-            customerProducts = InjectorUtil.asStringObjectMapList(customer.get("products"));
+            customerProducts = InjectorConv.asStringObjectMapList(customer.get("products"));
         }
 
         // If everything is there, link the product details to the customer product list
-        LinkDataInjector.linkDataArray(customerProducts, InjectorUtil.asStringObjectMapList(productList), "id");
+        LinkDataInjector.linkDataArray(customerProducts, InjectorConv.asStringObjectMapList(productList), "id");
         recyclerAdapter.setItems(customerProducts);
     }
 
