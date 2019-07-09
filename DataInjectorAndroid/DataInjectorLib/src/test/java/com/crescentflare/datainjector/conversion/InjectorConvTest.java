@@ -5,6 +5,7 @@ import com.crescentflare.datainjector.utility.InjectorUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -90,6 +91,31 @@ public class InjectorConvTest
     // --
     // Test special map and list conversion
     // --
+
+    @Test
+    public void asStringObjectMapList() throws Exception
+    {
+        List<Map<String, Object>> correctList = Arrays.asList(
+                InjectorUtil.initMap(
+                        "green", "#00ff00",
+                        "red", "#ff0000",
+                        "blue", "#0000ff"
+                ),
+                InjectorUtil.initMap(
+                        "cyan", "#00ffff",
+                        "yellow", "#ffff00",
+                        "magenta", "#ff00ff"
+                )
+        );
+        List<Map<Date, String>> incorrectList = new ArrayList<>();
+        Map<Date, String> dateMap = new HashMap<>();
+        Object noList = "nothing";
+        dateMap.put(new Date(), "string");
+        incorrectList.add(dateMap);
+        Assert.assertEquals(correctList, InjectorConv.asStringObjectMapList(correctList));
+        Assert.assertNull(InjectorConv.asStringObjectMapList(incorrectList));
+        Assert.assertNull(InjectorConv.asStringObjectMapList(noList));
+    }
 
     @Test
     public void asStringObjectMap() throws Exception
