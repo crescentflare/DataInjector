@@ -1,7 +1,6 @@
 package com.crescentflare.datainjector.injector;
 
 import com.crescentflare.datainjector.conversion.InjectorConv;
-import com.crescentflare.datainjector.utility.InjectorUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.Map;
  * Data injector: snake case conversion
  * Converts each entry key in the data set from snake case to camel case recursively
  */
-public class SnakeToCamelCaseInjector extends BaseInjector
+public class SnakeToCamelCaseInjector extends BaseInjectorOld
 {
     // ---
     // Initialization

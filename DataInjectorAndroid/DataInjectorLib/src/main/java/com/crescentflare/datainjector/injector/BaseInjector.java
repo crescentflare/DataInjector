@@ -1,6 +1,9 @@
 package com.crescentflare.datainjector.injector;
 
-import com.crescentflare.datainjector.utility.InjectorUtil;
+import com.crescentflare.datainjector.utility.InjectorResult;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Data injector: the base class
@@ -8,71 +11,39 @@ import com.crescentflare.datainjector.utility.InjectorUtil;
  */
 public class BaseInjector
 {
-    // ---
+    // --
     // Initialization
-    // ---
+    // --
 
     public BaseInjector()
     {
     }
 
 
-    // ---
+    // --
     // Apply overloads
-    // ---
+    // --
 
-    public final void apply(Object targetData)
+    @NotNull
+    public final InjectorResult apply(@Nullable Object targetData)
     {
-        onApply(targetData, null, null, null);
+        return onApply(targetData, null);
     }
 
-    public final void apply(Object targetData, Object referencedData)
+    @NotNull
+    public final InjectorResult apply(@Nullable Object targetData, @Nullable Object sourceData)
     {
-        onApply(targetData, null, referencedData, null);
-    }
-
-    public final void apply(Object targetData, Object referencedData, Object subReferencedData)
-    {
-        onApply(targetData, null, referencedData, subReferencedData);
-    }
-
-    public final void apply(Object targetData, Object subTargetData, Object referencedData, Object subReferencedData)
-    {
-        onApply(targetData, subTargetData, referencedData, subReferencedData);
+        return onApply(targetData, sourceData);
     }
 
 
-    // ---
+    // --
     // Functions to implement
-    // ---
+    // --
 
-    public void onApply(Object targetData, Object subTargetData, Object referencedData, Object subReferencedData)
+    @NotNull
+    protected InjectorResult onApply(@Nullable Object targetData, @Nullable Object sourceData)
     {
-    }
-
-
-    // ---
-    // Helper
-    // ---
-
-    public static Object obtainValue(String item, Object targetData, Object subTargetData, Object referencedData, Object subReferencedData)
-    {
-        if (item.startsWith("@."))
-        {
-            return InjectorUtil.itemFromObject(subReferencedData, item.substring(2));
-        }
-        else if (item.startsWith("@"))
-        {
-            return InjectorUtil.itemFromObject(referencedData, item.substring(1));
-        }
-        else if (item.startsWith("~."))
-        {
-            return InjectorUtil.itemFromObject(subTargetData, item.substring(2));
-        }
-        else if (item.startsWith("~"))
-        {
-            return InjectorUtil.itemFromObject(targetData, item.substring(1));
-        }
-        return item;
+        return InjectorResult.withModifiedObject(targetData);
     }
 }

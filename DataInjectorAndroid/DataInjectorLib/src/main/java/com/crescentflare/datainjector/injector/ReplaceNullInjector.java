@@ -1,7 +1,6 @@
 package com.crescentflare.datainjector.injector;
 
 import com.crescentflare.datainjector.conversion.InjectorConv;
-import com.crescentflare.datainjector.utility.InjectorUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.Map;
  * Data injector: remove or replace null values
  * Traverses a data set recursively removing null values or replacing them with the given defaults
  */
-public class ReplaceNullInjector extends BaseInjector
+public class ReplaceNullInjector extends BaseInjectorOld
 {
     // ---
     // Initialization

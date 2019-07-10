@@ -1,5 +1,8 @@
 package com.crescentflare.datainjector.conversion;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,7 +32,8 @@ public class InjectorConv
     // Array list conversion
     // --
 
-    public static List<String> asStringList(Object value)
+    @NotNull
+    public static List<String> asStringList(@Nullable Object value)
     {
         List<String> list = new ArrayList<>();
         if (value instanceof List)
@@ -47,7 +51,8 @@ public class InjectorConv
         return list;
     }
 
-    public static List<Double> asDoubleList(Object value)
+    @NotNull
+    public static List<Double> asDoubleList(@Nullable Object value)
     {
         List<Double> list = new ArrayList<>();
         if (value instanceof List)
@@ -65,7 +70,8 @@ public class InjectorConv
         return list;
     }
 
-    public static List<Float> asFloatList(Object value)
+    @NotNull
+    public static List<Float> asFloatList(@Nullable Object value)
     {
         List<Float> list = new ArrayList<>();
         if (value instanceof List)
@@ -83,7 +89,8 @@ public class InjectorConv
         return list;
     }
 
-    public static List<Integer> asIntegerList(Object value)
+    @NotNull
+    public static List<Integer> asIntegerList(@Nullable Object value)
     {
         List<Integer> list = new ArrayList<>();
         if (value instanceof List)
@@ -101,7 +108,8 @@ public class InjectorConv
         return list;
     }
 
-    public static List<Boolean> asBooleanList(Object value)
+    @NotNull
+    public static List<Boolean> asBooleanList(@Nullable Object value)
     {
         List<Boolean> list = new ArrayList<>();
         if (value instanceof List)
@@ -125,7 +133,8 @@ public class InjectorConv
     // --
 
     @SuppressWarnings("unchecked")
-    public static List<Map<String, Object>> asStringObjectMapList(Object object)
+    @Nullable
+    public static List<Map<String, Object>> asStringObjectMapList(@Nullable Object object)
     {
         List<?> objectList = asObjectList(object);
         if (objectList != null)
@@ -140,7 +149,8 @@ public class InjectorConv
     }
 
     @SuppressWarnings("unchecked")
-    public static Map<String, Object> asStringObjectMap(Object value)
+    @Nullable
+    public static Map<String, Object> asStringObjectMap(@Nullable Object value)
     {
         boolean isMap = value instanceof Map<?, ?>;
         if (isMap)
@@ -160,7 +170,8 @@ public class InjectorConv
     }
 
     @SuppressWarnings("unchecked")
-    public static List<Object> asObjectList(Object value)
+    @Nullable
+    public static List<Object> asObjectList(@Nullable Object value)
     {
         boolean isList = value instanceof List<?>;
         return isList ? (List<Object>)value : null;
@@ -171,7 +182,8 @@ public class InjectorConv
     // Date parsing
     // --
 
-    public static List<Date> asDateList(Object value)
+    @NotNull
+    public static List<Date> asDateList(@Nullable Object value)
     {
         List<Date> list = new ArrayList<>();
         if (value instanceof List)
@@ -189,7 +201,8 @@ public class InjectorConv
         return list;
     }
 
-    public static Date asDate(Object value)
+    @Nullable
+    public static Date asDate(@Nullable Object value)
     {
         if (value instanceof String)
         {
@@ -225,7 +238,8 @@ public class InjectorConv
     // Primitive types
     // --
 
-    public static String asString(Object value)
+    @Nullable
+    public static String asString(@Nullable Object value)
     {
         if (value instanceof String)
         {
@@ -238,7 +252,8 @@ public class InjectorConv
         return null;
     }
 
-    public static Double asDouble(Object value)
+    @Nullable
+    public static Double asDouble(@Nullable Object value)
     {
         if (value instanceof String)
         {
@@ -269,7 +284,8 @@ public class InjectorConv
         return null;
     }
 
-    public static Float asFloat(Object value)
+    @Nullable
+    public static Float asFloat(@Nullable Object value)
     {
         if (value instanceof String)
         {
@@ -300,7 +316,8 @@ public class InjectorConv
         return null;
     }
 
-    public static Integer asInteger(Object value)
+    @Nullable
+    public static Integer asInteger(@Nullable Object value)
     {
         if (value instanceof String)
         {
@@ -339,7 +356,8 @@ public class InjectorConv
         return null;
     }
 
-    public static Boolean asBoolean(Object value)
+    @Nullable
+    public static Boolean asBoolean(@Nullable Object value)
     {
         if (value instanceof String)
         {

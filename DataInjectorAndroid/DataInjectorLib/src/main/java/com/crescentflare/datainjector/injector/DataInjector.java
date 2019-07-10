@@ -2,6 +2,7 @@ package com.crescentflare.datainjector.injector;
 
 import com.crescentflare.datainjector.conversion.InjectorConv;
 import com.crescentflare.datainjector.utility.InjectorPath;
+import com.crescentflare.datainjector.utility.InjectorResult;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -77,14 +78,13 @@ public final class DataInjector
     // --
 
     @NotNull
-    public static Result inject(@Nullable Object data, @NotNull String path, @NotNull ModifyCallback modifyCallback)
+    public static InjectorResult inject(@Nullable Object data, @NotNull String path, @NotNull ModifyCallback modifyCallback)
     {
         return inject(data, new InjectorPath(path), modifyCallback);
     }
 
-    @SuppressWarnings("WeakerAccess")
     @NotNull
-    public static Result inject(@Nullable Object data, @NotNull InjectorPath path, @NotNull ModifyCallback modifyCallback)
+    public static InjectorResult inject(@Nullable Object data, @NotNull InjectorPath path, @NotNull ModifyCallback modifyCallback)
     {
         if (path.hasElements())
         {
@@ -95,7 +95,7 @@ public final class DataInjector
                 {
                     String mapIndex = path.firstElement();
                     Object originalData = dataMap.get(mapIndex);
-                    Result result = inject(originalData, path.deeperPath(), modifyCallback);
+                    InjectorResult result = inject(originalData, path.deeperPath(), modifyCallback);
                     if (result.hasError())
                     {
                         return result;
@@ -111,9 +111,9 @@ public final class DataInjector
                                 modifiedMap.put(key, dataMap.get(key));
                             }
                         }
-                        return Result.withModifiedObject(modifiedMap);
+                        return InjectorResult.withModifiedObject(modifiedMap);
                     }
-                    return Result.withModifiedObject(data);
+                    return InjectorResult.withModifiedObject(data);
                 }
             }
             else if (data instanceof List)
@@ -126,7 +126,7 @@ public final class DataInjector
                     if (index >= 0 && index < dataList.size())
                     {
                         Object originalData = dataList.get(index);
-                        Result result = inject(originalData, path.deeperPath(), modifyCallback);
+                        InjectorResult result = inject(originalData, path.deeperPath(), modifyCallback);
                         if (result.hasError())
                         {
                             return result;
@@ -145,98 +145,30 @@ public final class DataInjector
                                     modifiedList.add(dataList.get(i));
                                 }
                             }
-                            return Result.withModifiedObject(modifiedList);
+                            return InjectorResult.withModifiedObject(modifiedList);
                         }
-                        return Result.withModifiedObject(data);
+                        return InjectorResult.withModifiedObject(data);
                     }
                     else
                     {
-                        return Result.withError(Error.IndexInvalid);
+                        return InjectorResult.withError(InjectorResult.Error.IndexInvalid);
                     }
                 }
             }
             else
             {
-                return Result.withError(Error.NoIndexedCollection);
+                return InjectorResult.withError(InjectorResult.Error.NoIndexedCollection);
             }
         }
         else
         {
-            Result result = modifyCallback.modify(data);
+            InjectorResult result = modifyCallback.modify(data);
             if (result != null)
             {
                 return result;
             }
         }
-        return Result.withError(Error.Unknown);
-    }
-
-
-    // --
-    // Inject result class
-    // --
-
-    public static final class Result
-    {
-        private Object modifiedObject;
-        private Error error;
-        private Object customInfo;
-
-        private Result()
-        {
-            // Private constructor, should be created with factory methods
-        }
-
-        public static Result withModifiedObject(@Nullable Object modifiedObject)
-        {
-            Result result = new Result();
-            result.modifiedObject = modifiedObject;
-            return result;
-        }
-
-        @SuppressWarnings("WeakerAccess")
-        public static Result withError(@NotNull Error error)
-        {
-            Result result = new Result();
-            result.error = error;
-            return result;
-        }
-
-        @SuppressWarnings("unused")
-        public static Result withCustomError(@NotNull Object customInfo)
-        {
-            Result result = new Result();
-            result.error = Error.Custom;
-            result.customInfo = customInfo;
-            return result;
-        }
-
-        @SuppressWarnings("WeakerAccess")
-        @Nullable
-        public Object getModifiedObject()
-        {
-            return modifiedObject;
-        }
-
-        @SuppressWarnings("unused")
-        @Nullable
-        public Error getError()
-        {
-            return error;
-        }
-
-        @SuppressWarnings("WeakerAccess")
-        public boolean hasError()
-        {
-            return error != null;
-        }
-
-        @SuppressWarnings("unused")
-        @Nullable
-        public Object getCustomInfo()
-        {
-            return customInfo;
-        }
+        return InjectorResult.withError(InjectorResult.Error.Unknown);
     }
 
 
@@ -246,19 +178,6 @@ public final class DataInjector
 
     public interface ModifyCallback
     {
-        Result modify(@Nullable Object originalData);
-    }
-
-
-    // --
-    // Error enum
-    // --
-
-    public enum Error
-    {
-        Unknown,
-        NoIndexedCollection,
-        IndexInvalid,
-        Custom
+        InjectorResult modify(@Nullable Object originalData);
     }
 }

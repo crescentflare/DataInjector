@@ -4,7 +4,7 @@ import android.os.Handler;
 
 import com.crescentflare.bitletsynchronizer.bitlet.BitletHandler;
 import com.crescentflare.bitletsynchronizer.bitlet.BitletObserver;
-import com.crescentflare.datainjector.injector.BaseInjector;
+import com.crescentflare.datainjector.injector.BaseInjectorOld;
 import com.crescentflare.datainjector.injector.JoinStringInjector;
 import com.crescentflare.datainjector.injector.ReplaceNullInjector;
 import com.crescentflare.datainjector.injector.SnakeToCamelCaseInjector;
@@ -32,7 +32,7 @@ public class MockBitlet implements BitletHandler<MockBitlet.ObjectArray>
 
     private int rawResourceId;
     private String cacheKey;
-    private List<BaseInjector> injectors = new ArrayList<>();
+    private List<BaseInjectorOld> injectors = new ArrayList<>();
 
 
     // ---
@@ -93,7 +93,7 @@ public class MockBitlet implements BitletHandler<MockBitlet.ObjectArray>
                         {
                             for (Object item : processedJson)
                             {
-                                for (BaseInjector injector : injectors)
+                                for (BaseInjectorOld injector : injectors)
                                 {
                                     injector.apply(item, null, null);
                                 }

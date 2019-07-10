@@ -1,6 +1,7 @@
 package com.crescentflare.datainjector.injector;
 
 
+import com.crescentflare.datainjector.utility.InjectorResult;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 
 import org.junit.Assert;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Utility test: data injection utilities
+ * Injector test: general data injection
  */
 public class DataInjectorTest
 {
@@ -39,12 +40,12 @@ public class DataInjectorTest
         );
 
         // Apply manual injection to change the price
-        DataInjector.Result result = DataInjector.inject(inventoryMap, "clothing.shirts.small", new DataInjector.ModifyCallback()
+        InjectorResult result = DataInjector.inject(inventoryMap, "clothing.shirts.small", new DataInjector.ModifyCallback()
         {
             @Override
-            public DataInjector.Result modify(Object originalData)
+            public InjectorResult modify(Object originalData)
             {
-                return DataInjector.Result.withModifiedObject("8.95");
+                return InjectorResult.withModifiedObject("8.95");
             }
         });
 
@@ -74,12 +75,12 @@ public class DataInjectorTest
         List<List<Integer>> nestedNumbers = Arrays.asList(evenNumbers, oddNumbers);
 
         // Apply manual injection to change the number
-        DataInjector.Result result = DataInjector.inject(nestedNumbers, "1.2", new DataInjector.ModifyCallback()
+        InjectorResult result = DataInjector.inject(nestedNumbers, "1.2", new DataInjector.ModifyCallback()
         {
             @Override
-            public DataInjector.Result modify(Object originalData)
+            public InjectorResult modify(Object originalData)
             {
-                return DataInjector.Result.withModifiedObject(5);
+                return InjectorResult.withModifiedObject(5);
             }
         });
 
@@ -112,12 +113,12 @@ public class DataInjectorTest
         List<Object> randomItems = Arrays.asList(numberSequence, dictionary);
 
         // Apply manual injection to change the dictionary
-        DataInjector.Result result = DataInjector.inject(randomItems, "1.second", new DataInjector.ModifyCallback()
+        InjectorResult result = DataInjector.inject(randomItems, "1.second", new DataInjector.ModifyCallback()
         {
             @Override
-            public DataInjector.Result modify(Object originalData)
+            public InjectorResult modify(Object originalData)
             {
-                return DataInjector.Result.withModifiedObject("2nd");
+                return InjectorResult.withModifiedObject("2nd");
             }
         });
 

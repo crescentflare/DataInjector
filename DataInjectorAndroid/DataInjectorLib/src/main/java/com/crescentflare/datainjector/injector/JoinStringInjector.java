@@ -11,7 +11,7 @@ import java.util.Map;
  * Data injector: concatenate strings
  * Join multiple strings together with an optional delimiter
  */
-public class JoinStringInjector extends BaseInjector
+public class JoinStringInjector extends BaseInjectorOld
 {
     // ---
     // Members

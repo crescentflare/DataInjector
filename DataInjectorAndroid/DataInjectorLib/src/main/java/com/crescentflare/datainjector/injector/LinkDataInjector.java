@@ -1,7 +1,6 @@
 package com.crescentflare.datainjector.injector;
 
 import com.crescentflare.datainjector.conversion.InjectorConv;
-import com.crescentflare.datainjector.utility.InjectorUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +9,7 @@ import java.util.Map;
  * Data injector: link datasets
  * Inject one data set into another by a common field that links them together (such as ID)
  */
-public class LinkDataInjector extends BaseInjector
+public class LinkDataInjector extends BaseInjectorOld
 {
     // ---
     // Members
