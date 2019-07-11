@@ -36,21 +36,22 @@ public class ValueInjector extends BaseInjector
     // --
 
     @NotNull
-    public static InjectorResult setValue(@Nullable Object inData, @NotNull InjectorPath path, @Nullable Object value)
+    public static InjectorResult setValue(@Nullable Object data, @NotNull InjectorPath path, @Nullable Object value)
     {
-        return setValue(inData, path, value, true);
+        return setValue(data, path, value, true);
     }
 
     @NotNull
-    public static InjectorResult setValue(@Nullable Object inData, @NotNull InjectorPath path, @Nullable final Object value, boolean allowNull)
+    public static InjectorResult setValue(@Nullable Object data, @NotNull InjectorPath path, @Nullable final Object value, boolean allowNull)
     {
         if (!allowNull && value == null)
         {
             return InjectorResult.withError(InjectorResult.Error.NullNotAllowed);
         }
-        return DataInjector.inject(inData, path, new DataInjector.ModifyCallback()
+        return DataInjector.inject(data, path, new DataInjector.ModifyCallback()
         {
             @Override
+            @NotNull
             public InjectorResult modify(@Nullable Object originalData)
             {
                 return InjectorResult.withModifiedObject(value);

@@ -52,6 +52,7 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.json:org.json:2.0'
+    testImplementation 'org.jetbrains:annotations:16.0.2'
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'

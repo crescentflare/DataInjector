@@ -3,7 +3,6 @@ package com.crescentflare.datainjector.injector;
 import com.crescentflare.datainjector.conversion.InjectorConv;
 import com.crescentflare.datainjector.utility.InjectorPath;
 import com.crescentflare.datainjector.utility.InjectorResult;
-import com.crescentflare.datainjector.utility.InjectorUtil;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -162,11 +161,7 @@ public final class DataInjector
         }
         else
         {
-            InjectorResult result = modifyCallback.modify(data);
-            if (result != null)
-            {
-                return result;
-            }
+            return modifyCallback.modify(data);
         }
         return InjectorResult.withError(InjectorResult.Error.Unknown);
     }
@@ -178,6 +173,7 @@ public final class DataInjector
 
     public interface ModifyCallback
     {
+        @NotNull
         InjectorResult modify(@Nullable Object originalData);
     }
 }

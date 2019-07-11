@@ -4,6 +4,7 @@ package com.crescentflare.datainjector.injector;
 import com.crescentflare.datainjector.utility.InjectorResult;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -43,6 +44,7 @@ public class DataInjectorTest
         InjectorResult result = DataInjector.inject(inventoryMap, "clothing.shirts.small", new DataInjector.ModifyCallback()
         {
             @Override
+            @NotNull
             public InjectorResult modify(Object originalData)
             {
                 return InjectorResult.withModifiedObject("8.95");
@@ -78,6 +80,7 @@ public class DataInjectorTest
         InjectorResult result = DataInjector.inject(nestedNumbers, "1.2", new DataInjector.ModifyCallback()
         {
             @Override
+            @NotNull
             public InjectorResult modify(Object originalData)
             {
                 return InjectorResult.withModifiedObject(5);
@@ -116,6 +119,7 @@ public class DataInjectorTest
         InjectorResult result = DataInjector.inject(randomItems, "1.second", new DataInjector.ModifyCallback()
         {
             @Override
+            @NotNull
             public InjectorResult modify(Object originalData)
             {
                 return InjectorResult.withModifiedObject("2nd");
