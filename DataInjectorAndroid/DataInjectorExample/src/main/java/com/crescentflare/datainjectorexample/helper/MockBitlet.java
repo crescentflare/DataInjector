@@ -6,7 +6,7 @@ import com.crescentflare.bitletsynchronizer.bitlet.BitletHandler;
 import com.crescentflare.bitletsynchronizer.bitlet.BitletObserver;
 import com.crescentflare.datainjector.injector.BaseInjectorOld;
 import com.crescentflare.datainjector.injector.JoinStringInjector;
-import com.crescentflare.datainjector.injector.ReplaceNullInjector;
+import com.crescentflare.datainjector.injector.ReplaceNullInjectorOld;
 import com.crescentflare.datainjector.injector.SnakeToCamelCaseInjector;
 import com.crescentflare.datainjectorexample.ExampleApplication;
 import com.crescentflare.datainjectorexample.R;
@@ -45,7 +45,7 @@ public class MockBitlet implements BitletHandler<MockBitlet.ObjectArray>
         this.cacheKey = cacheKey;
         injectors.addAll(Arrays.asList(
                 new SnakeToCamelCaseInjector(),
-                new ReplaceNullInjector()
+                new ReplaceNullInjectorOld()
         ));
         if (rawResourceId == R.raw.customer_list)
         {
