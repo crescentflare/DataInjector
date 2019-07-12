@@ -102,7 +102,6 @@ public class DataInjectorTest
         Assert.assertNotSame(DataInjector.get(result.getModifiedObject(), "1"), oddNumbers);
     }
 
-
     @Test
     public void injectMixed() throws Exception
     {

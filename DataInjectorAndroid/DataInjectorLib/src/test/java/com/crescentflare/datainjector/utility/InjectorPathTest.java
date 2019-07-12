@@ -11,9 +11,9 @@ import java.util.Map;
  */
 public class InjectorPathTest
 {
-    // ---
+    // --
     // Test initialization
-    // ---
+    // --
 
     @Test
     public void init() throws Exception
@@ -32,9 +32,9 @@ public class InjectorPathTest
     }
 
 
-    // ---
+    // --
     // Test data access
-    // ---
+    // --
 
     @Test
     public void elements() throws Exception
@@ -69,9 +69,9 @@ public class InjectorPathTest
     }
 
 
-    // ---
+    // --
     // Test traversal
-    // ---
+    // --
 
     @Test
     public void deeperPath() throws Exception
