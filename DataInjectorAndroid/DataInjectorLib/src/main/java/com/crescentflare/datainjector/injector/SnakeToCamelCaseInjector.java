@@ -96,7 +96,8 @@ public class SnakeToCamelCaseInjector extends BaseInjector
     // --
 
     @Override
-    protected @NotNull InjectorResult onApply(@Nullable Object targetData, @Nullable Object sourceData)
+    @NotNull
+    protected InjectorResult onApply(@Nullable Object targetData, @Nullable Object sourceData)
     {
         return DataInjector.inject(targetData, targetItemPath != null ? targetItemPath : new InjectorPath(), new DataInjector.ModifyCallback()
         {

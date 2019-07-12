@@ -1,7 +1,12 @@
 package com.crescentflare.datainjector.injector;
 
 import com.crescentflare.datainjector.conversion.InjectorConv;
+import com.crescentflare.datainjector.utility.InjectorPath;
+import com.crescentflare.datainjector.utility.InjectorResult;
 import com.crescentflare.datainjector.utility.InjectorUtil;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,140 +16,159 @@ import java.util.Map;
  * Data injector: concatenate strings
  * Join multiple strings together with an optional delimiter
  */
-public class JoinStringInjector extends BaseInjectorOld
+public class JoinStringInjector extends BaseInjector
 {
-    // ---
+    // --
     // Members
-    // ---
+    // --
 
+    private InjectorPath targetItemPath;
+    private InjectorPath sourceDataPath;
+    private Object overrideSourceData;
     private List<String> fromItems = new ArrayList<>();
-    private String item;
     private String delimiter = "";
-    private boolean removeOriginals = false;
 
 
-    // ---
+    // --
     // Initialization
-    // ---
+    // --
 
     public JoinStringInjector()
     {
     }
 
-    public JoinStringInjector(String item, List<String> fromItems)
+
+    // --
+    // Manual injection
+    // --
+
+    @NotNull
+    public static InjectorResult joinString(@NotNull List<?> sourceList)
     {
-        this.item = item;
-        this.fromItems = fromItems;
+        return joinString(sourceList, "");
     }
 
-    public JoinStringInjector(String item, List<String> fromItems, String delimiter)
+    @NotNull
+    public static InjectorResult joinString(@NotNull List<?> sourceList, @NotNull String delimiter)
     {
-        this.item = item;
-        this.fromItems = fromItems;
-        this.delimiter = delimiter;
-    }
-
-    public JoinStringInjector(String item, List<String> fromItems, String delimiter, boolean removeOriginals)
-    {
-        this.item = item;
-        this.fromItems = fromItems;
-        this.delimiter = delimiter;
-        this.removeOriginals = removeOriginals;
-    }
-
-
-    // ---
-    // Data helpers
-    // ---
-
-    public static String joinStrings(String[] stringArray, String delimiter)
-    {
-        String result = "";
-        boolean firstString = true;
-        for (String item : stringArray)
+        List<String> stringItems = new ArrayList<>();
+        for (Object value : sourceList)
         {
-            if (!firstString)
+            if (value instanceof String)
             {
-                result += delimiter;
+                stringItems.add((String)value);
             }
-            result += item;
-            firstString = false;
         }
-        return result;
+        return InjectorResult.withModifiedObject(joinStringList(stringItems, delimiter));
     }
 
-    public static String joinStrings(List<String> stringList, String delimiter)
+    @NotNull
+    public static InjectorResult joinString(@NotNull Map<String, Object> sourceMap, @NotNull List<String> fromItems)
     {
-        String result = "";
+        return joinString(sourceMap, fromItems, "");
+    }
+
+    @NotNull
+    public static InjectorResult joinString(@NotNull Map<String, Object> sourceMap, @NotNull List<String> fromItems, @NotNull String delimiter)
+    {
+        List<String> stringItems = new ArrayList<>();
+        for (String item : fromItems)
+        {
+            Object value = sourceMap.get(item);
+            if (value instanceof String)
+            {
+                stringItems.add((String)value);
+            }
+        }
+        return InjectorResult.withModifiedObject(joinStringList(stringItems, delimiter));
+    }
+
+
+    // --
+    // Data helpers
+    // --
+
+    @NotNull
+    public static String joinStringList(@NotNull List<String> stringList)
+    {
+        return joinStringList(stringList, "");
+    }
+
+    @NotNull
+    public static String joinStringList(@NotNull List<String> stringList, @NotNull String delimiter)
+    {
+        StringBuilder result = new StringBuilder("");
         boolean firstString = true;
         for (String item : stringList)
         {
             if (!firstString)
             {
-                result += delimiter;
+                result.append(delimiter);
             }
-            result += item;
+            result.append(item);
             firstString = false;
         }
-        return result;
+        return result.toString();
     }
 
 
-    // ---
+    // --
     // General injection
-    // ---
+    // --
 
     @Override
-    public void onApply(Object targetData, Object subTargetData, Object referencedData, Object subReferencedData)
+    @NotNull
+    protected InjectorResult onApply(@Nullable Object targetData, @Nullable Object sourceData)
     {
-        if (item == null)
+        Object checkSourceData = overrideSourceData != null ? overrideSourceData : sourceData;
+        final Object useSourceData = DataInjector.get(checkSourceData, sourceDataPath != null ? sourceDataPath : new InjectorPath());
+        return DataInjector.inject(targetData, targetItemPath != null ? targetItemPath : new InjectorPath(), new DataInjector.ModifyCallback()
         {
-            return;
-        }
-        String finalString = "";
-        boolean firstString = true;
-        for (String fromItem : fromItems)
-        {
-            String concatString = InjectorConv.asString(obtainValue(fromItem, targetData, null, referencedData, subReferencedData));
-            if (concatString != null)
+            @Override
+            public @NotNull InjectorResult modify(@Nullable Object originalData)
             {
-                if (!firstString)
+                Map<String, Object> sourceMap = InjectorConv.asStringObjectMap(useSourceData);
+                List<Object> sourceList = InjectorConv.asObjectList(useSourceData);
+                if (sourceMap != null)
                 {
-                    finalString += delimiter;
+                    return joinString(sourceMap, fromItems, delimiter);
                 }
-                finalString += concatString;
-                firstString = false;
-            }
-        }
-        Map<String, Object> modifyMap = InjectorConv.asStringObjectMap(targetData);
-        List<Object> modifyList = InjectorConv.asObjectList(targetData);
-        if (modifyMap != null)
-        {
-            if (removeOriginals)
-            {
-                for (String fromItem : fromItems)
+                else if (sourceList != null)
                 {
-                    if (!fromItem.startsWith("~.") && fromItem.startsWith("~"))
-                    {
-                        InjectorUtil.setItemOnMap(modifyMap, fromItem.substring(1), null);
-                    }
+                    return joinString(sourceList, delimiter);
                 }
+                return InjectorResult.withError(InjectorResult.Error.SourceInvalid);
             }
-            InjectorUtil.setItemOnMap(modifyMap, item, finalString);
-        }
-        else if (modifyList != null)
-        {
-            if (removeOriginals)
-            {
-                for (String fromItem : fromItems)
-                {
-                    if (!fromItem.startsWith("~.") && fromItem.startsWith("~"))
-                    {
-                        InjectorUtil.setItemOnList(modifyList, fromItem.substring(1), null);
-                    }
-                }
-            }
-            InjectorUtil.setItemOnList(modifyList, item, finalString);
-        }
+        });
+    }
+
+
+    // --
+    // Set values
+    // --
+
+    public void setTargetItemPath(@Nullable InjectorPath targetItemPath)
+    {
+        this.targetItemPath = targetItemPath;
+    }
+
+    public void setSourceDataPath(@Nullable InjectorPath sourceDataPath)
+    {
+        this.sourceDataPath = sourceDataPath;
+    }
+
+    public void setOverrideSourceData(@Nullable Object overrideSourceData)
+    {
+        this.overrideSourceData = overrideSourceData;
+    }
+
+    public void setFromItems(@Nullable List<String> fromItems)
+    {
+        this.fromItems = fromItems != null ? fromItems : new ArrayList<String>();
+    }
+
+    public void setDelimiter(@Nullable String delimiter)
+    {
+        this.delimiter = delimiter != null ? delimiter : "";
     }
 }

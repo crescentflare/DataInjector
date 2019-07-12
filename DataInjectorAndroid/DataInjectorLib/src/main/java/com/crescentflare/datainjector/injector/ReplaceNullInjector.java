@@ -78,7 +78,8 @@ public class ReplaceNullInjector extends BaseInjector
     // --
 
     @Override
-    protected @NotNull InjectorResult onApply(@Nullable Object targetData, @Nullable Object sourceData)
+    @NotNull
+    protected InjectorResult onApply(@Nullable Object targetData, @Nullable Object sourceData)
     {
         Object checkSourceData = overrideSourceData != null ? overrideSourceData : sourceData;
         final Object useSourceData = DataInjector.get(checkSourceData, sourceDataPath != null ? sourceDataPath : new InjectorPath());

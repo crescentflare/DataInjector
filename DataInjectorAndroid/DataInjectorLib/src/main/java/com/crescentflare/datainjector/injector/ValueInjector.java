@@ -64,6 +64,7 @@ public class ValueInjector extends BaseInjector
     // General injection
     // --
 
+    @Override
     @NotNull
     protected InjectorResult onApply(@Nullable Object targetData, @Nullable Object sourceData)
     {

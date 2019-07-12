@@ -5,7 +5,7 @@ import android.os.Handler;
 import com.crescentflare.bitletsynchronizer.bitlet.BitletHandler;
 import com.crescentflare.bitletsynchronizer.bitlet.BitletObserver;
 import com.crescentflare.datainjector.injector.BaseInjectorOld;
-import com.crescentflare.datainjector.injector.JoinStringInjector;
+import com.crescentflare.datainjector.injector.JoinStringInjectorOld;
 import com.crescentflare.datainjector.injector.ReplaceNullInjectorOld;
 import com.crescentflare.datainjector.injector.SnakeToCamelCaseInjectorOld;
 import com.crescentflare.datainjectorexample.ExampleApplication;
@@ -49,7 +49,7 @@ public class MockBitlet implements BitletHandler<MockBitlet.ObjectArray>
         ));
         if (rawResourceId == R.raw.customer_list)
         {
-            injectors.add(new JoinStringInjector("fullName", Arrays.asList("~firstName", "~middleName", "~lastName"), " ", true));
+            injectors.add(new JoinStringInjectorOld("fullName", Arrays.asList("~firstName", "~middleName", "~lastName"), " ", true));
         }
     }
 
