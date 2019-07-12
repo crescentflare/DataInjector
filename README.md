@@ -7,7 +7,7 @@
 
 Data injector is a project to easily manipulate JSON data before being handled by the application. For example, to map restful API responses into view models together with view content or to fix API responses.
 
-Use the library together with [viewlet creator](https://github.com/crescentflare/ViewletCreator) and [UniLayout](https://github.com/crescentflare/UniLayout) to share logic between iOS and Android and to develop them real-time simultaneously.
+Use the library together with [JsonInflator](https://github.com/crescentflare/JsonInflator) and [UniLayout](https://github.com/crescentflare/UniLayout) to share logic between iOS and Android and to develop them real-time simultaneously.
 
 
 ### Features
