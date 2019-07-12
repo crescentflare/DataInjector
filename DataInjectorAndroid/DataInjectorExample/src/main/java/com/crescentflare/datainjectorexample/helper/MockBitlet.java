@@ -4,10 +4,12 @@ import android.os.Handler;
 
 import com.crescentflare.bitletsynchronizer.bitlet.BitletHandler;
 import com.crescentflare.bitletsynchronizer.bitlet.BitletObserver;
-import com.crescentflare.datainjector.injector.BaseInjectorOld;
-import com.crescentflare.datainjector.injector.JoinStringInjectorOld;
-import com.crescentflare.datainjector.injector.ReplaceNullInjectorOld;
-import com.crescentflare.datainjector.injector.SnakeToCamelCaseInjectorOld;
+import com.crescentflare.datainjector.injector.BaseInjector;
+import com.crescentflare.datainjector.injector.JoinStringInjector;
+import com.crescentflare.datainjector.injector.ReplaceNullInjector;
+import com.crescentflare.datainjector.injector.SnakeToCamelCaseInjector;
+import com.crescentflare.datainjector.utility.InjectorPath;
+import com.crescentflare.datainjector.utility.InjectorResult;
 import com.crescentflare.datainjectorexample.ExampleApplication;
 import com.crescentflare.datainjectorexample.R;
 import com.google.gson.Gson;
@@ -32,7 +34,7 @@ public class MockBitlet implements BitletHandler<MockBitlet.ObjectArray>
 
     private int rawResourceId;
     private String cacheKey;
-    private List<BaseInjectorOld> injectors = new ArrayList<>();
+    private List<BaseInjector> injectors = new ArrayList<>();
 
 
     // ---
@@ -44,12 +46,16 @@ public class MockBitlet implements BitletHandler<MockBitlet.ObjectArray>
         this.rawResourceId = rawResourceId;
         this.cacheKey = cacheKey;
         injectors.addAll(Arrays.asList(
-                new SnakeToCamelCaseInjectorOld(),
-                new ReplaceNullInjectorOld()
+                new SnakeToCamelCaseInjector(),
+                new ReplaceNullInjector()
         ));
         if (rawResourceId == R.raw.customer_list)
         {
-            injectors.add(new JoinStringInjectorOld("fullName", Arrays.asList("~firstName", "~middleName", "~lastName"), " ", true));
+            JoinStringInjector joinStringInjector = new JoinStringInjector();
+            joinStringInjector.setTargetItemPath(new InjectorPath("fullName"));
+            joinStringInjector.setFromItems(Arrays.asList("firstName", "middleName", "lastName"));
+            joinStringInjector.setDelimiter(" ");
+            injectors.add(joinStringInjector);
         }
     }
 
@@ -91,13 +97,18 @@ public class MockBitlet implements BitletHandler<MockBitlet.ObjectArray>
                         processedJson = new Gson().fromJson(jsonString, type);
                         if (processedJson != null)
                         {
+                            List<Object> modifiedJson = new ArrayList<>();
                             for (Object item : processedJson)
                             {
-                                for (BaseInjectorOld injector : injectors)
+                                Object modifiedItem = item;
+                                for (BaseInjector injector : injectors)
                                 {
-                                    injector.apply(item, null, null);
+                                    InjectorResult result = injector.apply(modifiedItem, modifiedItem);
+                                    modifiedItem = result.getModifiedObject();
                                 }
+                                modifiedJson.add(modifiedItem);
                             }
+                            processedJson = modifiedJson;
                         }
                     }
                 }
