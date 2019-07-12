@@ -77,7 +77,6 @@ public class ReplaceNullInjector extends BaseInjector
     // General injection
     // --
 
-
     @Override
     protected @NotNull InjectorResult onApply(@Nullable Object targetData, @Nullable Object sourceData)
     {

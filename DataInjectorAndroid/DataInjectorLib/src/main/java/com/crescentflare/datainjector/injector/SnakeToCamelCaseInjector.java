@@ -1,135 +1,208 @@
 package com.crescentflare.datainjector.injector;
 
 import com.crescentflare.datainjector.conversion.InjectorConv;
+import com.crescentflare.datainjector.utility.InjectorPath;
+import com.crescentflare.datainjector.utility.InjectorResult;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Data injector: snake case conversion
- * Converts each entry key in the data set from snake case to camel case recursively
+ * Converts each entry key in the data set from snake case to camel case (with optional recursion)
  */
-public class SnakeToCamelCaseInjector extends BaseInjectorOld
+public class SnakeToCamelCaseInjector extends BaseInjector
 {
-    // ---
+    // --
+    // Members
+    // --
+
+    private InjectorPath targetItemPath;
+    private boolean recursive = false;
+
+
+    // --
     // Initialization
-    // ---
+    // --
 
     public SnakeToCamelCaseInjector()
     {
     }
 
 
-    // ---
-    // Data helper
-    // ---
+    // --
+    // Manual injection
+    // --
 
-    public static String stringToCamelCase(String snakeCaseString)
+    @NotNull
+    public static InjectorResult changeCase(@Nullable Object targetData)
     {
-        String[] splitString = snakeCaseString.split("_");
-        if (splitString.length > 1)
+        return changeCase(targetData, false);
+    }
+
+    @NotNull
+    public static InjectorResult changeCase(@Nullable Object targetData, boolean recursive)
+    {
+        Map<String, Object> mapItem = InjectorConv.asStringObjectMap(targetData);
+        List<Object> listItem = InjectorConv.asObjectList(targetData);
+        if (mapItem != null)
         {
-            String resultString = splitString[0];
-            for (int i = 1; i < splitString.length; i++)
+            return processMap(mapItem, recursive);
+        }
+        else if (listItem != null)
+        {
+            if (!recursive)
             {
-                resultString += splitString[i].substring(0, 1).toUpperCase() + splitString[i].substring(1);
+                return InjectorResult.withError(InjectorResult.Error.TargetInvalid);
             }
-            return resultString;
+            return processList(listItem);
+        }
+        return InjectorResult.withError(InjectorResult.Error.TargetInvalid);
+    }
+
+
+    // --
+    // Data helpers
+    // --
+
+    @Nullable
+    public static String stringToCamelCase(@Nullable String snakeCaseString)
+    {
+        if (snakeCaseString != null)
+        {
+            String[] splitString = snakeCaseString.split("_");
+            if (splitString.length > 1)
+            {
+                StringBuilder builder = new StringBuilder(splitString[0]);
+                for (int i = 1; i < splitString.length; i++)
+                {
+                    builder.append(splitString[i].substring(0, 1).toUpperCase());
+                    builder.append(splitString[i].substring(1));
+                }
+                return builder.toString();
+            }
         }
         return snakeCaseString;
     }
 
 
-    // ---
-    // Manual injection
-    // ---
-
-    public static void changeToCamelCase(Object targetData)
-    {
-        Map<String, Object> targetMap = InjectorConv.asStringObjectMap(targetData);
-        List<Object> targetList = InjectorConv.asObjectList(targetData);
-        if (targetMap != null)
-        {
-            processMap(targetMap);
-        }
-        else if (targetList != null)
-        {
-            processList(targetList);
-        }
-    }
-
-
-    // ---
+    // --
     // General injection
-    // ---
+    // --
 
     @Override
-    public void onApply(Object targetData, Object subTargetData, Object referencedData, Object subReferencedData)
+    protected @NotNull InjectorResult onApply(@Nullable Object targetData, @Nullable Object sourceData)
     {
-        changeToCamelCase(targetData);
+        return DataInjector.inject(targetData, targetItemPath != null ? targetItemPath : new InjectorPath(), new DataInjector.ModifyCallback()
+        {
+            @Override
+            public @NotNull InjectorResult modify(@Nullable Object originalData)
+            {
+                return SnakeToCamelCaseInjector.changeCase(originalData, recursive);
+            }
+        });
     }
 
 
-    // ---
-    // Helper
-    // ---
+    // --
+    // Set values
+    // --
 
-    private static void processList(List<Object> array)
+    public void setTargetItemPath(@Nullable InjectorPath targetItemPath)
     {
-        for (Object arrayItem : array)
+        this.targetItemPath = targetItemPath;
+    }
+
+    public void setRecursive(boolean recursive)
+    {
+        this.recursive = recursive;
+    }
+
+
+    // --
+    // Internal data processing
+    // --
+
+    private static InjectorResult processList(List<Object> list)
+    {
+        List<Object> modifiedList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++)
         {
-            Map<String, Object> targetMap = InjectorConv.asStringObjectMap(arrayItem);
-            List<Object> targetList = InjectorConv.asObjectList(arrayItem);
-            if (targetMap != null)
+            Map<String, Object> mapItem = InjectorConv.asStringObjectMap(list.get(i));
+            List<Object> listItem = InjectorConv.asObjectList(list.get(i));
+            if (mapItem != null)
             {
-                processMap(targetMap);
+                InjectorResult result = processMap(mapItem, true);
+                if (result.hasError())
+                {
+                    return result;
+                }
+                modifiedList.add(result.getModifiedObject());
             }
-            else if (targetList != null)
+            else if (listItem != null)
             {
-                processList(targetList);
+                InjectorResult result = processList(listItem);
+                if (result.hasError())
+                {
+                    return result;
+                }
+                modifiedList.add(result.getModifiedObject());
+            }
+            else
+            {
+                modifiedList.add(list.get(i));
             }
         }
+        return InjectorResult.withModifiedObject(modifiedList);
     }
 
-    private static void processMap(Map<String, Object> map)
+    private static InjectorResult processMap(Map<String, Object> map, boolean recursive)
     {
-        List<String> keys = new ArrayList<>();
+        HashMap<String, Object> modifiedMap = new HashMap<>();
         for (String key : map.keySet())
         {
-            keys.add(key);
-        }
-        for (String key : keys)
-        {
-            String newKey = stringToCamelCase(key);
             Object value = map.get(key);
-            Map<String, Object> mapValue = InjectorConv.asStringObjectMap(value);
-            List<Object> listValue = InjectorConv.asObjectList(value);
-            boolean adjustKey = !newKey.equals(key);
-            if (adjustKey)
+            String newKey = stringToCamelCase(key);
+            if (newKey != null)
             {
-                map.remove(key);
-            }
-            if (mapValue != null)
-            {
-                processMap(mapValue);
-                if (adjustKey)
+                if (recursive)
                 {
-                    map.put(newKey, mapValue);
+                    Map<String, Object> mapItem = InjectorConv.asStringObjectMap(value);
+                    List<Object> listItem = InjectorConv.asObjectList(value);
+                    if (mapItem != null)
+                    {
+                        InjectorResult result = processMap(mapItem, recursive);
+                        if (result.hasError())
+                        {
+                            return result;
+                        }
+                        modifiedMap.put(newKey, result.getModifiedObject());
+                    }
+                    else if (listItem != null)
+                    {
+                        InjectorResult result = processList(listItem);
+                        if (result.hasError())
+                        {
+                            return result;
+                        }
+                        modifiedMap.put(newKey, result.getModifiedObject());
+                    }
+                    else
+                    {
+                        modifiedMap.put(newKey, value);
+                    }
                 }
-            }
-            else if (listValue != null)
-            {
-                processList(listValue);
-                if (adjustKey)
+                else
                 {
-                    map.put(newKey, listValue);
+                    modifiedMap.put(newKey, value);
                 }
-            }
-            else if (adjustKey)
-            {
-                map.put(newKey, value);
             }
         }
+        return InjectorResult.withModifiedObject(modifiedMap);
     }
 }
