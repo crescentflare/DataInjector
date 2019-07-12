@@ -1,0 +1,6 @@
+framework module DataInjector {
+  umbrella header "DataInjector-umbrella.h"
+
+  export *
+  module * { export * }
+}

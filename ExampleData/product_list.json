@@ -1,0 +1,50 @@
+[
+  {
+    "id": "038ca937",
+    "name": "UI Design tool",
+    "description": "Easily edit and share user interface designs for applications",
+    "price": 99.95
+  },
+  {
+    "id": "03ac59df",
+    "name": "Spreadsheet editor",
+    "description": "Calculate and visualize all kinds of business data",
+    "price": 144.95
+  },
+  {
+    "id": "057a2dcc",
+    "name": "Photo editor",
+    "description": "Advanced software to edit and improve existing photos",
+    "price": 499.95
+  },
+  {
+    "id": "0889aa12",
+    "name": "Mail client",
+    "description": "Send and receive e-mail messages with additional features to keep mail managable",
+    "price": 9.95
+  },
+  {
+    "id": "0abb2237",
+    "name": "Internet browser",
+    "description": "Browse one of the many available pages on the internet",
+    "price": 1.95
+  },
+  {
+    "id": "0264ae21",
+    "name": "Database designer",
+    "description": "Visual tools to create and edit database structures",
+    "price": 299.95
+  },
+  {
+    "id": "0fa25af2",
+    "name": "Flowchart editor",
+    "description": "Visualize application interaction flows by using this flowchart editor",
+    "price": 64.95
+  },
+  {
+    "id": "03ac59df",
+    "name": "3D modeling software",
+    "description": "Advanced software to edit models for applications containing 3D content",
+    "price": 699.95
+  }
+]

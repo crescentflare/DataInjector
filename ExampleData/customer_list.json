@@ -1,0 +1,78 @@
+[
+  {
+    "id": "a49cb239",
+    "first_name": "John",
+    "middle_name": null,
+    "last_name": "Doe",
+    "products": [
+      {
+        "id": "0264ae21",
+        "paid": true
+      },
+      {
+        "id": "0fa25af2",
+        "paid": false
+      }
+    ]
+  },
+  {
+    "id": "8c9f87ee",
+    "first_name": "Jack",
+    "middle_name": "the",
+    "last_name": "Joker",
+    "products": [
+      {
+        "id": "0abb2237",
+        "paid": false
+      }
+    ]
+  },
+  {
+    "id": "2387abcd",
+    "first_name": "Mary-Anne",
+    "middle_name": null,
+    "last_name": "Adams",
+    "products": [
+      {
+        "id": "038ca937",
+        "paid": true
+      },
+      {
+        "id": "057a2dcc",
+        "paid": false
+      },
+      {
+        "id": "03ac59df",
+        "paid": true
+      }
+    ]
+  },
+  {
+    "id": "12398365",
+    "first_name": "Bob",
+    "middle_name": null,
+    "last_name": "Knight",
+    "products": [
+      {
+        "id": "0889aa12",
+        "paid": true
+      },
+      {
+        "id": "03ac59df",
+        "paid": true
+      }
+    ]
+  },
+  {
+    "id": "adfebcdf",
+    "first_name": "Donald",
+    "middle_name": null,
+    "last_name": "Warren",
+    "products": [
+      {
+        "id": "03ac59df",
+        "paid": true
+      }
+    ]
+  }
+]
