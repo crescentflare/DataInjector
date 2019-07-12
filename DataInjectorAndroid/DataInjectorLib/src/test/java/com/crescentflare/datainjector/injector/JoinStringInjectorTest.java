@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Injector test: value injection
+ * Injector test: joined string injection
  */
 public class JoinStringInjectorTest
 {
@@ -83,6 +83,6 @@ public class JoinStringInjectorTest
         InjectorResult result = injector.apply(sampleMap, sampleMap);
 
         // Verify values
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("fullName")), "Jack the Joker");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "fullName"), "Jack the Joker");
     }
 }

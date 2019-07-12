@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * Injector test: value injection
+ * Injector test: replacing null injection
  */
 public class ReplaceNullInjectorTest
 {
@@ -53,8 +53,8 @@ public class ReplaceNullInjectorTest
         InjectorResult result = ReplaceNullInjector.filterNull(nestedMap, true);
 
         // Verify the change
-        Map<String, Object> amsterdamMap = InjectorConv.asStringObjectMap(DataInjector.get(result.getModifiedObject(), new InjectorPath("Netherlands.Amsterdam")));
-        Map<String, Object> rotterdamMap = InjectorConv.asStringObjectMap(DataInjector.get(result.getModifiedObject(), new InjectorPath("Netherlands.Rotterdam")));
+        Map<String, Object> amsterdamMap = InjectorConv.asStringObjectMap(DataInjector.get(result.getModifiedObject(), "Netherlands.Amsterdam"));
+        Map<String, Object> rotterdamMap = InjectorConv.asStringObjectMap(DataInjector.get(result.getModifiedObject(), "Netherlands.Rotterdam"));
         Assert.assertTrue(amsterdamMap.keySet().contains("centralLocation"));
         Assert.assertFalse(amsterdamMap.keySet().contains("harborLocation"));
         Assert.assertTrue(rotterdamMap.keySet().contains("centralLocation"));
@@ -115,11 +115,11 @@ public class ReplaceNullInjectorTest
         InjectorResult result = ReplaceNullInjector.replaceNull(nestedMap, defaults, true, false);
 
         // Verify the change
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("Vegetables.0.description")), "A healthy vegetable containing many nutrients");
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("Vegetables.1.description")), "No description given");
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("Meat.0.description")), "No description given");
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("Deserts.0.name")), "Untitled");
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("Deserts.0.description")), "No description given");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "Vegetables.0.description"), "A healthy vegetable containing many nutrients");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "Vegetables.1.description"), "No description given");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "Meat.0.description"), "No description given");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "Deserts.0.name"), "Untitled");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "Deserts.0.description"), "No description given");
     }
 
 
@@ -154,9 +154,9 @@ public class ReplaceNullInjectorTest
         InjectorResult result = injector.apply(sampleMap, dataSource);
 
         // Verify values
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("title")), sampleMap.get("title"));
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("text")), sampleMap.get("text"));
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("description")), dataSource.get("description"));
-        Assert.assertNull(DataInjector.get(result.getModifiedObject(), new InjectorPath("status")));
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "title"), sampleMap.get("title"));
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "text"), sampleMap.get("text"));
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "description"), dataSource.get("description"));
+        Assert.assertNull(DataInjector.get(result.getModifiedObject(), "status"));
     }
 }

@@ -169,16 +169,16 @@ public class DuplicateInjectorTest
         // Verify amount of items and sub items
         List<Object> resultSectionArray = InjectorConv.asObjectList(result.getModifiedObject());
         Assert.assertEquals(resultSectionArray.size(), dataSource.size());
-        Assert.assertEquals(InjectorConv.asObjectList(DataInjector.get(result.getModifiedObject(), new InjectorPath("0.subItems"))).size(), 6 * 2 - 1);
-        Assert.assertEquals(InjectorConv.asObjectList(DataInjector.get(result.getModifiedObject(), new InjectorPath("1.subItems"))).size(), 2 * 2 - 1);
-        Assert.assertEquals(InjectorConv.asObjectList(DataInjector.get(result.getModifiedObject(), new InjectorPath("2.subItems"))).size(), 1);
+        Assert.assertEquals(InjectorConv.asObjectList(DataInjector.get(result.getModifiedObject(), "0.subItems")).size(), 6 * 2 - 1);
+        Assert.assertEquals(InjectorConv.asObjectList(DataInjector.get(result.getModifiedObject(), "1.subItems")).size(), 2 * 2 - 1);
+        Assert.assertEquals(InjectorConv.asObjectList(DataInjector.get(result.getModifiedObject(), "2.subItems")).size(), 1);
 
         // Verify some deep nested items
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("1.title")), "Shapes");
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("0.subItems.2.text")), "Green");
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("0.subItems.3.type")), "divider");
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("1.subItems.0.text")), "Square");
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("2.subItems.0.text")), "There are no items");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "1.title"), "Shapes");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "0.subItems.2.text"), "Green");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "0.subItems.3.type"), "divider");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "1.subItems.0.text"), "Square");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "2.subItems.0.text"), "There are no items");
     }
 
 

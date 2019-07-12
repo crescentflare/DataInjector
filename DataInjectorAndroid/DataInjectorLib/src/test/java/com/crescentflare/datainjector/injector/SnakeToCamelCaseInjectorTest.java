@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * Injector test: value injection
+ * Injector test: convert to camel case injection
  */
 public class SnakeToCamelCaseInjectorTest
 {
@@ -41,11 +41,11 @@ public class SnakeToCamelCaseInjectorTest
         InjectorResult result = SnakeToCamelCaseInjector.changeCase(nestedMap, true);
 
         // Verify the change
-        Map<String, Object> secondMap = InjectorConv.asStringObjectMap(DataInjector.get(result.getModifiedObject(), new InjectorPath("secondSet")));
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("firstSet.snakeCaseKey")), "converted");
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("firstSet.nocase")), 10);
+        Map<String, Object> secondMap = InjectorConv.asStringObjectMap(DataInjector.get(result.getModifiedObject(), "secondSet"));
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "firstSet.snakeCaseKey"), "converted");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "firstSet.nocase"), 10);
         Assert.assertTrue(secondMap.keySet().contains("anotherCase"));
-        Assert.assertTrue((Boolean)DataInjector.get(result.getModifiedObject(), new InjectorPath("secondSet.alreadyCamelCase")));
+        Assert.assertTrue((Boolean)DataInjector.get(result.getModifiedObject(), "secondSet.alreadyCamelCase"));
     }
 
 
@@ -73,7 +73,7 @@ public class SnakeToCamelCaseInjectorTest
         InjectorResult result = injector.apply(sampleMap);
 
         // Verify values
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("dont_touch_this_key.snakeCaseKey")), "First");
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("dont_touch_this_key.anotherKey")), "Second");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "dont_touch_this_key.snakeCaseKey"), "First");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "dont_touch_this_key.anotherKey"), "Second");
     }
 }

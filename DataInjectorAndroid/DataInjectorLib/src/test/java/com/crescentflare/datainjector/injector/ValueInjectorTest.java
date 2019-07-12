@@ -45,7 +45,7 @@ public class ValueInjectorTest
         InjectorResult result = ValueInjector.setValue(nestedMap, new InjectorPath("Madrid.language"), "German");
 
         // Verify the change
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("Madrid.language")), "German");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "Madrid.language"), "German");
 
         // Null value tests
         Assert.assertNull(ValueInjector.setValue(nestedMap, new InjectorPath("Nice.language"), null, true).getError());
@@ -106,9 +106,9 @@ public class ValueInjectorTest
         }
 
         // Verify titles and descriptions
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("0.title")), "Apple");
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("0.text")), "A juicy apple, freshly picked");
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("1.title")), "Strawberry");
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), new InjectorPath("1.text")), "A set of tasty strawberries, available this week");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "0.title"), "Apple");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "0.text"), "A juicy apple, freshly picked");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "1.title"), "Strawberry");
+        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "1.text"), "A set of tasty strawberries, available this week");
     }
 }
