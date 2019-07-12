@@ -12,12 +12,15 @@ import com.crescentflare.bitletsynchronizer.bitlet.BitletResultObserver;
 import com.crescentflare.bitletsynchronizer.cache.BitletCacheEntry;
 import com.crescentflare.bitletsynchronizer.synchronizer.BitletSynchronizer;
 import com.crescentflare.datainjector.conversion.InjectorConv;
-import com.crescentflare.datainjector.injector.LinkDataInjectorOld;
+import com.crescentflare.datainjector.injector.LinkDataInjector;
+import com.crescentflare.datainjector.utility.InjectorResult;
+import com.crescentflare.datainjector.utility.InjectorUtil;
 import com.crescentflare.datainjectorexample.helper.Bitlets;
 import com.crescentflare.datainjectorexample.helper.MockBitlet;
 import com.crescentflare.datainjectorexample.recyclerview.DetailAdapter;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -132,7 +135,7 @@ public class DetailActivity extends AppCompatActivity
         }
 
         // Find the products of the given customer id
-        Map<String, Object> customer = LinkDataInjectorOld.findDataItem(InjectorConv.asStringObjectMapList(customerList), getIntent().getStringExtra(ARG_CUSTOMER_ID), "id");
+        Map<String, Object> customer = LinkDataInjector.findDataItem(customerList != null ? customerList : Collections.emptyList(), getIntent().getStringExtra(ARG_CUSTOMER_ID), "id");
         List<Map<String, Object>> customerProducts = null;
         if (customer != null)
         {
@@ -140,8 +143,9 @@ public class DetailActivity extends AppCompatActivity
         }
 
         // If everything is there, link the product details to the customer product list
-        LinkDataInjectorOld.linkDataArray(customerProducts, InjectorConv.asStringObjectMapList(productList), "id");
-        recyclerAdapter.setItems(customerProducts);
+        InjectorResult result = LinkDataInjector.linkData(customerProducts != null ? customerProducts : Collections.emptyList(), productList != null ? productList : Collections.emptyList(), "id");
+        List<Map<String, Object>> showCustomerProducts = InjectorConv.asStringObjectMapList(result.getModifiedObject());
+        recyclerAdapter.setItems(showCustomerProducts);
     }
 
 
