@@ -2,7 +2,7 @@ import UIKit
 import XCTest
 @testable import DataInjector
 
-class SnakeCaseToCamelCaseInjectorTests: XCTestCase {
+class SnakeToCamelCaseInjectorTests: XCTestCase {
     
     // --
     // MARK: Test manual injection
