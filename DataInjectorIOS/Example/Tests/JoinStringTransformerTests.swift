@@ -2,7 +2,7 @@ import UIKit
 import XCTest
 @testable import DataInjector
 
-class JoinStringInjectorTests: XCTestCase {
+class JoinStringTransformerTests: XCTestCase {
     
     // --
     // MARK: Test manual joining string with an array
@@ -12,8 +12,8 @@ class JoinStringInjectorTests: XCTestCase {
         // Set up array
         let sampleArray = [ "Jack", "the", "Joker" ]
         
-        // Apply manual injection to join the strings
-        let result = JoinStringInjector.joinString(fromArray: sampleArray, delimiter: " ")
+        // Apply manual transformation to join the strings
+        let result = JoinStringTransformer.joinString(fromArray: sampleArray, delimiter: " ")
         
         // Verify the result
         XCTAssertEqual(result.modifiedObject as? String, "Jack the Joker")
@@ -33,7 +33,7 @@ class JoinStringInjectorTests: XCTestCase {
         ]
         
         // Apply manual injection to join the strings
-        let result = JoinStringInjector.joinString(fromDictionary: sampleDict, fromItems: ["firstName", "middleName", "lastName"], delimiter: " ")
+        let result = JoinStringTransformer.joinString(fromDictionary: sampleDict, fromItems: ["firstName", "middleName", "lastName"], delimiter: " ")
         
         // Verify the result
         XCTAssertEqual(result.modifiedObject as? String, "John Doe")
@@ -41,7 +41,7 @@ class JoinStringInjectorTests: XCTestCase {
     
 
     // --
-    // MARK: Test generic injection
+    // MARK: Test generic transformation
     // --
     
     func testJoinStringGeneric() {
@@ -55,16 +55,15 @@ class JoinStringInjectorTests: XCTestCase {
         ]
         
         // Set up injector
-        let injector = JoinStringInjector()
-        injector.targetItemPath = InjectorPath(path: "fullName")
-        injector.fromItems = [ "firstName", "middleName", "lastName" ]
-        injector.delimiter = " "
+        let transformer = JoinStringTransformer()
+        transformer.fromItems = [ "firstName", "middleName", "lastName" ]
+        transformer.delimiter = " "
         
         // Apply
-        let result = injector.appliedInjection(targetData: sampleDict, sourceData: sampleDict)
+        let result = transformer.appliedTransformation(sourceData: sampleDict)
         
         // Verify values
-        XCTAssertEqual(DataInjector.get(from: result.modifiedObject, path: InjectorPath(path: "fullName")) as? String, "Jack the Joker")
+        XCTAssertEqual(result.modifiedObject as? String, "Jack the Joker")
     }
     
 }
