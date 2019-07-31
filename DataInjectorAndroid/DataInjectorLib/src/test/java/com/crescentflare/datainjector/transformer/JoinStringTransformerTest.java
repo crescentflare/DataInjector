@@ -1,7 +1,6 @@
-package com.crescentflare.datainjector.injector;
+package com.crescentflare.datainjector.transformer;
 
 
-import com.crescentflare.datainjector.utility.InjectorPath;
 import com.crescentflare.datainjector.utility.InjectorResult;
 import com.crescentflare.datainjector.utility.InjectorUtil;
 
@@ -15,7 +14,7 @@ import java.util.Map;
 /**
  * Injector test: joined string injection
  */
-public class JoinStringInjectorTest
+public class JoinStringTransformerTest
 {
     // --
     // Test manual joining string with a list
@@ -28,7 +27,7 @@ public class JoinStringInjectorTest
         List<String> sampleList = Arrays.asList("Jack", "the", "Joker");
 
         // Apply manual injection to join the strings
-        InjectorResult result = JoinStringInjector.joinString(sampleList, " ");
+        InjectorResult result = JoinStringTransformer.joinString(sampleList, " ");
 
         // Verify the result
         Assert.assertEquals(result.getModifiedObject(), "Jack the Joker");
@@ -50,7 +49,7 @@ public class JoinStringInjectorTest
         );
 
         // Apply manual injection to join the strings
-        InjectorResult result = JoinStringInjector.joinString(sampleMap, Arrays.asList("firstName", "middleName", "lastName"), " ");
+        InjectorResult result = JoinStringTransformer.joinString(sampleMap, Arrays.asList("firstName", "middleName", "lastName"), " ");
 
         // Verify the result
         Assert.assertEquals(result.getModifiedObject(), "John Doe");
@@ -74,15 +73,14 @@ public class JoinStringInjectorTest
         );
 
         // Set up injector
-        JoinStringInjector injector = new JoinStringInjector();
-        injector.setTargetItemPath(new InjectorPath("fullName"));
-        injector.setFromItems(Arrays.asList("firstName", "middleName", "lastName"));
-        injector.setDelimiter(" ");
+        JoinStringTransformer transformer = new JoinStringTransformer();
+        transformer.setFromItems(Arrays.asList("firstName", "middleName", "lastName"));
+        transformer.setDelimiter(" ");
 
         // Apply
-        InjectorResult result = injector.apply(sampleMap, sampleMap);
+        InjectorResult result = transformer.apply(sampleMap);
 
         // Verify values
-        Assert.assertEquals(DataInjector.get(result.getModifiedObject(), "fullName"), "Jack the Joker");
+        Assert.assertEquals(result.getModifiedObject(), "Jack the Joker");
     }
 }

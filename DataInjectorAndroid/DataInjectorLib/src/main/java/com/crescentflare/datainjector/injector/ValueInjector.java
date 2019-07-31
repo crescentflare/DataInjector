@@ -1,10 +1,14 @@
 package com.crescentflare.datainjector.injector;
 
+import com.crescentflare.datainjector.transformer.BaseTransformer;
 import com.crescentflare.datainjector.utility.InjectorPath;
 import com.crescentflare.datainjector.utility.InjectorResult;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Data injector: set a value
@@ -16,6 +20,7 @@ public class ValueInjector extends BaseInjector
     // Members
     // --
 
+    private List<? extends BaseTransformer> sourceTransformers = new ArrayList<>();
     private InjectorPath targetItemPath;
     private InjectorPath sourceDataPath;
     private Object value;
@@ -74,15 +79,31 @@ public class ValueInjector extends BaseInjector
             return ValueInjector.setValue(targetData, targetItemPath != null ? targetItemPath : new InjectorPath(), value, allowNull);
         }
 
+        // Prepare source data with optional transformation
+        Object checkSourceData = DataInjector.get(sourceData, sourceDataPath != null ? sourceDataPath : new InjectorPath());
+        for (BaseTransformer transformer : sourceTransformers)
+        {
+            InjectorResult result = transformer.apply(checkSourceData);
+            if (result.hasError())
+            {
+                return result;
+            }
+            checkSourceData = result.getModifiedObject();
+        }
+
         // Set value based on source data
-        Object sourceValue = DataInjector.get(sourceData, sourceDataPath != null ? sourceDataPath : new InjectorPath());
-        return ValueInjector.setValue(targetData, targetItemPath != null ? targetItemPath : new InjectorPath(), sourceValue, allowNull);
+        return ValueInjector.setValue(targetData, targetItemPath != null ? targetItemPath : new InjectorPath(), checkSourceData, allowNull);
     }
 
 
     // --
     // Set values
     // --
+
+    public void setSourceTransformers(@Nullable List<? extends BaseTransformer> sourceTransformers)
+    {
+        this.sourceTransformers = sourceTransformers != null ? sourceTransformers : new ArrayList<BaseTransformer>();
+    }
 
     public void setTargetItemPath(@Nullable InjectorPath targetItemPath)
     {

@@ -1,6 +1,7 @@
 package com.crescentflare.datainjector.injector;
 
 import com.crescentflare.datainjector.conversion.InjectorConv;
+import com.crescentflare.datainjector.transformer.BaseTransformer;
 import com.crescentflare.datainjector.utility.InjectorPath;
 import com.crescentflare.datainjector.utility.InjectorResult;
 
@@ -21,6 +22,7 @@ public class DuplicateInjector extends BaseInjector
     // --
 
     private List<? extends BaseInjector> subInjectors = new ArrayList<>();
+    private List<? extends BaseTransformer> sourceTransformers = new ArrayList<>();
     private InjectorPath targetItemPath;
     private int duplicateItemIndex = 0;
     private int betweenItemIndex = -1;
@@ -185,9 +187,21 @@ public class DuplicateInjector extends BaseInjector
             });
         }
 
-        // Duplicate based on source data
+        // Prepare source data with optional transformation
         Object checkSourceData = overrideSourceData != null ? overrideSourceData : sourceData;
-        final Object useSourceData = DataInjector.get(checkSourceData, sourceDataPath != null ? sourceDataPath : new InjectorPath());
+        checkSourceData = DataInjector.get(checkSourceData, sourceDataPath != null ? sourceDataPath : new InjectorPath());
+        for (BaseTransformer transformer : sourceTransformers)
+        {
+            InjectorResult result = transformer.apply(checkSourceData);
+            if (result.hasError())
+            {
+                return result;
+            }
+            checkSourceData = result.getModifiedObject();
+        }
+
+        // Duplicate based on source data
+        final Object useSourceData = checkSourceData;
         return DataInjector.inject(targetData, targetItemPath != null ? targetItemPath : new InjectorPath(), new DataInjector.ModifyCallback()
         {
             @Override
@@ -225,6 +239,11 @@ public class DuplicateInjector extends BaseInjector
     public void setSubInjectors(@Nullable List<? extends BaseInjector> subInjectors)
     {
         this.subInjectors = subInjectors != null ? subInjectors : new ArrayList<BaseInjector>();
+    }
+
+    public void setSourceTransformers(@Nullable List<? extends BaseTransformer> sourceTransformers)
+    {
+        this.sourceTransformers = sourceTransformers != null ? sourceTransformers : new ArrayList<BaseTransformer>();
     }
 
     public void setTargetItemPath(@Nullable InjectorPath targetItemPath)
