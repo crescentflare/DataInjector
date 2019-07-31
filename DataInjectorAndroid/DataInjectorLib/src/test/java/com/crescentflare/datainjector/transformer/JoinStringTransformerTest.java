@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Injector test: joined string injection
+ * Transformation test: join string transformer
  */
 public class JoinStringTransformerTest
 {
@@ -57,7 +57,7 @@ public class JoinStringTransformerTest
 
 
     // --
-    // Test generic injection
+    // Test generic transformation
     // --
 
     @Test
