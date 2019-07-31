@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0493BB3B22F176F300953594 /* BaseTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0493BB3A22F176F300953594 /* BaseTransformer.swift */; };
 		0493BB3D22F1785100953594 /* JoinStringTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0493BB3C22F1785100953594 /* JoinStringTransformer.swift */; };
+		0493BB4222F1BD1800953594 /* StringifyTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0493BB4122F1BD1800953594 /* StringifyTransformer.swift */; };
 		08F02F5E7F62ACE82DA9E1D585B5E2CE /* ValueInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93767BB7DC68F73F846C6BA81BF57550 /* ValueInjector.swift */; };
 		09251A78785F29FD5B62C5AEAFAEF921 /* DataInjector-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5939C9250F1991C169CF780D629D1C60 /* DataInjector-dummy.m */; };
 		1BE227E3B4BAF880D8D4EF1C2AD0F97F /* DataInjector-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2980E225CA83665F45C9A2254E8625AE /* DataInjector-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -69,6 +70,7 @@
 /* Begin PBXFileReference section */
 		0493BB3A22F176F300953594 /* BaseTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTransformer.swift; sourceTree = "<group>"; };
 		0493BB3C22F1785100953594 /* JoinStringTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinStringTransformer.swift; sourceTree = "<group>"; };
+		0493BB4122F1BD1800953594 /* StringifyTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringifyTransformer.swift; sourceTree = "<group>"; };
 		0D1CEF21880AFBC5C4E457028F2B1D2B /* BitletCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BitletCache.swift; path = BitletSynchronizerIOS/BitletSynchronizer/Classes/Cache/BitletCache.swift; sourceTree = "<group>"; };
 		0EB60BEA29BF0D5FD6FB28ED8CDCD355 /* Pods-DataInjector_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DataInjector_Tests-Info.plist"; sourceTree = "<group>"; };
 		1003486B18E750D87C7349F97BA84DFC /* Pods_DataInjector_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DataInjector_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,6 +171,7 @@
 			children = (
 				0493BB3A22F176F300953594 /* BaseTransformer.swift */,
 				0493BB3C22F1785100953594 /* JoinStringTransformer.swift */,
+				0493BB4122F1BD1800953594 /* StringifyTransformer.swift */,
 			);
 			name = transformer;
 			path = DataInjectorIOS/DataInjector/Classes/transformer;
@@ -598,6 +601,7 @@
 				49831D333E6D0FEC51BEF5A01FAA753A /* ReplaceNilInjector.swift in Sources */,
 				453630AE336E4F22728D58A83246EFD4 /* SnakeToCamelCaseInjector.swift in Sources */,
 				08F02F5E7F62ACE82DA9E1D585B5E2CE /* ValueInjector.swift in Sources */,
+				0493BB4222F1BD1800953594 /* StringifyTransformer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
