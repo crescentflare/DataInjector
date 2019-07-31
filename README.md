@@ -12,8 +12,10 @@ Use the library together with [JsonInflator](https://github.com/crescentflare/Js
 
 ### Features
 
-* Provides an easy way to access and modify maps on Android and dictionaries on iOS
-* Convert between data sets easily
+* Provides an easy way to access and modify nested data structures (like lists and maps on Android, or arrays and dictionaries on iOS)
+* Convert between data types easily
+* A set of injectors to help modify target data based on source data
+* A set of transformers to convert source data (also can be used together with injectors)
 
 
 ### iOS integration guide
@@ -21,7 +23,7 @@ Use the library together with [JsonInflator](https://github.com/crescentflare/Js
 The library is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile.
 
 ```ruby
-pod "DataInjector", '~> 0.1.0'
+pod "DataInjector", '~> 0.2.0'
 ```
 
 
@@ -30,7 +32,7 @@ pod "DataInjector", '~> 0.1.0'
 When using gradle, the library can easily be imported into the build.gradle file of your project. Add the following dependency:
 
 ```
-compile 'com.crescentflare.datainjector:DataInjectorLib:0.1.0'
+compile 'com.crescentflare.datainjector:DataInjectorLib:0.2.0'
 ```
 
 Make sure that jcenter is added as a repository.
