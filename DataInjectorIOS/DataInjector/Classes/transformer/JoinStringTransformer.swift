@@ -1,23 +1,21 @@
 //
-//  JoinStringInjector.swift
+//  JoinStringTransformer.swift
 //  DataInjector Pod
 //
-//  Library injector: concatenate strings
+//  Library transformer: concatenate strings
 //  Join multiple strings together with an optional delimiter
 //
 
 import Foundation
 
-/// An injector joining multiple strings together with an optional delimiter
-open class JoinStringInjector: BaseInjector {
+/// A transformer joining multiple strings together with an optional delimiter
+open class JoinStringTransformer: BaseTransformer {
     
     // --
     // MARK: Members
     // --
     
-    public var targetItemPath: InjectorPath?
     public var sourceDataPath: InjectorPath?
-    public var overrideSourceData: Any?
     public var fromItems = [String]()
     public var delimiter = ""
 
@@ -31,7 +29,7 @@ open class JoinStringInjector: BaseInjector {
 
     
     // --
-    // MARK: Manual injection
+    // MARK: Manual transformation
     // --
     
     public static func joinString(fromArray: [Any?], delimiter: String = "") -> InjectorResult {
@@ -43,7 +41,7 @@ open class JoinStringInjector: BaseInjector {
         }
         return InjectorResult(withModifiedObject: stringItems.joined(separator: delimiter))
     }
-    
+
     public static func joinString(fromDictionary: [String: Any?], fromItems: [String], delimiter: String = "") -> InjectorResult {
         var stringItems = [String]()
         for item in fromItems {
@@ -59,17 +57,14 @@ open class JoinStringInjector: BaseInjector {
     // MARK: General injection
     // --
     
-    open override func appliedInjection(targetData: Any?, sourceData: Any? = nil) -> InjectorResult {
-        var useSourceData = overrideSourceData ?? sourceData
-        useSourceData = DataInjector.get(from: useSourceData, path: sourceDataPath ?? InjectorPath(path: ""))
-        return DataInjector.inject(into: targetData, path: targetItemPath ?? InjectorPath(path: ""), modifyCallback: { originalData in
-            if let sourceDictionary = useSourceData as? [String: Any?] {
-                return JoinStringInjector.joinString(fromDictionary: sourceDictionary, fromItems: fromItems, delimiter: delimiter)
-            } else if let sourceArray = useSourceData as? [Any?] {
-                return JoinStringInjector.joinString(fromArray: sourceArray, delimiter: delimiter)
-            }
-            return InjectorResult(withError: .sourceInvalid)
-        })
+    open override func appliedTransformation(sourceData: Any?) -> InjectorResult {
+        let useSourceData = DataInjector.get(from: sourceData, path: sourceDataPath ?? InjectorPath(path: ""))
+        if let sourceDictionary = useSourceData as? [String: Any?] {
+            return JoinStringTransformer.joinString(fromDictionary: sourceDictionary, fromItems: fromItems, delimiter: delimiter)
+        } else if let sourceArray = useSourceData as? [Any?] {
+            return JoinStringTransformer.joinString(fromArray: sourceArray, delimiter: delimiter)
+        }
+        return InjectorResult(withError: .sourceInvalid)
     }
 
 }

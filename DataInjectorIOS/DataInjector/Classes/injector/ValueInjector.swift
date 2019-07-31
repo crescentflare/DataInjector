@@ -15,6 +15,7 @@ open class ValueInjector: BaseInjector {
     // MARK: Members
     // --
 
+    public var sourceTransformers = [BaseTransformer]()
     public var targetItemPath: InjectorPath?
     public var sourceDataPath: InjectorPath?
     public var value: Any?
@@ -53,9 +54,18 @@ open class ValueInjector: BaseInjector {
             return ValueInjector.setValue(inData: targetData, path: targetItemPath ?? InjectorPath(path: ""), value: value, allowNil: allowNil)
         }
         
+        // Prepare source data with optional transformation
+        var useSourceData = DataInjector.get(from: sourceData, path: sourceDataPath ?? InjectorPath(path: ""))
+        for transformer in sourceTransformers {
+            let result = transformer.appliedTransformation(sourceData: useSourceData)
+            if result.hasError() {
+                return result
+            }
+            useSourceData = result.modifiedObject
+        }
+
         // Set value based on source data
-        let sourceValue = DataInjector.get(from: sourceData, path: sourceDataPath ?? InjectorPath(path: ""))
-        return ValueInjector.setValue(inData: targetData, path: targetItemPath ?? InjectorPath(path: ""), value: sourceValue, allowNil: allowNil)
+        return ValueInjector.setValue(inData: targetData, path: targetItemPath ?? InjectorPath(path: ""), value: useSourceData, allowNil: allowNil)
     }
 
 }

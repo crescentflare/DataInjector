@@ -1,9 +1,9 @@
-package com.crescentflare.datainjector.injector;
+package com.crescentflare.datainjector.transformer;
 
 import com.crescentflare.datainjector.conversion.InjectorConv;
+import com.crescentflare.datainjector.injector.DataInjector;
 import com.crescentflare.datainjector.utility.InjectorPath;
 import com.crescentflare.datainjector.utility.InjectorResult;
-import com.crescentflare.datainjector.utility.InjectorUtil;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -13,18 +13,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Data injector: concatenate strings
+ * Data injector transformation: concatenate strings
  * Join multiple strings together with an optional delimiter
  */
-public class JoinStringInjector extends BaseInjector
+public class JoinStringTransformer extends BaseTransformer
 {
     // --
     // Members
     // --
 
-    private InjectorPath targetItemPath;
     private InjectorPath sourceDataPath;
-    private Object overrideSourceData;
     private List<String> fromItems = new ArrayList<>();
     private String delimiter = "";
 
@@ -33,13 +31,13 @@ public class JoinStringInjector extends BaseInjector
     // Initialization
     // --
 
-    public JoinStringInjector()
+    public JoinStringTransformer()
     {
     }
 
 
     // --
-    // Manual injection
+    // Manual transformation
     // --
 
     @NotNull
@@ -113,33 +111,25 @@ public class JoinStringInjector extends BaseInjector
 
 
     // --
-    // General injection
+    // General transformation
     // --
 
     @Override
     @NotNull
-    protected InjectorResult onApply(@Nullable Object targetData, @Nullable Object sourceData)
+    protected InjectorResult onApply(@Nullable Object sourceData)
     {
-        Object checkSourceData = overrideSourceData != null ? overrideSourceData : sourceData;
-        final Object useSourceData = DataInjector.get(checkSourceData, sourceDataPath != null ? sourceDataPath : new InjectorPath());
-        return DataInjector.inject(targetData, targetItemPath != null ? targetItemPath : new InjectorPath(), new DataInjector.ModifyCallback()
+        Object useSourceData = DataInjector.get(sourceData, sourceDataPath != null ? sourceDataPath : new InjectorPath());
+        Map<String, Object> sourceMap = InjectorConv.asStringObjectMap(useSourceData);
+        List<Object> sourceList = InjectorConv.asObjectList(useSourceData);
+        if (sourceMap != null)
         {
-            @Override
-            public @NotNull InjectorResult modify(@Nullable Object originalData)
-            {
-                Map<String, Object> sourceMap = InjectorConv.asStringObjectMap(useSourceData);
-                List<Object> sourceList = InjectorConv.asObjectList(useSourceData);
-                if (sourceMap != null)
-                {
-                    return joinString(sourceMap, fromItems, delimiter);
-                }
-                else if (sourceList != null)
-                {
-                    return joinString(sourceList, delimiter);
-                }
-                return InjectorResult.withError(InjectorResult.Error.SourceInvalid);
-            }
-        });
+            return joinString(sourceMap, fromItems, delimiter);
+        }
+        else if (sourceList != null)
+        {
+            return joinString(sourceList, delimiter);
+        }
+        return InjectorResult.withError(InjectorResult.Error.SourceInvalid);
     }
 
 
@@ -147,19 +137,9 @@ public class JoinStringInjector extends BaseInjector
     // Set values
     // --
 
-    public void setTargetItemPath(@Nullable InjectorPath targetItemPath)
-    {
-        this.targetItemPath = targetItemPath;
-    }
-
     public void setSourceDataPath(@Nullable InjectorPath sourceDataPath)
     {
         this.sourceDataPath = sourceDataPath;
-    }
-
-    public void setOverrideSourceData(@Nullable Object overrideSourceData)
-    {
-        this.overrideSourceData = overrideSourceData;
     }
 
     public void setFromItems(@Nullable List<String> fromItems)

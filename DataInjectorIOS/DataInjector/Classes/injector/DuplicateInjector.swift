@@ -16,6 +16,7 @@ open class DuplicateInjector: BaseInjector {
     // --
 
     public var subInjectors = [BaseInjector]()
+    public var sourceTransformers = [BaseTransformer]()
     public var targetItemPath: InjectorPath?
     public var duplicateItemIndex: Int = 0
     public var betweenItemIndex: Int = -1
@@ -110,9 +111,18 @@ open class DuplicateInjector: BaseInjector {
             })
         }
         
-        // Duplicate based on source data
+        // Prepare source data with optional transformation
         var useSourceData = overrideSourceData ?? sourceData
         useSourceData = DataInjector.get(from: useSourceData, path: sourceDataPath ?? InjectorPath(path: ""))
+        for transformer in sourceTransformers {
+            let result = transformer.appliedTransformation(sourceData: useSourceData)
+            if result.hasError() {
+                return result
+            }
+            useSourceData = result.modifiedObject
+        }
+
+        // Duplicate based on source data
         return DataInjector.inject(into: targetData, path: targetItemPath ?? InjectorPath(path: ""), modifyCallback: { originalData in
             return DuplicateInjector.duplicateItem(inArray: originalData, sourceArray: useSourceData, duplicateItemIndex: duplicateItemIndex, betweenItemIndex: betweenItemIndex, emptyItemIndex: emptyItemIndex, duplicateCallback: { duplicatedItem, sourceItem in
                 var modifiedDuplicatedItem = duplicatedItem

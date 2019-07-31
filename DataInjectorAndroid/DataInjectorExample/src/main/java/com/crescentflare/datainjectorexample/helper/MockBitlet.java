@@ -5,9 +5,10 @@ import android.os.Handler;
 import com.crescentflare.bitletsynchronizer.bitlet.BitletHandler;
 import com.crescentflare.bitletsynchronizer.bitlet.BitletObserver;
 import com.crescentflare.datainjector.injector.BaseInjector;
-import com.crescentflare.datainjector.injector.JoinStringInjector;
 import com.crescentflare.datainjector.injector.ReplaceNullInjector;
 import com.crescentflare.datainjector.injector.SnakeToCamelCaseInjector;
+import com.crescentflare.datainjector.injector.ValueInjector;
+import com.crescentflare.datainjector.transformer.JoinStringTransformer;
 import com.crescentflare.datainjector.utility.InjectorPath;
 import com.crescentflare.datainjector.utility.InjectorResult;
 import com.crescentflare.datainjectorexample.ExampleApplication;
@@ -21,6 +22,7 @@ import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,11 +53,13 @@ public class MockBitlet implements BitletHandler<MockBitlet.ObjectArray>
         ));
         if (rawResourceId == R.raw.customer_list)
         {
-            JoinStringInjector joinStringInjector = new JoinStringInjector();
-            joinStringInjector.setTargetItemPath(new InjectorPath("fullName"));
-            joinStringInjector.setFromItems(Arrays.asList("firstName", "middleName", "lastName"));
-            joinStringInjector.setDelimiter(" ");
-            injectors.add(joinStringInjector);
+            ValueInjector valueInjector = new ValueInjector();
+            JoinStringTransformer transformer = new JoinStringTransformer();
+            valueInjector.setTargetItemPath(new InjectorPath("fullName"));
+            transformer.setFromItems(Arrays.asList("firstName", "middleName", "lastName"));
+            transformer.setDelimiter(" ");
+            valueInjector.setSourceTransformers(Collections.singletonList(transformer));
+            injectors.add(valueInjector);
         }
     }
 

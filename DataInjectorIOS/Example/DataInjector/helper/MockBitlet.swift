@@ -44,10 +44,12 @@ class MockBitlet: BitletHandler {
         self.filename = filename
         self.cacheKey = cacheKey
         if cacheKey == "customers" {
-            let injector = JoinStringInjector()
+            let injector = ValueInjector()
+            let transformer = JoinStringTransformer()
             injector.targetItemPath = InjectorPath(path: "fullName")
-            injector.fromItems = [ "firstName", "middleName", "lastName" ]
-            injector.delimiter = " "
+            transformer.fromItems = [ "firstName", "middleName", "lastName" ]
+            transformer.delimiter = " "
+            injector.sourceTransformers = [transformer]
             injectors.append(injector)
         }
     }

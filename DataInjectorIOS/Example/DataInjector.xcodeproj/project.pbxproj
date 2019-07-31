@@ -18,8 +18,9 @@
 		0471FCEF1E2017DF0002D837 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 0471FCEE1E2017DF0002D837 /* data */; };
 		04840A541DEE1292005F6855 /* InjectorConvTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04840A441DEE10D9005F6855 /* InjectorConvTests.swift */; };
 		04840DDA22BE724700A52B68 /* DataInjectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04840DD922BE724700A52B68 /* DataInjectorTests.swift */; };
+		0493BB4022F17CEB00953594 /* JoinStringTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0493BB3E22F17CCC00953594 /* JoinStringTransformerTests.swift */; };
+		0493BB4522F1C64700953594 /* StringifyTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0493BB4322F1C64300953594 /* StringifyTransformerTests.swift */; };
 		04C7AEFD22D3355200F2AA2D /* SnakeToCamelCaseInjectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7AEFC22D3355200F2AA2D /* SnakeToCamelCaseInjectorTests.swift */; };
-		04C7AF0122D3488800F2AA2D /* JoinStringInjectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7AF0022D3488800F2AA2D /* JoinStringInjectorTests.swift */; };
 		04C7AF0322D3747F00F2AA2D /* LinkDataInjectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7AF0222D3747F00F2AA2D /* LinkDataInjectorTests.swift */; };
 		04CF11CB1E4A609000B1304D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CF11CA1E4A609000B1304D /* MainViewController.swift */; };
 		04CF11CE1E4A66C300B1304D /* SimpleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04CF11CD1E4A66C300B1304D /* SimpleCell.swift */; };
@@ -56,8 +57,9 @@
 		04840A441DEE10D9005F6855 /* InjectorConvTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectorConvTests.swift; sourceTree = "<group>"; };
 		04840A4A1DEE1287005F6855 /* DataInjector_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DataInjector_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04840DD922BE724700A52B68 /* DataInjectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataInjectorTests.swift; sourceTree = "<group>"; };
+		0493BB3E22F17CCC00953594 /* JoinStringTransformerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinStringTransformerTests.swift; sourceTree = "<group>"; };
+		0493BB4322F1C64300953594 /* StringifyTransformerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringifyTransformerTests.swift; sourceTree = "<group>"; };
 		04C7AEFC22D3355200F2AA2D /* SnakeToCamelCaseInjectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnakeToCamelCaseInjectorTests.swift; sourceTree = "<group>"; };
-		04C7AF0022D3488800F2AA2D /* JoinStringInjectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinStringInjectorTests.swift; sourceTree = "<group>"; };
 		04C7AF0222D3747F00F2AA2D /* LinkDataInjectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkDataInjectorTests.swift; sourceTree = "<group>"; };
 		04CF11CA1E4A609000B1304D /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		04CF11CD1E4A66C300B1304D /* SimpleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleCell.swift; sourceTree = "<group>"; };
@@ -184,10 +186,11 @@
 				040CB00E22CE120D00446096 /* DuplicateInjectorTests.swift */,
 				04840A441DEE10D9005F6855 /* InjectorConvTests.swift */,
 				045EB83D22BFB57800DA667F /* InjectorPathTests.swift */,
-				04C7AF0022D3488800F2AA2D /* JoinStringInjectorTests.swift */,
+				0493BB3E22F17CCC00953594 /* JoinStringTransformerTests.swift */,
 				04C7AF0222D3747F00F2AA2D /* LinkDataInjectorTests.swift */,
 				045AAC1222D11166000911F1 /* ReplaceNilInjectorTests.swift */,
 				04C7AEFC22D3355200F2AA2D /* SnakeToCamelCaseInjectorTests.swift */,
+				0493BB4322F1C64300953594 /* StringifyTransformerTests.swift */,
 				0438BE5122CF3B7600B0C7F5 /* ValueInjectorTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -389,14 +392,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04C7AF0122D3488800F2AA2D /* JoinStringInjectorTests.swift in Sources */,
 				045AAC1422D11193000911F1 /* ReplaceNilInjectorTests.swift in Sources */,
+				0493BB4522F1C64700953594 /* StringifyTransformerTests.swift in Sources */,
 				045EB83E22BFB57800DA667F /* InjectorPathTests.swift in Sources */,
 				040CB00F22CE120D00446096 /* DuplicateInjectorTests.swift in Sources */,
 				04C7AEFD22D3355200F2AA2D /* SnakeToCamelCaseInjectorTests.swift in Sources */,
 				04840DDA22BE724700A52B68 /* DataInjectorTests.swift in Sources */,
 				04840A541DEE1292005F6855 /* InjectorConvTests.swift in Sources */,
 				0438BE5222CF3B7700B0C7F5 /* ValueInjectorTests.swift in Sources */,
+				0493BB4022F17CEB00953594 /* JoinStringTransformerTests.swift in Sources */,
 				04C7AF0322D3747F00F2AA2D /* LinkDataInjectorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

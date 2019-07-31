@@ -15,6 +15,7 @@ open class ReplaceNilInjector: BaseInjector {
     // MARK: Members
     // --
     
+    public var sourceTransformers = [BaseTransformer]()
     public var targetItemPath: InjectorPath?
     public var sourceDataPath: InjectorPath?
     public var overrideSourceData: Any?
@@ -48,8 +49,18 @@ open class ReplaceNilInjector: BaseInjector {
     // --
     
     open override func appliedInjection(targetData: Any?, sourceData: Any? = nil) -> InjectorResult {
+        // Prepare source data with optional transformation
         var useSourceData = overrideSourceData ?? sourceData
         useSourceData = DataInjector.get(from: useSourceData, path: sourceDataPath ?? InjectorPath(path: ""))
+        for transformer in sourceTransformers {
+            let result = transformer.appliedTransformation(sourceData: useSourceData)
+            if result.hasError() {
+                return result
+            }
+            useSourceData = result.modifiedObject
+        }
+        
+        // Apply injection
         return DataInjector.inject(into: targetData, path: targetItemPath ?? InjectorPath(path: ""), modifyCallback: { originalData in
             return ReplaceNilInjector.replaceNil(onData: originalData, replaceData: useSourceData, recursive: recursive, ignoreNotExisting: ignoreNotExisting)
         })
