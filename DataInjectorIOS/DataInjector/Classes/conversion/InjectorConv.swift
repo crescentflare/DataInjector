@@ -130,8 +130,14 @@ public class InjectorConv {
         if value is String {
             return value as? String
         } else if let doubleValue = value as? Double {
+            if doubleValue.truncatingRemainder(dividingBy: 1) == 0 {
+                return String(format: "%.0f", doubleValue)
+            }
             return String(doubleValue)
         } else if let floatValue = value as? Float {
+            if floatValue.truncatingRemainder(dividingBy: 1) == 0 {
+                return String(format: "%.0f", floatValue)
+            }
             return String(floatValue)
         } else if let intValue = value as? Int {
             return String(intValue)

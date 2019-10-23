@@ -96,6 +96,7 @@ class InjectorConvTests: XCTestCase {
     func testAsString() {
         XCTAssertEqual("test", InjectorConv.asString(value: "test"))
         XCTAssertEqual("12", InjectorConv.asString(value: 12))
+        XCTAssertEqual("5", InjectorConv.asString(value: 5.0))
         XCTAssertEqual("14.42", InjectorConv.asString(value: 14.42))
         XCTAssertEqual("true", InjectorConv.asString(value: true))
     }
