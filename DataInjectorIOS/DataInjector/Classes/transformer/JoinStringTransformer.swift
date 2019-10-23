@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// A transformer joining multiple strings together with an optional delimiter
+/// A transformer joining multiple strings together with an optional delimiter, prefix or suffix
 open class JoinStringTransformer: BaseTransformer {
     
     // --

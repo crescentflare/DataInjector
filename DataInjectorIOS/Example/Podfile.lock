@@ -7,7 +7,7 @@ DEPENDENCIES:
   - DataInjector (from `../../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - BitletSynchronizer
 
 EXTERNAL SOURCES:
@@ -20,4 +20,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: e595e8aaa6faed65d153498f6d56800a42546ca6
 
-COCOAPODS: 1.7.2
+COCOAPODS: 1.8.4

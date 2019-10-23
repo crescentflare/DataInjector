@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		040CB00F22CE120D00446096 /* DuplicateInjectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040CB00E22CE120D00446096 /* DuplicateInjectorTests.swift */; };
 		041E559F1DEC6641004C4E32 /* DataInjector.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 041E559E1DEC6641004C4E32 /* DataInjector.podspec */; };
+		04218BA32360561D00521D3B /* UrlEncodeTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04218BA22360561D00521D3B /* UrlEncodeTransformerTests.swift */; };
+		04218BA52360582100521D3B /* UrlDecodeTransformerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04218BA42360582100521D3B /* UrlDecodeTransformerTests.swift */; };
 		0438BE5222CF3B7700B0C7F5 /* ValueInjectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0438BE5122CF3B7600B0C7F5 /* ValueInjectorTests.swift */; };
 		045AAC1422D11193000911F1 /* ReplaceNilInjectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045AAC1222D11166000911F1 /* ReplaceNilInjectorTests.swift */; };
 		045EB83E22BFB57800DA667F /* InjectorPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045EB83D22BFB57800DA667F /* InjectorPathTests.swift */; };
@@ -47,6 +49,8 @@
 /* Begin PBXFileReference section */
 		040CB00E22CE120D00446096 /* DuplicateInjectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DuplicateInjectorTests.swift; sourceTree = "<group>"; };
 		041E559E1DEC6641004C4E32 /* DataInjector.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DataInjector.podspec; path = ../../DataInjector.podspec; sourceTree = "<group>"; };
+		04218BA22360561D00521D3B /* UrlEncodeTransformerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlEncodeTransformerTests.swift; sourceTree = "<group>"; };
+		04218BA42360582100521D3B /* UrlDecodeTransformerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlDecodeTransformerTests.swift; sourceTree = "<group>"; };
 		0438BE5122CF3B7600B0C7F5 /* ValueInjectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueInjectorTests.swift; sourceTree = "<group>"; };
 		045AAC1222D11166000911F1 /* ReplaceNilInjectorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplaceNilInjectorTests.swift; sourceTree = "<group>"; };
 		045EB83D22BFB57800DA667F /* InjectorPathTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InjectorPathTests.swift; sourceTree = "<group>"; };
@@ -191,6 +195,8 @@
 				045AAC1222D11166000911F1 /* ReplaceNilInjectorTests.swift */,
 				04C7AEFC22D3355200F2AA2D /* SnakeToCamelCaseInjectorTests.swift */,
 				0493BB4322F1C64300953594 /* StringifyTransformerTests.swift */,
+				04218BA42360582100521D3B /* UrlDecodeTransformerTests.swift */,
+				04218BA22360561D00521D3B /* UrlEncodeTransformerTests.swift */,
 				0438BE5122CF3B7600B0C7F5 /* ValueInjectorTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -395,6 +401,7 @@
 				045AAC1422D11193000911F1 /* ReplaceNilInjectorTests.swift in Sources */,
 				0493BB4522F1C64700953594 /* StringifyTransformerTests.swift in Sources */,
 				045EB83E22BFB57800DA667F /* InjectorPathTests.swift in Sources */,
+				04218BA52360582100521D3B /* UrlDecodeTransformerTests.swift in Sources */,
 				040CB00F22CE120D00446096 /* DuplicateInjectorTests.swift in Sources */,
 				04C7AEFD22D3355200F2AA2D /* SnakeToCamelCaseInjectorTests.swift in Sources */,
 				04840DDA22BE724700A52B68 /* DataInjectorTests.swift in Sources */,
@@ -402,6 +409,7 @@
 				0438BE5222CF3B7700B0C7F5 /* ValueInjectorTests.swift in Sources */,
 				0493BB4022F17CEB00953594 /* JoinStringTransformerTests.swift in Sources */,
 				04C7AF0322D3747F00F2AA2D /* LinkDataInjectorTests.swift in Sources */,
+				04218BA32360561D00521D3B /* UrlEncodeTransformerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
