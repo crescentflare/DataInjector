@@ -33,10 +33,10 @@ class JoinStringTransformerTests: XCTestCase {
         ]
         
         // Apply manual injection to join the strings
-        let result = JoinStringTransformer.joinString(fromDictionary: sampleDict, fromItems: ["firstName", "middleName", "lastName"], delimiter: " ")
+        let result = JoinStringTransformer.joinString(fromDictionary: sampleDict, fromItems: ["firstName", "middleName", "lastName"], delimiter: " ", prefix: "Sir ", suffix: ", the unknown")
         
         // Verify the result
-        XCTAssertEqual(result.modifiedObject as? String, "John Doe")
+        XCTAssertEqual(result.modifiedObject as? String, "Sir John Doe, the unknown")
     }
     
 
