@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// An injector duplicating an item depending on the given data source(s)
+/// An injector utility for changing nested data structures
 public class DataInjector {
     
     // ---

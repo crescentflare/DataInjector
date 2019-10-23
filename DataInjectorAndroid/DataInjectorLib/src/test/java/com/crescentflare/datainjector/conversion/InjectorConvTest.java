@@ -188,6 +188,7 @@ public class InjectorConvTest
     {
         Assert.assertEquals("test", InjectorConv.asString("test"));
         Assert.assertEquals("12", InjectorConv.asString(12));
+        Assert.assertEquals("5", InjectorConv.asString(5.0));
         Assert.assertEquals("14.42", InjectorConv.asString(14.42));
         Assert.assertEquals("true", InjectorConv.asString(true));
     }

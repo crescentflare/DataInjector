@@ -245,7 +245,25 @@ public class InjectorConv
         {
             return (String)value;
         }
-        else if (value instanceof Double || value instanceof Float || value instanceof Integer || value instanceof Boolean)
+        else if (value instanceof Double)
+        {
+            Double checkDoubleValue = (Double)value;
+            if (checkDoubleValue % 1 == 0)
+            {
+                return Integer.toString(checkDoubleValue.intValue());
+            }
+            return value.toString();
+        }
+        else if (value instanceof Float)
+        {
+            Float checkFloatValue = (Float)value;
+            if (checkFloatValue % 1 == 0)
+            {
+                return Integer.toString(checkFloatValue.intValue());
+            }
+            return value.toString();
+        }
+        else if (value instanceof Integer || value instanceof Boolean)
         {
             return value.toString();
         }

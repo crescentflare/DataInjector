@@ -3,12 +3,12 @@
 //  DataInjector Pod
 //
 //  Library transformer: concatenate strings
-//  Join multiple strings together with an optional delimiter
+//  Join multiple strings together with an optional delimiter, prefix or suffix
 //
 
 import Foundation
 
-/// A transformer joining multiple strings together with an optional delimiter
+/// A transformer joining multiple strings together with an optional delimiter, prefix or suffix
 open class JoinStringTransformer: BaseTransformer {
     
     // --
@@ -18,6 +18,8 @@ open class JoinStringTransformer: BaseTransformer {
     public var sourceDataPath: InjectorPath?
     public var fromItems = [String]()
     public var delimiter = ""
+    public var prefix = ""
+    public var suffix = ""
 
     
     // --
@@ -32,24 +34,24 @@ open class JoinStringTransformer: BaseTransformer {
     // MARK: Manual transformation
     // --
     
-    public static func joinString(fromArray: [Any?], delimiter: String = "") -> InjectorResult {
+    public static func joinString(fromArray: [Any?], delimiter: String = "", prefix: String = "", suffix: String = "") -> InjectorResult {
         var stringItems = [String]()
         for value in fromArray {
             if let stringItem = value as? String {
                 stringItems.append(stringItem)
             }
         }
-        return InjectorResult(withModifiedObject: stringItems.joined(separator: delimiter))
+        return InjectorResult(withModifiedObject: prefix + stringItems.joined(separator: delimiter) + suffix)
     }
 
-    public static func joinString(fromDictionary: [String: Any?], fromItems: [String], delimiter: String = "") -> InjectorResult {
+    public static func joinString(fromDictionary: [String: Any?], fromItems: [String], delimiter: String = "", prefix: String = "", suffix: String = "") -> InjectorResult {
         var stringItems = [String]()
         for item in fromItems {
             if let stringItem = fromDictionary[item] as? String {
                 stringItems.append(stringItem)
             }
         }
-        return InjectorResult(withModifiedObject: stringItems.joined(separator: delimiter))
+        return InjectorResult(withModifiedObject: prefix + stringItems.joined(separator: delimiter) + suffix)
     }
     
     

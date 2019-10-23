@@ -7,39 +7,42 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A9A211D5E3668E379C76F73B999E25E /* SnakeToCamelCaseInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB44B72CF7E447B0ED2E1687C9487EE /* SnakeToCamelCaseInjector.swift */; };
+		0A9EE9D41367D0105D2A0AAB1CB696D4 /* InjectorResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E9C3384BE96746EA3030F2C0BB7DDB /* InjectorResult.swift */; };
+		12B3C70473C74D9ECD1FE60F1A860422 /* DuplicateInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFEE7B3231349C4CD36F74800F7EC32 /* DuplicateInjector.swift */; };
 		1FC50F36A2D86E75E5D0B9A4428E36E5 /* BitletCacheEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4E464688D86C3B5B493B8527648A8A /* BitletCacheEntry.swift */; };
+		274B793628E96D75ECD91133330AA2E1 /* UrlDecodeTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56901672210112F32493907701E5E300 /* UrlDecodeTransformer.swift */; };
 		3FCC6E63FA725068EB1C2CC334A26F69 /* BitletSynchronizer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FEA883AA7A177FCA7E87325E9C44D4D7 /* BitletSynchronizer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		42355DA05E11732EF393FDB644E17076 /* BitletOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6356D0D2EC7D994D8C81F7EF62BB6E /* BitletOperation.swift */; };
 		471D1D06CFAA09BFD8631016BBFB4E1C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
-		4A2D1E85E8C6EB199DBBE863CCE68F62 /* DataInjector-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E71D116379A1318C24A678788BBBC98 /* DataInjector-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C56E6C2F41985A1308E6D92AF58D6A9 /* DataInjector-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AE2158DC66AB5A69494AADCA757385A /* DataInjector-dummy.m */; };
 		4C5B06935B6F10D44D4265DDAB00D256 /* Pods-DataInjector_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F7CF1F53D2AD002DBE766EEE0E89CF5B /* Pods-DataInjector_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		50FE777F7A932F75393E7FF0531660FD /* DuplicateInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86F85D4DEEE3132FD48AE807CF387CC /* DuplicateInjector.swift */; };
-		615BF22DC49F94E868B881BABDB61343 /* JoinStringTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C403A1D38A75F8488A33D2958B9F2222 /* JoinStringTransformer.swift */; };
-		632C883EB7338F61BFEA77636C737A5E /* BaseInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33927277030C2625D77BAC586A27BA0 /* BaseInjector.swift */; };
+		60DACE49854BFF1C0713682265F6255D /* BaseInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E16F2E899296BC080E629E8153BA47C /* BaseInjector.swift */; };
+		63A9FFE64C3421BE139EFA4C3C87F6AE /* ValueInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162FA1E1FF37EC061BB5E4D9F44F58DB /* ValueInjector.swift */; };
 		656868E930ADF739C1EAD23AA670E80A /* BitletExpireTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B695EA83710D3B972303B7469A3845D /* BitletExpireTime.swift */; };
+		6E8C2A1BE2B467D44E56A8CEC34514EF /* InjectTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC03B5FCE9A8C01397404907F445C6A4 /* InjectTransformer.swift */; };
+		6F36C21B4CF4E6F06BDE42F88087F8D6 /* ReplaceNilInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642A275AE4C0201D27F525918F39AF97 /* ReplaceNilInjector.swift */; };
 		753BF8DF99673DFC11AF34C3594743C5 /* BitletObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA5E3DF647F51764819575DEF87EEB4 /* BitletObserver.swift */; };
+		773CF362692D6C251FB3EB8B791674D6 /* UrlEncodeTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2859B7C7BA0163153D81E1F56C4941 /* UrlEncodeTransformer.swift */; };
+		7D1050FEA7080CF3736A162B47521E0F /* DataInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94867C6D538D01F7F1BEB0CF6481A22F /* DataInjector.swift */; };
 		8AFD25FAD3FF7ECFE61CCFEB37B948D3 /* Pods-DataInjector_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 212A4FEF27F5C693EB652A487C69F0BD /* Pods-DataInjector_Tests-dummy.m */; };
+		905286DB678B667A6D4D99C6D60954BD /* LinkDataInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9066D4670E245C16CCE6A8DFE864BE4A /* LinkDataInjector.swift */; };
 		97DD8E546A5E7D0C13A598B750C1118E /* BitletSynchronizer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 105309CAB723AD06B52D53D9ABD66B56 /* BitletSynchronizer-dummy.m */; };
-		9A83FBA7AEFCA0FBF2E447FB04F67E48 /* BaseTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99A32FEB063C3B3D456CCCA9E704384 /* BaseTransformer.swift */; };
-		9A90BE80B59A99A49552A0AF8D23E61E /* StringifyTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEE42C1E231865776F647AAB75DE1D1 /* StringifyTransformer.swift */; };
+		9B9E43DEC15920F254EFC85A134B60B8 /* InjectorConv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6E1CD4EE153DBFF172D9F965B35274 /* InjectorConv.swift */; };
+		A0E632F6D29CD8B3AC623AA43407C549 /* StringifyTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257B9DCD3D1BD944611909C477BC6ABC /* StringifyTransformer.swift */; };
 		A0F7257B3D636B4E859C284F79E2A007 /* BitletOperationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDEA56FCAAB61C4C9A7CBAC65BDA6086 /* BitletOperationItem.swift */; };
 		A15A5E0FC0007181F0F285AD801EA076 /* BitletCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1CEF21880AFBC5C4E457028F2B1D2B /* BitletCache.swift */; };
 		A261ED85D5B06865EBDC6C4C76796599 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
-		A3416642066230A22203F72083EA1CC0 /* ValueInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D653976E27441696B25BF568E93AE6E0 /* ValueInjector.swift */; };
-		AB3DEBBB05BD2E34DA61C6F3C5B125D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		B1480598C8545C481F67BAF84C4E9398 /* Pods-DataInjector_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = AD8FEDC9F6A88CBDFE0672A53752EB6B /* Pods-DataInjector_Example-dummy.m */; };
+		B7965914A984373E5980687B87AD327C /* DataInjector-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F653D0DE80741932534FBAC8A616796 /* DataInjector-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA7F123C7CD921CF492C5EE5C2CFE247 /* BitletResultObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76921609A506849947CD06EA4D436AE9 /* BitletResultObserver.swift */; };
-		BA9C07F5C2CC0924DD08A78720035A3E /* DataInjector-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E9C3C46645E2A8B5BF828C4EFA06104 /* DataInjector-dummy.m */; };
-		BE910DCE7B2D584E926260DA0928643B /* InjectorConv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB5732C4DE62246653FC48D503CCC59 /* InjectorConv.swift */; };
+		BD9998164189D413E7A1EDB117D8BBBC /* InjectorPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4525A87A7D155C7CBA1B1DAA3B1A09E6 /* InjectorPath.swift */; };
 		C10257205261484B211FD2E817A00BE3 /* BitletSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9446DA5E3BC3FE5B9215A075A90418D /* BitletSynchronizer.swift */; };
-		C37A115E2D026776EB4FE36CA3F4B250 /* InjectorResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E459EB9F7E8A8E4B0928F82994BE278 /* InjectorResult.swift */; };
 		C44D4F37D8B36BD5D0E2909FA4DFCC18 /* BitletHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AA8DE1F1A8C4791F8CCA736966A4BF /* BitletHandler.swift */; };
-		CC44BA21C212C350E0C86A04FA89FB59 /* InjectorPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153B228FF35B1B29147A01027157EAAC /* InjectorPath.swift */; };
-		D3F9F57D00F7E49E493A64066910C38E /* DataInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496304144910ADFB5518A91FC9FE49C3 /* DataInjector.swift */; };
-		DB130E065C46A74B2C5D45A6C1363B60 /* LinkDataInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C89985F4786240C412530E9354A0BE /* LinkDataInjector.swift */; };
+		D21262A0E3FA1566954BCC1B978AB567 /* BaseTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79629D1F7442648974808726CF1DCFB /* BaseTransformer.swift */; };
+		D714071873E955F4D986FE72FFE6306D /* JoinStringTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1E465DBBD6D1098FF6BB8C4BA5FE49 /* JoinStringTransformer.swift */; };
+		DBDC08B95F768F25B9DB7B77DD2BB448 /* SnakeToCamelCaseInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBFEF75FB8705A0B0061F4DEFC1E6306 /* SnakeToCamelCaseInjector.swift */; };
 		E7DDF6568C48CD2DB3C98C2448A7A21C /* Pods-DataInjector_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D297993E715486BD000FEB01781231F /* Pods-DataInjector_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EAF10F9A5068BA05EF20FFAB2A0D673F /* ReplaceNilInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC202DB0FC51F24984748CCFD9C68DB /* ReplaceNilInjector.swift */; };
+		EB0C8AE7D2F78F0DB14AAC016D84EDE9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		EC00405F8FB51FD6CF8FD9D393A8E4D7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -68,62 +71,65 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		08CC0588088CAC717D1FD1952D247B46 /* DataInjector.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = DataInjector.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		0AE2158DC66AB5A69494AADCA757385A /* DataInjector-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "DataInjector-dummy.m"; sourceTree = "<group>"; };
 		0D1CEF21880AFBC5C4E457028F2B1D2B /* BitletCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BitletCache.swift; path = BitletSynchronizerIOS/BitletSynchronizer/Classes/Cache/BitletCache.swift; sourceTree = "<group>"; };
 		0EB60BEA29BF0D5FD6FB28ED8CDCD355 /* Pods-DataInjector_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DataInjector_Tests-Info.plist"; sourceTree = "<group>"; };
 		1003486B18E750D87C7349F97BA84DFC /* Pods_DataInjector_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_DataInjector_Example.framework; path = "Pods-DataInjector_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		105309CAB723AD06B52D53D9ABD66B56 /* BitletSynchronizer-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "BitletSynchronizer-dummy.m"; sourceTree = "<group>"; };
-		153B228FF35B1B29147A01027157EAAC /* InjectorPath.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InjectorPath.swift; sourceTree = "<group>"; };
-		1A22EFE1A4804AF6FCCFF64EBFD438E1 /* DataInjector.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = DataInjector.modulemap; sourceTree = "<group>"; };
+		162FA1E1FF37EC061BB5E4D9F44F58DB /* ValueInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ValueInjector.swift; sourceTree = "<group>"; };
+		1C08DA5361CA8267824ECB67FA31BB27 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		1EFEE7B3231349C4CD36F74800F7EC32 /* DuplicateInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DuplicateInjector.swift; sourceTree = "<group>"; };
 		212A4FEF27F5C693EB652A487C69F0BD /* Pods-DataInjector_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DataInjector_Tests-dummy.m"; sourceTree = "<group>"; };
+		257B9DCD3D1BD944611909C477BC6ABC /* StringifyTransformer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StringifyTransformer.swift; sourceTree = "<group>"; };
 		2B695EA83710D3B972303B7469A3845D /* BitletExpireTime.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BitletExpireTime.swift; path = BitletSynchronizerIOS/BitletSynchronizer/Classes/Bitlet/BitletExpireTime.swift; sourceTree = "<group>"; };
+		2F653D0DE80741932534FBAC8A616796 /* DataInjector-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DataInjector-umbrella.h"; sourceTree = "<group>"; };
 		2F938EA690EF64DBA6D2556C75CA2A3E /* BitletSynchronizer.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = BitletSynchronizer.xcconfig; sourceTree = "<group>"; };
 		3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		3394C808F0FCEE70E8AB4DD8E15DF1F2 /* Pods-DataInjector_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DataInjector_Example-Info.plist"; sourceTree = "<group>"; };
-		364AA6E0D9C1ED50D9AC649604A60857 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
-		3AEE42C1E231865776F647AAB75DE1D1 /* StringifyTransformer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StringifyTransformer.swift; sourceTree = "<group>"; };
-		496304144910ADFB5518A91FC9FE49C3 /* DataInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DataInjector.swift; sourceTree = "<group>"; };
+		4525A87A7D155C7CBA1B1DAA3B1A09E6 /* InjectorPath.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InjectorPath.swift; sourceTree = "<group>"; };
 		4C0569C5A3AC16C030D821ADB7997BE9 /* Pods-DataInjector_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-DataInjector_Tests.modulemap"; sourceTree = "<group>"; };
-		4E459EB9F7E8A8E4B0928F82994BE278 /* InjectorResult.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InjectorResult.swift; sourceTree = "<group>"; };
-		4E71D116379A1318C24A678788BBBC98 /* DataInjector-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DataInjector-umbrella.h"; sourceTree = "<group>"; };
+		5365C2B880EDB7B6C6BC03F36F8F6B6F /* DataInjector.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DataInjector.xcconfig; sourceTree = "<group>"; };
+		56901672210112F32493907701E5E300 /* UrlDecodeTransformer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UrlDecodeTransformer.swift; sourceTree = "<group>"; };
 		5856391BD1941437BADFBF8024EED7BD /* BitletSynchronizer-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "BitletSynchronizer-prefix.pch"; sourceTree = "<group>"; };
-		5E9C3C46645E2A8B5BF828C4EFA06104 /* DataInjector-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "DataInjector-dummy.m"; sourceTree = "<group>"; };
+		5F6E1CD4EE153DBFF172D9F965B35274 /* InjectorConv.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InjectorConv.swift; sourceTree = "<group>"; };
+		642A275AE4C0201D27F525918F39AF97 /* ReplaceNilInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReplaceNilInjector.swift; sourceTree = "<group>"; };
 		647A10ECA94B4194ECA2FBB2588F4FF3 /* Pods-DataInjector_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-DataInjector_Example.modulemap"; sourceTree = "<group>"; };
 		6549BC97D6052DD91510DBB2AA4A523C /* BitletSynchronizer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = BitletSynchronizer.framework; path = BitletSynchronizer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		65E8C9091224270893E23AE6504555BA /* DataInjector.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DataInjector.xcconfig; sourceTree = "<group>"; };
 		6A4E464688D86C3B5B493B8527648A8A /* BitletCacheEntry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BitletCacheEntry.swift; path = BitletSynchronizerIOS/BitletSynchronizer/Classes/Cache/BitletCacheEntry.swift; sourceTree = "<group>"; };
-		6B6451ECC011A1B3C921B9E97DF18FFC /* DataInjector-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DataInjector-prefix.pch"; sourceTree = "<group>"; };
 		6D050667B69CAE04301678115B781FB8 /* Pods-DataInjector_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DataInjector_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		6E16F2E899296BC080E629E8153BA47C /* BaseInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BaseInjector.swift; sourceTree = "<group>"; };
+		6E6A84E9A2EA4CD9BA6AD93C096DA116 /* DataInjector.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = DataInjector.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		6FA5E3DF647F51764819575DEF87EEB4 /* BitletObserver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BitletObserver.swift; path = BitletSynchronizerIOS/BitletSynchronizer/Classes/Bitlet/BitletObserver.swift; sourceTree = "<group>"; };
+		70691D24978A25ED2BEF48613EE28592 /* DataInjector.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = DataInjector.modulemap; sourceTree = "<group>"; };
 		766B1D74CE744860D2F113B00C43F7D0 /* Pods-DataInjector_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DataInjector_Example.release.xcconfig"; sourceTree = "<group>"; };
 		76921609A506849947CD06EA4D436AE9 /* BitletResultObserver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BitletResultObserver.swift; path = BitletSynchronizerIOS/BitletSynchronizer/Classes/Bitlet/BitletResultObserver.swift; sourceTree = "<group>"; };
+		7727DDF354E0C472DFDBF47A64C6868A /* DataInjector-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DataInjector-prefix.pch"; sourceTree = "<group>"; };
 		776A2A7AF5D2CD7E24B140ED169A9B90 /* DataInjector.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DataInjector.framework; path = DataInjector.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C77855951FC0AE7B19048151B334639 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		86A3D6A93271C17645BFA600DF9B8FBE /* Pods-DataInjector_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DataInjector_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		8A4E8CE9265C56322524BE215E11EABD /* Pods-DataInjector_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DataInjector_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
+		8B2859B7C7BA0163153D81E1F56C4941 /* UrlEncodeTransformer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UrlEncodeTransformer.swift; sourceTree = "<group>"; };
 		8C6356D0D2EC7D994D8C81F7EF62BB6E /* BitletOperation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BitletOperation.swift; path = BitletSynchronizerIOS/BitletSynchronizer/Classes/Operation/BitletOperation.swift; sourceTree = "<group>"; };
-		8EB5732C4DE62246653FC48D503CCC59 /* InjectorConv.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InjectorConv.swift; sourceTree = "<group>"; };
+		9066D4670E245C16CCE6A8DFE864BE4A /* LinkDataInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LinkDataInjector.swift; sourceTree = "<group>"; };
+		94867C6D538D01F7F1BEB0CF6481A22F /* DataInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DataInjector.swift; sourceTree = "<group>"; };
 		9D297993E715486BD000FEB01781231F /* Pods-DataInjector_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-DataInjector_Example-umbrella.h"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		A99A32FEB063C3B3D456CCCA9E704384 /* BaseTransformer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BaseTransformer.swift; sourceTree = "<group>"; };
 		AD8FEDC9F6A88CBDFE0672A53752EB6B /* Pods-DataInjector_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DataInjector_Example-dummy.m"; sourceTree = "<group>"; };
-		AF421FD67ADBB11BB0125D2BD812F3F2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
-		B33927277030C2625D77BAC586A27BA0 /* BaseInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BaseInjector.swift; sourceTree = "<group>"; };
-		BBB44B72CF7E447B0ED2E1687C9487EE /* SnakeToCamelCaseInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SnakeToCamelCaseInjector.swift; sourceTree = "<group>"; };
 		BC35CD243D943A61AA7F1C77F30DC141 /* Pods-DataInjector_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DataInjector_Example-acknowledgements.plist"; sourceTree = "<group>"; };
+		BD4855EF9160F1E324CC6BA62B34539A /* DataInjector-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "DataInjector-Info.plist"; sourceTree = "<group>"; };
 		BD49C093DB93EEDAA85E8C541BCA3814 /* Pods-DataInjector_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DataInjector_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		C403A1D38A75F8488A33D2958B9F2222 /* JoinStringTransformer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JoinStringTransformer.swift; sourceTree = "<group>"; };
-		C86F85D4DEEE3132FD48AE807CF387CC /* DuplicateInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DuplicateInjector.swift; sourceTree = "<group>"; };
+		BF1E465DBBD6D1098FF6BB8C4BA5FE49 /* JoinStringTransformer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = JoinStringTransformer.swift; sourceTree = "<group>"; };
 		C9AA8DE1F1A8C4791F8CCA736966A4BF /* BitletHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BitletHandler.swift; path = BitletSynchronizerIOS/BitletSynchronizer/Classes/Bitlet/BitletHandler.swift; sourceTree = "<group>"; };
+		CBFEF75FB8705A0B0061F4DEFC1E6306 /* SnakeToCamelCaseInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SnakeToCamelCaseInjector.swift; sourceTree = "<group>"; };
 		CDEA56FCAAB61C4C9A7CBAC65BDA6086 /* BitletOperationItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BitletOperationItem.swift; path = BitletSynchronizerIOS/BitletSynchronizer/Classes/Operation/BitletOperationItem.swift; sourceTree = "<group>"; };
-		D653976E27441696B25BF568E93AE6E0 /* ValueInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ValueInjector.swift; sourceTree = "<group>"; };
 		DBA0A07C3392EE2DCCCA7A6CA1D797B1 /* Pods-DataInjector_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DataInjector_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
-		DBC202DB0FC51F24984748CCFD9C68DB /* ReplaceNilInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReplaceNilInjector.swift; sourceTree = "<group>"; };
-		E195CE2449992A7ED8DA269A2AFD1128 /* DataInjector-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "DataInjector-Info.plist"; sourceTree = "<group>"; };
 		E19718A1B1E15CC8927E38A814866D70 /* Pods_DataInjector_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_DataInjector_Tests.framework; path = "Pods-DataInjector_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E32D8CCA93E46425785BB1D3C15E8D94 /* BitletSynchronizer.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = BitletSynchronizer.modulemap; sourceTree = "<group>"; };
 		E6966329F5E1BD89AF1A5549329F0914 /* BitletSynchronizer-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "BitletSynchronizer-Info.plist"; sourceTree = "<group>"; };
-		E6C89985F4786240C412530E9354A0BE /* LinkDataInjector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LinkDataInjector.swift; sourceTree = "<group>"; };
+		E79629D1F7442648974808726CF1DCFB /* BaseTransformer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BaseTransformer.swift; sourceTree = "<group>"; };
 		E9446DA5E3BC3FE5B9215A075A90418D /* BitletSynchronizer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BitletSynchronizer.swift; path = BitletSynchronizerIOS/BitletSynchronizer/Classes/Synchronizer/BitletSynchronizer.swift; sourceTree = "<group>"; };
+		EC03B5FCE9A8C01397404907F445C6A4 /* InjectTransformer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InjectTransformer.swift; sourceTree = "<group>"; };
+		F0E9C3384BE96746EA3030F2C0BB7DDB /* InjectorResult.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InjectorResult.swift; sourceTree = "<group>"; };
 		F31B09E196B9E206AC38E38560A41E65 /* Pods-DataInjector_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DataInjector_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		F4B04AAFD65A6E68BB00AE5105A6C0E7 /* Pods-DataInjector_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DataInjector_Example-frameworks.sh"; sourceTree = "<group>"; };
 		F7CF1F53D2AD002DBE766EEE0E89CF5B /* Pods-DataInjector_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-DataInjector_Tests-umbrella.h"; sourceTree = "<group>"; };
@@ -136,14 +142,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A261ED85D5B06865EBDC6C4C76796599 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		26B12339D5B6BC84E243EC103C5BB711 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AB3DEBBB05BD2E34DA61C6F3C5B125D7 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,45 +161,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E6537C8E25E8958C07D4CBF9172336DF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EB0C8AE7D2F78F0DB14AAC016D84EDE9 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		016D72A79F5276EAA190A4770CCE8D70 /* DataInjector */ = {
+		1C4D101351DE0F51A899337F076FDD96 /* injector */ = {
 			isa = PBXGroup;
 			children = (
-				0D987FFCFFA7390A97A146D87B08FE11 /* conversion */,
-				025A1AA7C6132B85C32CAE8F8C4EDFFF /* injector */,
-				4DE3974F86E2BEE6FE4A573355215F28 /* Pod */,
-				6C7050272EF94D6099F33842EA677A6A /* Support Files */,
-				4957F908C55A669ED658FAEB6EB2AA6C /* transformer */,
-				7F3306B08CD0978E6B9E6A37A51D5E93 /* utility */,
-			);
-			name = DataInjector;
-			path = ../../..;
-			sourceTree = "<group>";
-		};
-		025A1AA7C6132B85C32CAE8F8C4EDFFF /* injector */ = {
-			isa = PBXGroup;
-			children = (
-				B33927277030C2625D77BAC586A27BA0 /* BaseInjector.swift */,
-				496304144910ADFB5518A91FC9FE49C3 /* DataInjector.swift */,
-				C86F85D4DEEE3132FD48AE807CF387CC /* DuplicateInjector.swift */,
-				E6C89985F4786240C412530E9354A0BE /* LinkDataInjector.swift */,
-				DBC202DB0FC51F24984748CCFD9C68DB /* ReplaceNilInjector.swift */,
-				BBB44B72CF7E447B0ED2E1687C9487EE /* SnakeToCamelCaseInjector.swift */,
-				D653976E27441696B25BF568E93AE6E0 /* ValueInjector.swift */,
+				6E16F2E899296BC080E629E8153BA47C /* BaseInjector.swift */,
+				94867C6D538D01F7F1BEB0CF6481A22F /* DataInjector.swift */,
+				1EFEE7B3231349C4CD36F74800F7EC32 /* DuplicateInjector.swift */,
+				9066D4670E245C16CCE6A8DFE864BE4A /* LinkDataInjector.swift */,
+				642A275AE4C0201D27F525918F39AF97 /* ReplaceNilInjector.swift */,
+				CBFEF75FB8705A0B0061F4DEFC1E6306 /* SnakeToCamelCaseInjector.swift */,
+				162FA1E1FF37EC061BB5E4D9F44F58DB /* ValueInjector.swift */,
 			);
 			name = injector;
 			path = DataInjectorIOS/DataInjector/Classes/injector;
-			sourceTree = "<group>";
-		};
-		0D987FFCFFA7390A97A146D87B08FE11 /* conversion */ = {
-			isa = PBXGroup;
-			children = (
-				8EB5732C4DE62246653FC48D503CCC59 /* InjectorConv.swift */,
-			);
-			name = conversion;
-			path = DataInjectorIOS/DataInjector/Classes/conversion;
 			sourceTree = "<group>";
 		};
 		37ECA85E9C9D38CD2081A01551287253 /* Pods */ = {
@@ -215,7 +198,7 @@
 		3A0321D7F3B0D8D5ECC6AABFBF4EFEA5 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				016D72A79F5276EAA190A4770CCE8D70 /* DataInjector */,
+				F7C6135DBB79A3D6D628F801236D2B9C /* DataInjector */,
 			);
 			name = "Development Pods";
 			sourceTree = "<group>";
@@ -231,27 +214,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4957F908C55A669ED658FAEB6EB2AA6C /* transformer */ = {
-			isa = PBXGroup;
-			children = (
-				A99A32FEB063C3B3D456CCCA9E704384 /* BaseTransformer.swift */,
-				C403A1D38A75F8488A33D2958B9F2222 /* JoinStringTransformer.swift */,
-				3AEE42C1E231865776F647AAB75DE1D1 /* StringifyTransformer.swift */,
-			);
-			name = transformer;
-			path = DataInjectorIOS/DataInjector/Classes/transformer;
-			sourceTree = "<group>";
-		};
-		4DE3974F86E2BEE6FE4A573355215F28 /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				08CC0588088CAC717D1FD1952D247B46 /* DataInjector.podspec */,
-				AF421FD67ADBB11BB0125D2BD812F3F2 /* LICENSE */,
-				364AA6E0D9C1ED50D9AC649604A60857 /* README.md */,
-			);
-			name = Pod;
-			sourceTree = "<group>";
-		};
 		66DE5B0F819409AF5732A6ED1A3220A4 /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -261,25 +223,35 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		6C7050272EF94D6099F33842EA677A6A /* Support Files */ = {
+		78755DEDAAA7DD1918975D991E3EB4BA /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				1A22EFE1A4804AF6FCCFF64EBFD438E1 /* DataInjector.modulemap */,
-				65E8C9091224270893E23AE6504555BA /* DataInjector.xcconfig */,
-				5E9C3C46645E2A8B5BF828C4EFA06104 /* DataInjector-dummy.m */,
-				E195CE2449992A7ED8DA269A2AFD1128 /* DataInjector-Info.plist */,
-				6B6451ECC011A1B3C921B9E97DF18FFC /* DataInjector-prefix.pch */,
-				4E71D116379A1318C24A678788BBBC98 /* DataInjector-umbrella.h */,
+				6E6A84E9A2EA4CD9BA6AD93C096DA116 /* DataInjector.podspec */,
+				1C08DA5361CA8267824ECB67FA31BB27 /* LICENSE */,
+				7C77855951FC0AE7B19048151B334639 /* README.md */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		8C1E12247BDE400EB68195142835095A /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				70691D24978A25ED2BEF48613EE28592 /* DataInjector.modulemap */,
+				5365C2B880EDB7B6C6BC03F36F8F6B6F /* DataInjector.xcconfig */,
+				0AE2158DC66AB5A69494AADCA757385A /* DataInjector-dummy.m */,
+				BD4855EF9160F1E324CC6BA62B34539A /* DataInjector-Info.plist */,
+				7727DDF354E0C472DFDBF47A64C6868A /* DataInjector-prefix.pch */,
+				2F653D0DE80741932534FBAC8A616796 /* DataInjector-umbrella.h */,
 			);
 			name = "Support Files";
 			path = "DataInjectorIOS/Example/Pods/Target Support Files/DataInjector";
 			sourceTree = "<group>";
 		};
-		7F3306B08CD0978E6B9E6A37A51D5E93 /* utility */ = {
+		9D691422901D6CCDB12EA6E26C8A8831 /* utility */ = {
 			isa = PBXGroup;
 			children = (
-				153B228FF35B1B29147A01027157EAAC /* InjectorPath.swift */,
-				4E459EB9F7E8A8E4B0928F82994BE278 /* InjectorResult.swift */,
+				4525A87A7D155C7CBA1B1DAA3B1A09E6 /* InjectorPath.swift */,
+				F0E9C3384BE96746EA3030F2C0BB7DDB /* InjectorResult.swift */,
 			);
 			name = utility;
 			path = DataInjectorIOS/DataInjector/Classes/utility;
@@ -362,6 +334,43 @@
 			path = "Target Support Files/Pods-DataInjector_Example";
 			sourceTree = "<group>";
 		};
+		E7F1AFA1FAB7F9CB8D1396D543812252 /* transformer */ = {
+			isa = PBXGroup;
+			children = (
+				E79629D1F7442648974808726CF1DCFB /* BaseTransformer.swift */,
+				EC03B5FCE9A8C01397404907F445C6A4 /* InjectTransformer.swift */,
+				BF1E465DBBD6D1098FF6BB8C4BA5FE49 /* JoinStringTransformer.swift */,
+				257B9DCD3D1BD944611909C477BC6ABC /* StringifyTransformer.swift */,
+				56901672210112F32493907701E5E300 /* UrlDecodeTransformer.swift */,
+				8B2859B7C7BA0163153D81E1F56C4941 /* UrlEncodeTransformer.swift */,
+			);
+			name = transformer;
+			path = DataInjectorIOS/DataInjector/Classes/transformer;
+			sourceTree = "<group>";
+		};
+		E9C9FAC8A231DF1CA5F9713831D87993 /* conversion */ = {
+			isa = PBXGroup;
+			children = (
+				5F6E1CD4EE153DBFF172D9F965B35274 /* InjectorConv.swift */,
+			);
+			name = conversion;
+			path = DataInjectorIOS/DataInjector/Classes/conversion;
+			sourceTree = "<group>";
+		};
+		F7C6135DBB79A3D6D628F801236D2B9C /* DataInjector */ = {
+			isa = PBXGroup;
+			children = (
+				E9C9FAC8A231DF1CA5F9713831D87993 /* conversion */,
+				1C4D101351DE0F51A899337F076FDD96 /* injector */,
+				78755DEDAAA7DD1918975D991E3EB4BA /* Pod */,
+				8C1E12247BDE400EB68195142835095A /* Support Files */,
+				E7F1AFA1FAB7F9CB8D1396D543812252 /* transformer */,
+				9D691422901D6CCDB12EA6E26C8A8831 /* utility */,
+			);
+			name = DataInjector;
+			path = ../../..;
+			sourceTree = "<group>";
+		};
 		F7DDE438227BD1A69DAC7C167EEABDF9 /* Pods-DataInjector_Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -397,11 +406,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D145AA0DA2ECD6B2F7B76C23A6DB62EF /* Headers */ = {
+		C6F26A575E2C7A87FA63394B529C5E67 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A2D1E85E8C6EB199DBBE863CCE68F62 /* DataInjector-umbrella.h in Headers */,
+				B7965914A984373E5980687B87AD327C /* DataInjector-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,12 +484,12 @@
 		};
 		A511C7FC5402920405AFB361015ABE34 /* DataInjector */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ADD3E572B02598FB558A629E1BC031B7 /* Build configuration list for PBXNativeTarget "DataInjector" */;
+			buildConfigurationList = 552A46875B96A565F6C1001D1A2652E9 /* Build configuration list for PBXNativeTarget "DataInjector" */;
 			buildPhases = (
-				D145AA0DA2ECD6B2F7B76C23A6DB62EF /* Headers */,
-				13C3EAF31F4AA0F819375A2CFD1F4CE9 /* Sources */,
-				26B12339D5B6BC84E243EC103C5BB711 /* Frameworks */,
-				0CE57B1B37595783DBF41917A8DD27A3 /* Resources */,
+				C6F26A575E2C7A87FA63394B529C5E67 /* Headers */,
+				CC151B9A872B297CF88070113CA24398 /* Sources */,
+				E6537C8E25E8958C07D4CBF9172336DF /* Frameworks */,
+				2FF588B319A421B2AC49F01E12983729 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -521,14 +530,14 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		0CE57B1B37595783DBF41917A8DD27A3 /* Resources */ = {
+		1F5C97785B0D7A6D78CB5424A4037650 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1F5C97785B0D7A6D78CB5424A4037650 /* Resources */ = {
+		2FF588B319A421B2AC49F01E12983729 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -568,27 +577,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		13C3EAF31F4AA0F819375A2CFD1F4CE9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				632C883EB7338F61BFEA77636C737A5E /* BaseInjector.swift in Sources */,
-				9A83FBA7AEFCA0FBF2E447FB04F67E48 /* BaseTransformer.swift in Sources */,
-				BA9C07F5C2CC0924DD08A78720035A3E /* DataInjector-dummy.m in Sources */,
-				D3F9F57D00F7E49E493A64066910C38E /* DataInjector.swift in Sources */,
-				50FE777F7A932F75393E7FF0531660FD /* DuplicateInjector.swift in Sources */,
-				BE910DCE7B2D584E926260DA0928643B /* InjectorConv.swift in Sources */,
-				CC44BA21C212C350E0C86A04FA89FB59 /* InjectorPath.swift in Sources */,
-				C37A115E2D026776EB4FE36CA3F4B250 /* InjectorResult.swift in Sources */,
-				615BF22DC49F94E868B881BABDB61343 /* JoinStringTransformer.swift in Sources */,
-				DB130E065C46A74B2C5D45A6C1363B60 /* LinkDataInjector.swift in Sources */,
-				EAF10F9A5068BA05EF20FFAB2A0D673F /* ReplaceNilInjector.swift in Sources */,
-				0A9A211D5E3668E379C76F73B999E25E /* SnakeToCamelCaseInjector.swift in Sources */,
-				9A90BE80B59A99A49552A0AF8D23E61E /* StringifyTransformer.swift in Sources */,
-				A3416642066230A22203F72083EA1CC0 /* ValueInjector.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6CE2E600B9AFB88F6DDF650D14322770 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -603,6 +591,30 @@
 				BA7F123C7CD921CF492C5EE5C2CFE247 /* BitletResultObserver.swift in Sources */,
 				97DD8E546A5E7D0C13A598B750C1118E /* BitletSynchronizer-dummy.m in Sources */,
 				C10257205261484B211FD2E817A00BE3 /* BitletSynchronizer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC151B9A872B297CF88070113CA24398 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				60DACE49854BFF1C0713682265F6255D /* BaseInjector.swift in Sources */,
+				D21262A0E3FA1566954BCC1B978AB567 /* BaseTransformer.swift in Sources */,
+				4C56E6C2F41985A1308E6D92AF58D6A9 /* DataInjector-dummy.m in Sources */,
+				7D1050FEA7080CF3736A162B47521E0F /* DataInjector.swift in Sources */,
+				12B3C70473C74D9ECD1FE60F1A860422 /* DuplicateInjector.swift in Sources */,
+				9B9E43DEC15920F254EFC85A134B60B8 /* InjectorConv.swift in Sources */,
+				BD9998164189D413E7A1EDB117D8BBBC /* InjectorPath.swift in Sources */,
+				0A9EE9D41367D0105D2A0AAB1CB696D4 /* InjectorResult.swift in Sources */,
+				6E8C2A1BE2B467D44E56A8CEC34514EF /* InjectTransformer.swift in Sources */,
+				D714071873E955F4D986FE72FFE6306D /* JoinStringTransformer.swift in Sources */,
+				905286DB678B667A6D4D99C6D60954BD /* LinkDataInjector.swift in Sources */,
+				6F36C21B4CF4E6F06BDE42F88087F8D6 /* ReplaceNilInjector.swift in Sources */,
+				DBDC08B95F768F25B9DB7B77DD2BB448 /* SnakeToCamelCaseInjector.swift in Sources */,
+				A0E632F6D29CD8B3AC623AA43407C549 /* StringifyTransformer.swift in Sources */,
+				274B793628E96D75ECD91133330AA2E1 /* UrlDecodeTransformer.swift in Sources */,
+				773CF362692D6C251FB3EB8B791674D6 /* UrlEncodeTransformer.swift in Sources */,
+				63A9FFE64C3421BE139EFA4C3C87F6AE /* ValueInjector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -630,6 +642,38 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		12E411C77AA220AC5BAAA6C1AA00D6B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5365C2B880EDB7B6C6BC03F36F8F6B6F /* DataInjector.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/DataInjector/DataInjector-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/DataInjector/DataInjector-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/DataInjector/DataInjector.modulemap";
+				PRODUCT_MODULE_NAME = DataInjector;
+				PRODUCT_NAME = DataInjector;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		1D5D307EC1AE1DAB1D493DD30914CF6B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2F938EA690EF64DBA6D2556C75CA2A3E /* BitletSynchronizer.xcconfig */;
@@ -852,37 +896,6 @@
 			};
 			name = Debug;
 		};
-		82FCD9C299D2798FA3610F868A770B27 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 65E8C9091224270893E23AE6504555BA /* DataInjector.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/DataInjector/DataInjector-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/DataInjector/DataInjector-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/DataInjector/DataInjector.modulemap";
-				PRODUCT_MODULE_NAME = DataInjector;
-				PRODUCT_NAME = DataInjector;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		9EA32D7ECEAA18524035828504DBD877 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 86A3D6A93271C17645BFA600DF9B8FBE /* Pods-DataInjector_Tests.debug.xcconfig */;
@@ -982,9 +995,9 @@
 			};
 			name = Release;
 		};
-		B781C25CF3D87CA438EAF4D068124BA2 /* Release */ = {
+		E4B42F74A81725FB51A5A702BB251750 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 65E8C9091224270893E23AE6504555BA /* DataInjector.xcconfig */;
+			baseConfigurationReference = 5365C2B880EDB7B6C6BC03F36F8F6B6F /* DataInjector.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1008,11 +1021,10 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1026,20 +1038,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		552A46875B96A565F6C1001D1A2652E9 /* Build configuration list for PBXNativeTarget "DataInjector" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4B42F74A81725FB51A5A702BB251750 /* Debug */,
+				12E411C77AA220AC5BAAA6C1AA00D6B4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		690ABFCCD4D9190435D6EC2CA1B8BCB3 /* Build configuration list for PBXNativeTarget "Pods-DataInjector_Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9EA32D7ECEAA18524035828504DBD877 /* Debug */,
 				4DD89A85B3561FEDA27F96FD03485E20 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		ADD3E572B02598FB558A629E1BC031B7 /* Build configuration list for PBXNativeTarget "DataInjector" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				82FCD9C299D2798FA3610F868A770B27 /* Debug */,
-				B781C25CF3D87CA438EAF4D068124BA2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

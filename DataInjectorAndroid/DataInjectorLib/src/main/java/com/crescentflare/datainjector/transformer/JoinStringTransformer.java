@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * Data injector transformation: concatenate strings
- * Join multiple strings together with an optional delimiter
+ * Join multiple strings together with an optional delimiter, prefix or suffix
  */
 public class JoinStringTransformer extends BaseTransformer
 {
@@ -25,6 +25,8 @@ public class JoinStringTransformer extends BaseTransformer
     private InjectorPath sourceDataPath;
     private List<String> fromItems = new ArrayList<>();
     private String delimiter = "";
+    private String prefix = "";
+    private String suffix = "";
 
 
     // --
@@ -43,11 +45,17 @@ public class JoinStringTransformer extends BaseTransformer
     @NotNull
     public static InjectorResult joinString(@NotNull List<?> sourceList)
     {
-        return joinString(sourceList, "");
+        return joinString(sourceList, "", "", "");
     }
 
     @NotNull
     public static InjectorResult joinString(@NotNull List<?> sourceList, @NotNull String delimiter)
+    {
+        return joinString(sourceList, delimiter, "", "");
+    }
+
+    @NotNull
+    public static InjectorResult joinString(@NotNull List<?> sourceList, @NotNull String delimiter, @NotNull String prefix, @NotNull String suffix)
     {
         List<String> stringItems = new ArrayList<>();
         for (Object value : sourceList)
@@ -57,17 +65,23 @@ public class JoinStringTransformer extends BaseTransformer
                 stringItems.add((String)value);
             }
         }
-        return InjectorResult.withModifiedObject(joinStringList(stringItems, delimiter));
+        return InjectorResult.withModifiedObject(joinStringList(stringItems, delimiter, prefix, suffix));
     }
 
     @NotNull
     public static InjectorResult joinString(@NotNull Map<String, Object> sourceMap, @NotNull List<String> fromItems)
     {
-        return joinString(sourceMap, fromItems, "");
+        return joinString(sourceMap, fromItems, "", "", "");
     }
 
     @NotNull
     public static InjectorResult joinString(@NotNull Map<String, Object> sourceMap, @NotNull List<String> fromItems, @NotNull String delimiter)
+    {
+        return joinString(sourceMap, fromItems, delimiter, "", "");
+    }
+
+    @NotNull
+    public static InjectorResult joinString(@NotNull Map<String, Object> sourceMap, @NotNull List<String> fromItems, @NotNull String delimiter, @NotNull String prefix, @NotNull String suffix)
     {
         List<String> stringItems = new ArrayList<>();
         for (String item : fromItems)
@@ -78,7 +92,7 @@ public class JoinStringTransformer extends BaseTransformer
                 stringItems.add((String)value);
             }
         }
-        return InjectorResult.withModifiedObject(joinStringList(stringItems, delimiter));
+        return InjectorResult.withModifiedObject(joinStringList(stringItems, delimiter, prefix, suffix));
     }
 
 
@@ -89,13 +103,19 @@ public class JoinStringTransformer extends BaseTransformer
     @NotNull
     public static String joinStringList(@NotNull List<String> stringList)
     {
-        return joinStringList(stringList, "");
+        return joinStringList(stringList, "", "", "");
     }
 
     @NotNull
     public static String joinStringList(@NotNull List<String> stringList, @NotNull String delimiter)
     {
-        StringBuilder result = new StringBuilder("");
+        return joinStringList(stringList, delimiter, "", "");
+    }
+
+    @NotNull
+    public static String joinStringList(@NotNull List<String> stringList, @NotNull String delimiter, @NotNull String prefix, @NotNull String suffix)
+    {
+        StringBuilder result = new StringBuilder(prefix);
         boolean firstString = true;
         for (String item : stringList)
         {
@@ -106,6 +126,7 @@ public class JoinStringTransformer extends BaseTransformer
             result.append(item);
             firstString = false;
         }
+        result.append(suffix);
         return result.toString();
     }
 
@@ -123,11 +144,11 @@ public class JoinStringTransformer extends BaseTransformer
         List<Object> sourceList = InjectorConv.asObjectList(useSourceData);
         if (sourceMap != null)
         {
-            return joinString(sourceMap, fromItems, delimiter);
+            return joinString(sourceMap, fromItems, delimiter, prefix, suffix);
         }
         else if (sourceList != null)
         {
-            return joinString(sourceList, delimiter);
+            return joinString(sourceList, delimiter, prefix, suffix);
         }
         return InjectorResult.withError(InjectorResult.Error.SourceInvalid);
     }
@@ -150,5 +171,15 @@ public class JoinStringTransformer extends BaseTransformer
     public void setDelimiter(@Nullable String delimiter)
     {
         this.delimiter = delimiter != null ? delimiter : "";
+    }
+
+    public void setPrefix(@Nullable String prefix)
+    {
+        this.prefix = prefix != null ? prefix : "";
+    }
+
+    public void setSuffix(@Nullable String suffix)
+    {
+        this.suffix = suffix != null ? suffix : "";
     }
 }

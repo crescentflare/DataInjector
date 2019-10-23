@@ -49,10 +49,10 @@ public class JoinStringTransformerTest
         );
 
         // Apply manual injection to join the strings
-        InjectorResult result = JoinStringTransformer.joinString(sampleMap, Arrays.asList("firstName", "middleName", "lastName"), " ");
+        InjectorResult result = JoinStringTransformer.joinString(sampleMap, Arrays.asList("firstName", "middleName", "lastName"), " ", "Sir ", ", the unknown");
 
         // Verify the result
-        Assert.assertEquals(result.getModifiedObject(), "John Doe");
+        Assert.assertEquals(result.getModifiedObject(), "Sir John Doe, the unknown");
     }
 
 
