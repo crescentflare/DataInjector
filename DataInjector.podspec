@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DataInjector'
-  s.version          = '0.2.0'
+  s.version          = '0.3.0'
   s.swift_version    = '5.0'
   s.summary          = 'Easily map and manipulate nested dictionaries.'
 

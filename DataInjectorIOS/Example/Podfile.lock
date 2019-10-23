@@ -1,6 +1,6 @@
 PODS:
   - BitletSynchronizer (0.3.8)
-  - DataInjector (0.2.0)
+  - DataInjector (0.3.0)
 
 DEPENDENCIES:
   - BitletSynchronizer (~> 0.3.8)
@@ -16,7 +16,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   BitletSynchronizer: 0ba1a25d0d338b17c26a1d57f4902f75db1e5543
-  DataInjector: fbaa33a75de139b5d6b685583196dcc6b5ed6dc9
+  DataInjector: 00f3a8d3d793b96f5980b108fb1eceacb5f4ebf4
 
 PODFILE CHECKSUM: e595e8aaa6faed65d153498f6d56800a42546ca6
 
