@@ -23,7 +23,7 @@ Use the library together with [JsonInflator](https://github.com/crescentflare/Js
 The library is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile.
 
 ```ruby
-pod "DataInjector", '~> 0.3.0'
+pod "DataInjector", '~> 0.3.1'
 ```
 
 
@@ -32,7 +32,7 @@ pod "DataInjector", '~> 0.3.0'
 When using gradle, the library can easily be imported into the build.gradle file of your project. Add the following dependency:
 
 ```
-compile 'com.crescentflare.datainjector:DataInjectorLib:0.3.0'
+compile 'com.crescentflare.datainjector:DataInjectorLib:0.3.1'
 ```
 
 Make sure that jcenter is added as a repository.
