@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/crescentflare/DataInjector'
     gitUrl = 'https://github.com/crescentflare/DataInjector.git'
 
-    libraryVersion = '0.3.0'
+    libraryVersion = '0.3.1'
 
     developerId = 'crescentflare'
     developerName = 'Crescent Flare'
@@ -31,7 +31,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 28
         versionCode 1
-        versionName "0.3.0"
+        versionName "0.3.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 

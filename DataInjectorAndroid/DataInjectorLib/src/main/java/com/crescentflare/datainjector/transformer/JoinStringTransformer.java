@@ -60,9 +60,10 @@ public class JoinStringTransformer extends BaseTransformer
         List<String> stringItems = new ArrayList<>();
         for (Object value : sourceList)
         {
-            if (value instanceof String)
+            String stringValue = InjectorConv.asString(value);
+            if (stringValue != null)
             {
-                stringItems.add((String)value);
+                stringItems.add(stringValue);
             }
         }
         return InjectorResult.withModifiedObject(joinStringList(stringItems, delimiter, prefix, suffix));
@@ -86,10 +87,10 @@ public class JoinStringTransformer extends BaseTransformer
         List<String> stringItems = new ArrayList<>();
         for (String item : fromItems)
         {
-            Object value = sourceMap.get(item);
-            if (value instanceof String)
+            String stringValue = InjectorConv.asString(sourceMap.get(item));
+            if (stringValue != null)
             {
-                stringItems.add((String)value);
+                stringItems.add(stringValue);
             }
         }
         return InjectorResult.withModifiedObject(joinStringList(stringItems, delimiter, prefix, suffix));
