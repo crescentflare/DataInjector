@@ -37,7 +37,7 @@ open class JoinStringTransformer: BaseTransformer {
     public static func joinString(fromArray: [Any?], delimiter: String = "", prefix: String = "", suffix: String = "") -> InjectorResult {
         var stringItems = [String]()
         for value in fromArray {
-            if let stringItem = value as? String {
+            if let stringItem = InjectorConv.asString(value: value) {
                 stringItems.append(stringItem)
             }
         }
@@ -47,7 +47,7 @@ open class JoinStringTransformer: BaseTransformer {
     public static func joinString(fromDictionary: [String: Any?], fromItems: [String], delimiter: String = "", prefix: String = "", suffix: String = "") -> InjectorResult {
         var stringItems = [String]()
         for item in fromItems {
-            if let stringItem = fromDictionary[item] as? String {
+            if let stringItem = InjectorConv.asString(value: fromDictionary[item] ?? nil) {
                 stringItems.append(stringItem)
             }
         }
