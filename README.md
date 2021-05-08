@@ -3,7 +3,7 @@
 [![CI Status](http://img.shields.io/travis/crescentflare/DataInjector.svg?style=flat)](https://travis-ci.org/crescentflare/DataInjector)
 [![License](https://img.shields.io/cocoapods/l/DataInjector.svg?style=flat)](http://cocoapods.org/pods/DataInjector)
 [![Version](https://img.shields.io/cocoapods/v/DataInjector.svg?style=flat)](http://cocoapods.org/pods/DataInjector)
-[Version](https://img.shields.io/maven-central/v/com.crescentflare.datainjector/DataInjectorLib.svg?style=flat)](https://repo1.maven.org/maven2/com/crescentflare/datainjector/DataInjectorLib)
+[![Version](https://img.shields.io/maven-central/v/com.crescentflare.datainjector/DataInjectorLib.svg?style=flat)](https://repo1.maven.org/maven2/com/crescentflare/datainjector/DataInjectorLib)
 
 Data injector is a project to easily manipulate JSON data before being handled by the application. For example, to map restful API responses into view models together with view content or to fix API responses.
 
