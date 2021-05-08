@@ -1,27 +1,20 @@
 apply plugin: 'com.android.library'
 
 ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'DataInjectorLib'
+    PUBLISH_GROUP_ID = 'com.crescentflare.datainjector'
+    PUBLISH_ARTIFACT_ID = 'DataInjectorLib'
+    PUBLISH_VERSION = library_version
 
-    publishedGroupId = 'com.crescentflare.datainjector'
-    libraryName = 'DataInjectorAndroid'
-    artifact = 'DataInjectorLib'
+    PUBLISH_DESCRIPTION = "Easily apply mapping or manipulate java maps"
+    PUBLISH_SITE_URL = "https://github.com/crescentflare/DataInjector"
+    PUBLISH_GIT_URL = "github.com/crescentflare/DataInjector"
 
-    libraryDescription = 'Easily apply mapping or manipulate java maps'
+    PUBLISH_LICENSE_NAME = "The MIT License (MIT)"
+    PUBLISH_LICENSE_URL = "https://opensource.org/licenses/MIT"
 
-    siteUrl = 'https://github.com/crescentflare/DataInjector'
-    gitUrl = 'https://github.com/crescentflare/DataInjector.git'
-
-    libraryVersion = '0.3.1'
-
-    developerId = 'crescentflare'
-    developerName = 'Crescent Flare'
-    developerEmail = 'info@crescentflare.com'
-
-    licenseName = 'The MIT License (MIT)'
-    licenseUrl = 'https://opensource.org/licenses/MIT'
-    allLicenses = ["MIT"]
+    PUBLISH_DEVELOPER_ID = "crescentflare"
+    PUBLISH_DEVELOPER_NAME = "Crescent Flare Apps"
+    PUBLISH_DEVELOPER_EMAIL = "info@crescentflare.com"
 }
 
 android {
@@ -31,7 +24,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 28
         versionCode 1
-        versionName "0.3.1"
+        versionName library_version
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -55,5 +48,4 @@ dependencies {
     testImplementation 'org.jetbrains:annotations:16.0.2'
 }
 
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+apply from: "publish-mavencentral.gradle"
